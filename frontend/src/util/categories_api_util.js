@@ -1,1 +1,25 @@
-export const fetchCategories = () => fetch('/api/categories')
+export const fetchCategories= () => {
+  let categories = {};
+
+  return (
+	fetch(
+		'http://localhost:3001/categories', 
+		{
+        	headers: { 
+        		'Authorization': 'get-categories' 
+        	}
+   		}
+   	)
+   	.then( function(response) {
+   		if (response.status !== 200) {
+   			console.log('Something went wrong. Status: ', response.status)
+   		}
+
+      return response 
+
+   	})
+   	.catch( function(err) {
+   		console.log("Error fetching")
+   	})
+  )
+}

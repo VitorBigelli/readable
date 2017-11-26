@@ -1,7 +1,7 @@
 import { RECEIVE_CATEGORIES, ADD_CATEGORY } from '../actions/index'; 
 
 const initialCategories = {
-	categories: null
+	categories: []
 }
 
 function categories ( state = initialCategories, action ) {
