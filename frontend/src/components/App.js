@@ -14,9 +14,20 @@ class App extends Component {
 	}
 
   	render() {
+  		const { categories } = this.props
+
 	    return (
 	      <div className="App">
-	        Hello World
+
+	      	<ul className="categories-list">
+	      		<h3 className="categories-list-header"> Choose a category: </h3>
+	        	{ categories && categories.map( category => (
+	        		<li key={category.name} className="categories-list-item">
+	        			{ category.name }
+	        		</li>
+	        	)
+	        	)}
+	        </ul>
 	      </div>
 	    );
 	  }
