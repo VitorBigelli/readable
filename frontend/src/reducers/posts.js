@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS } from '../actions/post';
+import { RECEIVE_POSTS } from '../actions/posts';
 
 function posts (state = [], action) {
 	switch(action.type) {

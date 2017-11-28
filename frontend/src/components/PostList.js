@@ -1,21 +1,22 @@
 import React, { Component } from 'react'; 
 import { connect } from 'react-redux'; 
-import { getPostsByCategory, getAllPosts } from '../actions/post';
+import { getPostsByCategory, getAllPosts } from '../actions/posts';
 import Post from './Post'; 
 
 class PostList extends Component {
 
 	componentDidMount() {
 		if (!this.props.category) {
+			console.log(this.props.category)
 			this.props.fetchAllPosts();
 		} else {
-			this.props.fetchPosts(this.props.category)
+			this.props.fetchPostsByCategory(this.props.category)
 		}
 	}
 
 	render() {
 		const { posts, category } = this.props
-		const postListTitle = category ? ("Posts about " + category.name) : "All posts"
+		const postListTitle = category ? ("Posts about " + category) : "All posts"
 
 		return (
 			<div> 

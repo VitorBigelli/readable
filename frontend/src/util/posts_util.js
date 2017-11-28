@@ -14,7 +14,6 @@ export const getByCategory = (categoryName) => {
  			if (response.status !== 200 ) {
  				console.log('Something went wrong.')
  			}
-
  			return response;
  		})
  		.catch( function(err) {

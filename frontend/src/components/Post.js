@@ -1,4 +1,8 @@
 import React, { Component } from 'react'; 
+import { getAllPosts } from '../actions/posts';
+import { getComments } from '../actions/comments';
+import { connect } from 'react-redux';
+import { CommentList } from './CommentList';
 
 class Post extends Component {
 
@@ -10,9 +14,14 @@ class Post extends Component {
 		}
 	}
 
+	componentDidMount() {
+		this.props.getComments(this.props.post.id)
+	}
+
 	render() {
-		const { post } = this.props
+		const { post, comments } = this.props
 		const { isEditing, isNew } = this.state
+
 		return (
 			!isEditing && 
 			!isNew && 
@@ -20,11 +29,28 @@ class Post extends Component {
 				<p className="post-title"> {post.title} </p> 
 				<p className="post-body"> {post.body} </p>
 				<p className="post-author"> Posted by {post.author} </p>
+				{ comments && 
+					<ul>	 
+						<CommentList comments={comments} />
+					</ul>
+				}
 			</div>
-		
 		)
 	}
 
 }
 
-export default Post; 
+function mapStateToProps ({comments}) {
+	return {
+		comments: comments
+	}
+}
+
+function mapDispatchToProps (dispatch) {
+	return {
+		getAllPosts: () => dispatch(getAllPosts()),
+		getComments: (postId) => dispatch(getComments(postId))
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post); 

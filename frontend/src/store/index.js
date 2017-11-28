@@ -4,11 +4,11 @@ import reducers from '../reducers/index';
 import { combineReducers } from 'redux';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-const postStore = createStore( 
+const store = createStore( 
 	reducers, 
 	composeEnhancers(
 		applyMiddleware(thunk)
 	)
 );
 
-export default postStore;
+export default store;

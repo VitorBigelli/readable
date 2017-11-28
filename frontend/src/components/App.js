@@ -45,9 +45,9 @@ class App extends Component {
   				<Route
   					key={category.name} 
 	  				exact path={"/" + category.path}
-	  				render={ () => ( 
-	  						<PostList category={category.name} /> 
-	  				)} 
+	  				render={ () => (
+						<PostList category={category.name} /> 
+					)}
   				/>
   			))}
 	      
