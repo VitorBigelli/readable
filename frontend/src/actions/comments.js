@@ -20,7 +20,6 @@ export const getComments = (postId) => dispatch => (
 	CommentsAPI.getCommentsByPost(postId)
 		.then( function(response) {
 			response.json().then( function(data) {
-				console.log(data)
 				dispatch(receiveComments(data));
 			})
 		})

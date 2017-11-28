@@ -25,14 +25,14 @@ class Post extends Component {
 		return (
 			!isEditing && 
 			!isNew && 
-			<div className="post-container"> 
-				<p className="post-title"> {post.title} </p> 
-				<p className="post-body"> {post.body} </p>
+			<div className="post-container">
 				<p className="post-author"> Posted by {post.author} </p>
+	 			<div className="post-content">
+	 				<h4 className="post-title"> {post.title} </h4> 
+					<p className="post-body"> {post.body} </p>
+				</div>
 				{ comments && 
-					<ul>	 
-						<CommentList comments={comments} />
-					</ul>
+					<CommentList comments={comments[post.id]} />
 				}
 			</div>
 		)
@@ -41,6 +41,7 @@ class Post extends Component {
 }
 
 function mapStateToProps ({comments}) {
+	console.log(comments)
 	return {
 		comments: comments
 	}

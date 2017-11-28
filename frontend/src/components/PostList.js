@@ -7,7 +7,6 @@ class PostList extends Component {
 
 	componentDidMount() {
 		if (!this.props.category) {
-			console.log(this.props.category)
 			this.props.fetchAllPosts();
 		} else {
 			this.props.fetchPostsByCategory(this.props.category)

@@ -38,3 +38,14 @@ h2 {
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.comment-container {
+  margin: auto;
+  background-color: #eee;
+}
+
+.comment-list {
+  width: 100%;
+  padding: 0;
+  list-style: none;
+}
