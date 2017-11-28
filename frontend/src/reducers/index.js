@@ -1,21 +1,18 @@
 import { RECEIVE_CATEGORIES, ADD_CATEGORY } from '../actions/index'; 
+import posts from './posts';
+import { combineReducers } from 'redux';
 
-const initialCategories = {
-	categories: []
-}
+const initialCategories = []
 
 function categories ( state = initialCategories, action ) {
 	switch(action.type) {
 		case RECEIVE_CATEGORIES:
 			const { categories } =  action
+			return categories;
 
-			return {
-				...state,
-				['categories']: categories
-			}
 		default:
 			return state;
 	}
 }
 
-export default categories;
+export default combineReducers({categories, posts});

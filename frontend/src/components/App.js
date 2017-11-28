@@ -5,8 +5,6 @@ import { fetchCategories } from '../actions/index'
 import CategoryList from './CategoryList';
 import { Route } from 'react-router-dom';
 import PostList from './PostList';
-import { Provider } from 'react-redux'; 
-import store from '../store/posts_store';
 
 class App extends Component {
 
@@ -43,9 +41,7 @@ class App extends Component {
   					key={category.name} 
 	  				exact path={"/" + category.path}
 	  				render={ () => ( 
-	  					<Provider store={store}>
 	  						<PostList category={category.name} /> 
-	  					</Provider>
 	  				)} 
   				/>
   			))}

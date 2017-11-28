@@ -1,15 +1,10 @@
 import { RECEIVE_POSTS } from '../actions/post';
 
-function posts (state = {}, action) {
+function posts (state = [], action) {
 	switch(action.type) {
 		case RECEIVE_POSTS:
 			const { posts } = action
-			console.log(posts)
-			
-			return {
-				...state, 
-				['posts']: posts
-			}
+			return posts
 
 		default: 
 			return state
