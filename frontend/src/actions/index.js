@@ -14,7 +14,6 @@ export const fetchCategories = () => dispatch => {
 	CategoryAPI.fetchCategories()
 		.then( response => {
 			response.json().then( function(data) {
-				console.log(data)
 				dispatch(receiveCategories(data.categories))	
 			})
 		})

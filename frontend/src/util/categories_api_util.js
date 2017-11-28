@@ -1,14 +1,13 @@
-export const fetchCategories= () => {
-  let categories = {};
+export const fetchCategories = () => {
 
   return (
 	fetch(
 		'http://localhost:3001/categories', 
 		{
-        	headers: { 
-        		'Authorization': 'get-categories' 
-        	}
-   		}
+  	  headers: { 
+     		'Authorization': 'get-categories' 
+      }
+ 		}
    	)
    	.then( function(response) {
    		if (response.status !== 200) {

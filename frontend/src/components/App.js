@@ -2,14 +2,23 @@ import React, { Component } from 'react';
 import '../App.css';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../actions/index'
+import CategoryList from './CategoryList';
+import { Route } from 'react-router-dom';
+import PostList from './PostList';
+import { Provider } from 'react-redux'; 
+import store from '../store/posts_store';
 
 class App extends Component {
 
-	state = {
-		categories: []
+	constructor(props) {
+		super(props); 
+		this.state = {
+			categories: []
+		}
 	}
 
 	componentDidMount() {
+		
 		this.props.fetchCategories()
 	}
 
@@ -19,18 +28,29 @@ class App extends Component {
 	    return (
 	      <div className="App">
 
-	      	<ul className="categories-list">
-	      		<h3 className="categories-list-header"> Choose a category: </h3>
-	        	{ categories && categories.map( category => (
-	        		<li key={category.name} className="categories-list-item">
-	        			{ category.name }
-	        		</li>
-	        	)
-	        	)}
-	        </ul>
+	      	<Route 
+	      		exact path="/" 
+	      		render={ () => (
+	      			<ul className="categories-list">
+			      		<h3 className="categories-list-header"> Choose a category: </h3>
+			        	<CategoryList categories={categories} />
+			        </ul>
+			    )} 
+			/>
+
+  			<Route 
+  				exact path="/react"
+  				render={ () => ( 
+  					<Provider store={store}>
+  						<PostList category='react' /> 
+  					</Provider>
+  				)} 
+  			/>
+	      
+       	
 	      </div>
-	    );
-	  }
+	    )
+	}
 }
 
 function mapStateToProps ({categories}) {
