@@ -16,7 +16,6 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		
 		this.props.fetchCategories()
 	}
 
@@ -29,10 +28,16 @@ class App extends Component {
 	      	<Route 
 	      		exact path="/" 
 	      		render={ () => (
-	      			<ul className="categories-list">
-			      		<h3 className="categories-list-header"> Choose a category: </h3>
-			        	<CategoryList categories={categories} />
-			        </ul>
+	      			<div className="main">
+		      			<ul className="categories-list">
+				      		<h3 className="categories-list-header"> Choose a category: </h3>
+				        	<CategoryList categories={categories} />
+				        </ul>
+
+				        <ul className="posts"> 
+				        	<PostList />
+				        </ul>
+				    </div>
 			    )} 
 			/>
 

@@ -18,7 +18,16 @@ export const getPostsByCategory = (category) => dispatch => (
 	
 	PostAPI.getByCategory(category)
 		.then( function(response) {
-			console.log(response)
+			response.json().then( function(data) {
+				dispatch(receivePosts(data))
+			})
+		})
+)
+
+export const getAllPosts = () => dispatch => (
+
+	PostAPI.getAll()
+		.then( function(response) {
 			response.json().then( function(data) {
 				dispatch(receivePosts(data))
 			})
