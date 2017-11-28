@@ -3,9 +3,12 @@ import { RECEIVE_POSTS } from '../actions/post';
 function posts (state = {}, action) {
 	switch(action.type) {
 		case RECEIVE_POSTS:
+			const { posts } = action
+			console.log(posts)
+			
 			return {
 				...state, 
-				['posts']: action.categories
+				['posts']: posts
 			}
 
 		default: 

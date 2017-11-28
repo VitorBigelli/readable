@@ -7,10 +7,10 @@ export const VOTE_SCORE_UP_POST = 'VOTE_SCORE_UP_POST';
 export const VOTE_SCORE_DOWN_POST = 'VOTE_SCORE_DOWN_POST'; 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 
-export const receivePosts = categories => {
+export const receivePosts = posts => {
 	return {
 		type: RECEIVE_POSTS,
-		categories
+		posts
 	}
 }
 
@@ -18,11 +18,10 @@ export const getPostsByCategory = (category) => dispatch => (
 	
 	PostAPI.getByCategory(category)
 		.then( function(response) {
+			console.log(response)
 			response.json().then( function(data) {
 				dispatch(receivePosts(data))
 			})
-
-
 		})
 )
 

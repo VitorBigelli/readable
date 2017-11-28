@@ -38,14 +38,17 @@ class App extends Component {
 			    )} 
 			/>
 
-  			<Route 
-  				exact path="/react"
-  				render={ () => ( 
-  					<Provider store={store}>
-  						<PostList category='react' /> 
-  					</Provider>
-  				)} 
-  			/>
+  			{ categories && categories.map( category => (
+  				<Route
+  					key={category.name} 
+	  				exact path={"/" + category.path}
+	  				render={ () => ( 
+	  					<Provider store={store}>
+	  						<PostList category={category.name} /> 
+	  					</Provider>
+	  				)} 
+  				/>
+  			))}
 	      
        	
 	      </div>

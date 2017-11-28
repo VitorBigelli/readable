@@ -10,12 +10,12 @@ class Post extends Component {
 	}
 
 	render() {
-
+		const { post } = this.props
 		return (
-			{ !isEditing && (
-				
-
-			)} 
+			<div> 
+				<p> {post.title} </p> 
+				<p> {post.body} </p>
+			</div>
 		)
 	}
 
