@@ -36,7 +36,7 @@ class App extends Component {
 	}
 
   	render() {
-  		const { categories } = this.props
+  		const { categories, avatars } = this.props
   		const { postModalIsOpen } = this.state
 
 	    return (
@@ -46,6 +46,7 @@ class App extends Component {
 	      		onClick={this.openPostModal}
 	      		className="new-post"
 	      	> New Post </button>
+
 	      	<Modal
 	      		className="post-modal"
 	      		overlayClassName="post-overlay"
@@ -53,9 +54,37 @@ class App extends Component {
 	      		onRequestClose={this.closePostModal}
 	      		contentLabel="PostModal"
 	      	> 
-	      		<div>
-	      			MODAL
-	      		</div>
+	      			<form
+	      				className="post-form"
+	      				onSubmit={ (e) => e.preventDefault() }
+	      			> 
+	      				<h3> New post </h3>
+	      				<input
+	      					className="post-form-title"
+	      					type="text"
+	      					placeholder="Title"
+	      				/>
+	      				<textarea 
+	      					className="post-form-body"
+	      					placeholder="Write your post here... "
+	      				/>
+	      				<span> Category: </span>
+	      					<select className="post-category"> 
+	      						{categories && categories.map( category => (
+	      							<option key={category.name} name={category.name} value={category.name}> {category.name} </option>
+	      						))}
+	      					</select>
+	      					<br/>
+	      				<div className="post-author-info"> 
+		      				<span> Name: </span>
+		      				<input 
+		      					className="post-author-name"
+		      					type="text"
+		      				/>
+		      			</div>
+	      				<button> Post </button>
+	      				<button> Cancel </button>
+	      			</form>
 	      	</Modal>
 
 	      	<Route 

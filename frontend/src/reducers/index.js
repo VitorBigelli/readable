@@ -14,4 +14,14 @@ function categories ( state = [], action ) {
 	}
 }
 
-export default combineReducers({categories, posts, comments});
+function avatars (state = [], action) { 
+	return [
+		'../icons/rick.png',
+		'../icons/morty.jpeg',
+		'../icons/jerry.png',
+		'../icons/beth.png',
+		'../icons/summer.jpeg'
+	]
+}
+
+export default combineReducers({categories, posts, comments, avatars});
