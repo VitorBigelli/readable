@@ -1,22 +1,25 @@
 import React from 'react'; 
 import { Link, Route } from 'react-router-dom'; 
 
-const CategoryList = ({categories}) => {
+const CategoryList = ({categories, updateCategory}) => {
 
 	return (
-	<div className="categories-list-container">
-		<ul className="categories-list">
+	<div defaultValue='none' className="categories-list-container">
+		<select 
+			className="categories-list"
+		>
+			<option key="none" value="none" className="categories-list-item"> All posts </option>
 		{ categories && categories.map( category => (
-			<Link key={category.name}  to={"/" + category.path}>
-				<li className="categories-list-item">
+			<option 
+				key={category.name} value={category.name} 
+				className="categories-list-item"
+				onClick={ updateCategory(category.name) }
+			>
 					{ category.name }
-				</li>
-
-			</Link>
-				
+			</option>			
 		))
 		}
-		</ul>
+		</select>
 	</div>
 	)
 }

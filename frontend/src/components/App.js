@@ -15,8 +15,8 @@ class App extends Component {
 	constructor(props) {
 		super(props); 
 		this.state = {
-			postModalIsOpen: true,
-			categories: []
+			postModalIsOpen: false,
+			currentCategory: 'none'
 		}
 	}
 
@@ -27,10 +27,15 @@ class App extends Component {
 			
 		post['id'] = '4kj45kj4kjkjj4çl';
 		post['timestamp'] = Date.now();
-
 		this.props.postNewPost(post)
 		this.closePostModal();
 	}	
+
+	updateCategory = (category) => {
+		this.setState( () => {
+			currentCategory: category
+		})
+	}
 
 	openPostModal = () => {
 		this.setState( () => (
@@ -54,15 +59,19 @@ class App extends Component {
 
   	render() {
   		const { categories, avatars } = this.props
-  		const { postModalIsOpen } = this.state
+  		const { postModalIsOpen, currentCategory } = this.state
 
 	    return (
 	      <div className="App">
 
-	      	<button 
-	      		onClick={this.openPostModal}
-	      		className="new-post"
-	      	> New Post </button>
+	      	<div className="nav-bar">
+				<span> Filter by category: </span> 
+		      	<CategoryList categories={categories} updateCategory={(category) => this.updateCategory(category)}  />
+		      	<button 
+		      		onClick={this.openPostModal}
+		      		className="new-post"
+		      	> New Post </button>
+		    </div>
 
 	      	<Modal
 	      		className="post-modal"
@@ -119,7 +128,6 @@ class App extends Component {
 	      			<div className="main">
 		      			<ul className="categories-list">
 				      		<h3 className="categories-list-header"> Choose a category: </h3>
-				        	<CategoryList categories={categories} />
 				        </ul>
 
 				        <ul className="posts"> 
@@ -133,9 +141,12 @@ class App extends Component {
   				<Route
   					key={category.name} 
 	  				exact path={"/" + category.path}
-	  				render={ () => (
+	  				render={ () => {
+						return (
 						<PostList category={category.name} /> 
-					)}
+						)
+					}
+					}
   				/>
   			))}
 	      

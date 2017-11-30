@@ -247,3 +247,16 @@ h4 {
   flex-wrap: wrap;
   list-style: none;
 }
+
+.nav-bar {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.nav-bar select {
+  height: 20px;
+  padding: 0;
+}
