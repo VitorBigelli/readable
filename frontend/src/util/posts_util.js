@@ -22,6 +22,32 @@ export const getByCategory = (categoryName) => {
 	)
 }
 
+export const postNewPost = (post) => {
+
+	return (
+		fetch(
+			"http://localhost:3001/posts/",
+			{
+				method: "POST",
+				body: JSON.stringify(post),
+				headers: {
+					'Authorization': 'post-post'
+				}
+			}
+		)
+		.then( function(response) {
+			if (response.status !== 200 ) {
+				console.log("Something went wrong")
+			}
+
+			return response
+		})
+		.catch( function(err) {
+			console.log('ERROR')
+		})
+	)
+}
+
 export const getAll = () => {
 
 	return (

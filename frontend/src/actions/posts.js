@@ -14,12 +14,36 @@ export const receivePosts = posts => {
 	}
 }
 
+export const createPost = post => {
+	return {
+		type: CREATE_POST,
+		post
+	}
+}
+
 export const getPostsByCategory = (category) => dispatch => (
 	
 	PostAPI.getByCategory(category)
 		.then( function(response) {
 			response.json().then( function(data) {
+
 				dispatch(receivePosts(data))
+			})
+		})
+)
+
+export const postNewPost = (post) => dispatch => (
+
+	PostAPI.postNewPost(post)
+		.then( function(response) {
+			response.json().then( function(data) {
+				data.id = post.id
+				data.timestamp = post.timestamp
+				data.title = post.title
+				data.body = post.body
+				data.author = post.author
+				data.category = post.category
+				dispatch(createPost(data))
 			})
 		})
 )
@@ -33,15 +57,4 @@ export const getAllPosts = () => dispatch => (
 			})
 		})
 )
-
-export function createPost ({ title, body, author, category }) {
-	return {
-		type: CREATE_POST,
-		title, 
-		body, 
-		author,
-		category
-
-	}
-}
 

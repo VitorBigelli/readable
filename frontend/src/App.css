@@ -176,9 +176,17 @@ h4 {
   margin-right: 10px;
 }
 
+.post-overlay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
 .post-modal {
   position: absolute;
-  position: fixed;
   top: 100px;
   left: 10%;
   right: 10%;

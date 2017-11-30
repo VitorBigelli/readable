@@ -2,33 +2,50 @@ import React, { Component } from 'react';
 import '../App.css';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../actions/index'
+import { postNewPost } from '../actions/posts';
 import CategoryList from './CategoryList';
 import { Route } from 'react-router-dom';
 import PostList from './PostList';
 import Modal from 'react-modal';
+import serializeForm from 'form-serialize';
+
 
 class App extends Component {
 
 	constructor(props) {
 		super(props); 
 		this.state = {
-			postModalIsOpen: false,
+			postModalIsOpen: true,
 			categories: []
 		}
 	}
 
+	handleSubmit = (e) => {
+		e.preventDefault() 
+
+		let post = serializeForm(e.target, {hash: true} )
+			
+		post['id'] = '4kj45kj4kjkjj4çl';
+		post['timestamp'] = Date.now();
+
+		this.props.postNewPost(post)
+		this.closePostModal();
+	}	
+
 	openPostModal = () => {
-		this.setState( () => ({
+		this.setState( () => (
+			{
 			postModalIsOpen: true
-		})
-		)
+			}
+		))
 	}
 
 	closePostModal = () => {
-		this.setState( () => ({
+		this.setState( () => (
+			{
 			postModalIsOpen: false
-		})
-		)
+			}
+		))
 	}
 
 	componentDidMount() {
@@ -56,20 +73,24 @@ class App extends Component {
 	      	> 
 	      			<form
 	      				className="post-form"
-	      				onSubmit={ (e) => e.preventDefault() }
+	      				onSubmit={ (event) =>  {
+	      					this.handleSubmit(event)
+	      				}}
 	      			> 
 	      				<h3> New post </h3>
 	      				<input
 	      					className="post-form-title"
 	      					type="text"
+	      					name="title"
 	      					placeholder="Title"
 	      				/>
 	      				<textarea 
+	      					name="body"
 	      					className="post-form-body"
 	      					placeholder="Write your post here... "
 	      				/>
 	      				<span> Category: </span>
-	      					<select className="post-category"> 
+	      					<select className="post-category" name="category"> 
 	      						{categories && categories.map( category => (
 	      							<option key={category.name} name={category.name} value={category.name}> {category.name} </option>
 	      						))}
@@ -80,10 +101,15 @@ class App extends Component {
 		      				<input 
 		      					className="post-author-name"
 		      					type="text"
+		      					name="author"
 		      				/>
 		      			</div>
-	      				<button> Post </button>
-	      				<button> Cancel </button>
+	      				<button
+	      					type="submit"
+	      				> Post </button>
+	      				<button
+	      					onClick={() => this.closePostModal()}
+	      				> Cancel </button>
 	      			</form>
 	      	</Modal>
 
@@ -127,7 +153,8 @@ function mapStateToProps ({categories}) {
 
 function mapDispatchToProps (dispatch) {
 	return {
-		fetchCategories: () => dispatch(fetchCategories())
+		fetchCategories: () => dispatch(fetchCategories()),
+		postNewPost: (post) => dispatch(postNewPost(post))
 	}
 }
 

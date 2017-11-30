@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS } from '../actions/posts';
+import { RECEIVE_POSTS, CREATE_POST } from '../actions/posts';
 
 function posts (state = [], action) {
 	switch(action.type) {
@@ -6,6 +6,9 @@ function posts (state = [], action) {
 			const { posts } = action
 			return posts
 
+		case CREATE_POST:
+			const { post } = action
+			return state.concat([post])
 		default: 
 			return state
 	}
