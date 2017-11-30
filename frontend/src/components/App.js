@@ -5,14 +5,30 @@ import { fetchCategories } from '../actions/index'
 import CategoryList from './CategoryList';
 import { Route } from 'react-router-dom';
 import PostList from './PostList';
+import Modal from 'react-modal';
 
 class App extends Component {
 
 	constructor(props) {
 		super(props); 
 		this.state = {
+			postModalIsOpen: false,
 			categories: []
 		}
+	}
+
+	openPostModal = () => {
+		this.setState( () => ({
+			postModalIsOpen: true
+		})
+		)
+	}
+
+	closePostModal = () => {
+		this.setState( () => ({
+			postModalIsOpen: false
+		})
+		)
 	}
 
 	componentDidMount() {
@@ -21,9 +37,26 @@ class App extends Component {
 
   	render() {
   		const { categories } = this.props
+  		const { postModalIsOpen } = this.state
 
 	    return (
 	      <div className="App">
+
+	      	<button 
+	      		onClick={this.openPostModal}
+	      		className="new-post"
+	      	> New Post </button>
+	      	<Modal
+	      		className="post-modal"
+	      		overlayClassName="post-overlay"
+	      		isOpen={postModalIsOpen}
+	      		onRequestClose={this.closePostModal}
+	      		contentLabel="PostModal"
+	      	> 
+	      		<div>
+	      			MODAL
+	      		</div>
+	      	</Modal>
 
 	      	<Route 
 	      		exact path="/" 
