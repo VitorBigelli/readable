@@ -138,11 +138,13 @@ h4 {
 .post-avatar {
   border-radius: 50%;
   width: 15%;
+  max-width: 100px;
   height: auto;
 }
 
 .comment-avatar {
   border-radius: 50%;
+  max-width: 50px;
   width: 10%;
 }
 
