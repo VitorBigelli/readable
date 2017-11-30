@@ -55,7 +55,6 @@ class Post extends Component {
 					<div className="post-interact"> 
 						<span> Vote up </span>
 						<span> Vote down </span>
-						<span> Comment </span>
 					</div>
 					<div className="post-comment">
 						
