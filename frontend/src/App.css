@@ -9,6 +9,9 @@ h2 {
   margin-bottom: 30px;
 }
 
+h4 {
+  font-size: 15px;
+}
 
 .categories-list {
   display: flex;
@@ -34,9 +37,11 @@ h2 {
   width: 90%; 
   max-width: 700px; 
   margin: auto;
-  background-color: #a3a3a3;
+  background-color: #d9d9d9;
   padding: 10px;
   margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .comment-container {
@@ -44,8 +49,85 @@ h2 {
   background-color: #eee;
 }
 
+.comment-content {
+  width: calc(90% - 10px);
+  float: right;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.comment-author {
+  font-weight: bold;
+}
+
 .comment-list {
   width: 100%;
   padding: 0;
   list-style: none;
 }
+
+.comment-input {
+  width: calc(100% - 6px);
+  height: 20px; 
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.post-footer {
+  width: 100%;
+}
+
+.post-header {
+  width: 100%;
+}
+
+.post-info {
+  width: auto;
+  background-color: #fff;
+  font-size: 14px;
+  padding: 5px;
+}
+
+.post-date {
+  color: #444;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.post-interact {
+  font-size: 13px;
+}
+
+.post-main-info {
+  padding: 5px 0 0 5px;
+  margin: 0;
+  float: right;
+  font-weight: bold;
+  width: calc(85% - 5px);
+}
+
+.post-complement-info {
+  font-weight: normal;
+}
+
+.post-avatar {
+  border-radius: 50%;
+  width: 15%;
+  height: auto;
+}
+
+.comment-avatar {
+  border-radius: 50%;
+  width: 10%;
+}
+
+.post-content {
+  width: calc(100% - 10px);
+  max-width: 650px;
+  float: right;
+  margin-right: 0;
+  padding-left: 10px;
+  background-color: #fff;
+  font-size: 14px;
+}
+

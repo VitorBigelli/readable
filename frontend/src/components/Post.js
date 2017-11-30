@@ -21,19 +21,58 @@ class Post extends Component {
 	render() {
 		const { post, comments } = this.props
 		const { isEditing, isNew } = this.state
+		const date = new Date(Date.now() - post.timestamp)
+		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+		const fullDate = months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " at " + date.getHours() + ":" + date.getMinutes() 
 
 		return (
 			!isEditing && 
 			!isNew && 
 			<div className="post-container">
-				<p className="post-author"> Posted by {post.author} </p>
-	 			<div className="post-content">
-	 				<h4 className="post-title"> {post.title} </h4> 
+				
+				<div className="post-header">
+					<div className="post-info">
+						<img 
+							className="post-avatar"
+							src={post.avatar}
+							width={80}
+							alt="avatar"
+						/>
+						<p className="post-main-info"> {post.author} 
+							<span className="post-complement-info"> posted on {post.category} category </span>
+							<br/>
+							<span className="post-date"> { fullDate } </span>
+						</p>
+			 		</div>
+			 	</div>
+
+		 		<div className="post-content">
+		 			<h4 className="post-title"> {post.title} </h4> 
 					<p className="post-body"> {post.body} </p>
 				</div>
-				{ comments && 
-					<CommentList comments={comments[post.id]} />
-				}
+
+				<div className="post-footer"> 
+					<div className="post-interact"> 
+						<span> Vote up </span>
+						<span> Vote down </span>
+						<span> Comment </span>
+					</div>
+					<div className="post-comment">
+						
+						<textarea 
+							className="comment-input"
+							type="text"
+							value=""
+							placeholder="Write a comment"
+						/>
+
+					</div>
+				</div>
+
+					{ comments && 
+						<CommentList comments={comments[post.id]} />
+					}
+
 			</div>
 		)
 	}
@@ -41,7 +80,6 @@ class Post extends Component {
 }
 
 function mapStateToProps ({comments}) {
-	console.log(comments)
 	return {
 		comments: comments
 	}

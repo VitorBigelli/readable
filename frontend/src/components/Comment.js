@@ -7,8 +7,15 @@ class Comment extends Component {
 
 		return (
 			<div>
-				<p> {comment.author} </p> 
-				<span> {comment.body} </span>
+				<img
+					className="comment-avatar"
+					src={comment.avatar}
+					alt="avatar"
+				/>
+				<div className="comment-content">
+					<span className="comment-author"> {comment.author} </span> 
+					<span> {comment.body} </span>
+				</div>
 			</div>
 		)
 	}
