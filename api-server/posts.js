@@ -76,6 +76,7 @@ function add (token, post) {
       title: post.title,
       body: post.body,
       author: post.author,
+      avatar: post.avatar ? post.avatar : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWI9PhMgJSUt9yo_jUN5RVEjqOfv0G5pcHKHrQA-q0QQRlWUfG',
       category: post.category,
       voteScore: 1,
       deleted: false,

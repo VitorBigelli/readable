@@ -4,11 +4,11 @@ body {
 
 h2 {
   text-align: center;
-  width: 90%; 
+  width: 90%;
   max-width: 700px;
   margin: auto;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 10px;
+  padding: 0;
 }
 
 h4 {
@@ -19,6 +19,7 @@ h4 {
   display: flex;
   flex-wrap: wrap;
   padding: 5px;
+  margin-right: 10px;
 }
 
 .categories-list-header {
@@ -115,6 +116,10 @@ h4 {
   width: calc(50% - 10px);
 }
 
+.main {
+  width: 100%; 
+}
+
 .post-main-info {
   padding: 5px 0 0 5px;
   margin: 0;
@@ -135,8 +140,13 @@ h4 {
 .post-avatar {
   border-radius: 50%;
   width: 15%;
-  max-width: 100px;
+  max-width: 80px;
   height: auto;
+}
+
+.posts-list {
+  list-style: none;
+  padding: 0;
 }
 
 .comment-avatar {
@@ -146,7 +156,7 @@ h4 {
 }
 
 .post-content {
-  width: calc(100%);
+  width: 100%;
   max-width: 650px;
   float: right;
   margin-right: 0;
@@ -249,14 +259,42 @@ h4 {
 }
 
 .nav-bar {
-  width: 100%;
+  width: calc(90% + 10px);
+  max-width: 700px;
   display: flex;
   flex-wrap: wrap;
   padding: 5px;
   font-size: 14px;
+  margin: auto;
+  background-color: #fff;
 }
 
 .nav-bar select {
   height: 20px;
   padding: 0;
 }
+
+.new-post {
+  background-image: url('./icons/new-post.svg');
+  background-color: transparent;
+  border: none;
+  height: 30px;
+  width: 30px;
+  color: transparent;
+  float: right;
+  margin-right: 0;
+}
+
+header {
+  background-color: #d44;
+  height: 35px;
+  padding: 10px;
+}
+
+h1 {
+  color: #fff;
+  float: left;
+  line-height: 30px;
+  margin: 0;
+}
+

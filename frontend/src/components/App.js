@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { fetchCategories } from '../actions/index'
 import { postNewPost } from '../actions/posts';
 import CategoryList from './CategoryList';
-import { Route } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import PostList from './PostList';
 import Modal from 'react-modal';
 import serializeForm from 'form-serialize';
@@ -16,13 +16,13 @@ class App extends Component {
 		super(props); 
 		this.state = {
 			postModalIsOpen: false,
-			currentCategory: 'none'
+			currentCategory: this.props.location.pathname,
+			sortBy: 'none'
 		}
 	}
 
 	handleSubmit = (e) => {
 		e.preventDefault() 
-
 		let post = serializeForm(e.target, {hash: true} )
 			
 		post['id'] = '4kj45kj4kjkjj4çl';
@@ -31,10 +31,11 @@ class App extends Component {
 		this.closePostModal();
 	}	
 
-	updateCategory = (category) => {
+	updateCategory = (history, category) => {
 		this.setState( () => {
 			currentCategory: category
-		})
+		})		
+		history.push("/"+category)
 	}
 
 	openPostModal = () => {
@@ -54,6 +55,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
+		console.log(this.props.location.pathname)
 		this.props.fetchCategories()
 	}
 
@@ -64,22 +66,52 @@ class App extends Component {
 	    return (
 	      <div className="App">
 
+	      	<header>
+	      			<h1> React readable </h1>
+		      		<button
+				      		className="new-post-button"
+				      		onClick={this.openPostModal}
+				      		className="new-post"
+				    > New Post </button>
+	      	</header>
+
 	      	<div className="nav-bar">
-				<span> Filter by category: </span> 
-		      	<CategoryList categories={categories} updateCategory={(category) => this.updateCategory(category)}  />
-		      	<button 
-		      		onClick={this.openPostModal}
-		      		className="new-post"
-		      	> New Post </button>
+				<span> Filter: </span> 
+		      	<CategoryList 
+		      		categories={categories} 
+		      		updateCategory={(history, category) => this.updateCategory(history, category)}  
+		      		currentCategory={currentCategory}
+		      	/>
+		      	<span> Order by: </span> 
 		    </div>
 
+			<Switch>
+				<Route 
+		      		exact path="/" 
+		      		render={ () => (
+		      			<PostList />
+					)} 
+				/>
+	  			{ categories && categories.map( category => (
+	  				<Route
+	  					key={category.name} 
+		  				path={"/" + category.path}
+		  				render={ () => {
+							return (
+							<PostList category={category.name} /> 
+							)
+						}
+						}
+	  				/>
+	  			))}
+  			</Switch>
+	      
 	      	<Modal
 	      		className="post-modal"
 	      		overlayClassName="post-overlay"
 	      		isOpen={postModalIsOpen}
 	      		onRequestClose={this.closePostModal}
-	      		contentLabel="PostModal"
-	      	> 
+	      		contentLabel="PostModal">
 	      			<form
 	      				className="post-form"
 	      				onSubmit={ (event) =>  {
@@ -122,36 +154,10 @@ class App extends Component {
 	      			</form>
 	      	</Modal>
 
-	      	<Route 
-	      		exact path="/" 
-	      		render={ () => (
-	      			<div className="main">
-		      			<ul className="categories-list">
-				      		<h3 className="categories-list-header"> Choose a category: </h3>
-				        </ul>
-
-				        <ul className="posts"> 
-				        	<PostList />
-				        </ul>
-				    </div>
-			    )} 
-			/>
-
-  			{ categories && categories.map( category => (
-  				<Route
-  					key={category.name} 
-	  				exact path={"/" + category.path}
-	  				render={ () => {
-						return (
-						<PostList category={category.name} /> 
-						)
-					}
-					}
-  				/>
-  			))}
-	      
-       	
-	      </div>
+		   	<footer> 
+       	  		Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+       	  	</footer>
+	    </div>
 	    )
 	}
 }
@@ -169,5 +175,7 @@ function mapDispatchToProps (dispatch) {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default withRouter(
+	connect(mapStateToProps, mapDispatchToProps)(App)
+);
 

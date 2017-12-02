@@ -21,7 +21,7 @@ class Post extends Component {
 	render() {
 		const { post, comments } = this.props
 		const { isEditing, isNew } = this.state
-		const date = new Date(Date.now() - post.timestamp)
+		const date = new Date(post.timestamp)
 		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 		const fullDate = months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " at " + date.getHours() + ":" + date.getMinutes() 
 

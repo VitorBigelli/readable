@@ -1,27 +1,49 @@
 import React from 'react'; 
-import { Link, Route } from 'react-router-dom'; 
+import { withRouter, Route } from 'react-router-dom'; 
 
-const CategoryList = ({categories, updateCategory}) => {
+const CategoryList = withRouter(({history, categories, updateCategory, currentCategory}) => {
 
-	return (
-	<div defaultValue='none' className="categories-list-container">
-		<select 
-			className="categories-list"
-		>
-			<option key="none" value="none" className="categories-list-item"> All posts </option>
-		{ categories && categories.map( category => (
-			<option 
-				key={category.name} value={category.name} 
-				className="categories-list-item"
-				onClick={ updateCategory(category.name) }
-			>
-					{ category.name }
-			</option>			
-		))
+		const onChangeCategory = (event) => {
+			event.preventDefault(); 
+			const category = event.target.value
+			updateCategory(history, category)
 		}
-		</select>
-	</div>
-	)
-}
+
+		return (
+			<select 
+				className="categories-list"
+				onChange={ (event) => onChangeCategory(event)}
+				defaultValue={currentCategory}
+			>
+				<option key="none" value="" className="categories-list-item"> All posts </option>
+			}
+			{ categories && categories.map( category => {
+				if (("/"+category.name) == currentCategory) {
+					return (
+						<option 
+							key={category.name} value={category.name} 
+							className="categories-list-item"
+							selected
+						>
+								{ category.name }
+						</option>	
+					)		
+				} else {
+					return (
+						<option 
+							key={category.name} value={category.name} 
+							className="categories-list-item"
+						>
+							{ category.name }
+						</option>			
+					)
+				}
+			})
+			}
+			</select>
+		)
+	}
+)
+
 
 export default CategoryList;

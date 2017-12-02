@@ -4,7 +4,7 @@ class Comment extends Component {
 
 	render() {
 		const { comment } = this.props
-		const date = new Date(Date.now() - comment.timestamp)
+		const date = new Date(comment.timestamp)
 		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 		const fullDate = months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " at " + date.getHours() + ":" + date.getMinutes() 
 

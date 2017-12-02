@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'; 
 import { getPostsByCategory, getAllPosts } from '../actions/posts';
 import Post from './Post'; 
+import { withRouter } from 'react-router-dom';
 
 class PostList extends Component {
 
@@ -18,11 +19,13 @@ class PostList extends Component {
 		const postListTitle = category ? ("Posts about " + category) : "All posts"
 
 		return (
-			<div> 
+			<div className="main"> 
 				<h2> {postListTitle} </h2>
+				<ul className="posts-list"> 				        	
 				{ posts && posts.map( post => (
-					<Post key={post.id} post={post} />
+					<li key={post.id}> <Post post={post} /> </li>
 				))} 
+				</ul>
 			</div>
 		)
 	}
@@ -42,4 +45,6 @@ function mapDispatchToProps(dispatch) {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostList);
+export default withRouter(
+	connect(mapStateToProps, mapDispatchToProps)(PostList)
+);
