@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import { getAllPosts } from '../actions/posts';
-import { getComments } from '../actions/comments';
+import { getComments, postComment } from '../actions/comments';
 import { connect } from 'react-redux';
 import { CommentList } from './CommentList';
 import '../newComment.css';
@@ -30,8 +30,30 @@ class Post extends Component {
 		}))
 	}
 
+
+
 	componentDidMount() {
 		this.props.getComments(this.props.post.id)
+	}
+
+	createComment = (event) => {
+		event.preventDefault(); 
+
+		const comment = {
+			id: "sdklfjsadlf", 
+			author: event.target.author.value, 
+			body: this.state.currentComment, 
+			timestamp: Date.now(),
+			parentId: this.props.post.id
+		}
+
+		this.props.createComment(comment)
+	}
+
+	closeCommentModal = () => {
+		this.setState( () => ({
+			commentModalIsOpen: false
+		}))
 	}
 
 	render() {
@@ -104,27 +126,31 @@ class Post extends Component {
 		<Modal 
 			isOpen={commentModalIsOpen}
 			className="comment-modal"
+			onRequestClose={this.closeCommentModal}
 			overlayClassName="overlay"
+			contentLabel="CommentModal"
 		>
 			<p> Write your name/nickname to post your comment: </p>
 				<form 
 					className="comment-author-form"
-					onSubmit={ (event) => this.createComment(event)}
+					onSubmit={ (event) => { 
+						this.createComment(event)
+					}}
 				>	
 					<input 
 						type="text"
-							className="comment-author"
-
-						/>
+						className="comment-author"
+						name="author"
+					/>
 					<button
+						type="submit"
 						className="save-comment">
 						Post comment
 					</button>
-					<button
+					<button 
+						onClick={ () => this.closeCommentModal() }
 						className="cancel-comment"
-					>
-						Cancel comment
-					</button>
+					> Cancel comment </button>
 				</form>
 		</Modal>
 
@@ -144,7 +170,8 @@ function mapStateToProps ({comments}) {
 function mapDispatchToProps (dispatch) {
 	return {
 		getAllPosts: () => dispatch(getAllPosts()),
-		getComments: (postId) => dispatch(getComments(postId))
+		getComments: (postId) => dispatch(getComments(postId)),
+		createComment: (comment) => dispatch(postComment(comment))
 	}
 }
 

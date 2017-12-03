@@ -24,3 +24,21 @@ export const getComments = (postId) => dispatch => (
 			})
 		})
 )
+
+export const createComment = comment => {
+	return {
+		type: CREATE_COMMENT,
+		comment
+	}
+}
+
+export const postComment = comment => dispatch => (
+
+	CommentsAPI.postComment(comment)
+		.then( function(response) {
+			console.log(response)
+			response.json().then( function(data) {
+				dispatch(createComment(comment))
+			})
+		})
+)

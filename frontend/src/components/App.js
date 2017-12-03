@@ -113,7 +113,6 @@ class App extends Component {
 	      		className="post-modal"
 	      		overlayClassName="overlay"
 	      		isOpen={postModalIsOpen}
-	      		onRequestClose={this.closePostModal}
 	      		contentLabel="PostModal">
 	      			<form
 	      				className="post-form"

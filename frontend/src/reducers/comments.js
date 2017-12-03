@@ -1,4 +1,4 @@
-import { RECEIVE_COMMENTS } from '../actions/comments';
+import { RECEIVE_COMMENTS, CREATE_COMMENT } from '../actions/comments';
 
 function comments (state = {}, action) {
 	switch(action.type) {
@@ -13,7 +13,13 @@ function comments (state = {}, action) {
 			else {
 				return state;
 			}
-		default: 
+		case CREATE_COMMENT: 
+			const { comment } = action
+			return {
+				...state,
+				[comment.parentId]: state[comment.parentId].concat([comment])
+			}
+		default:  
 			return state
 	}
 }
