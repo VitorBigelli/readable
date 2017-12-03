@@ -9,32 +9,39 @@ import PostList from './PostList';
 import Modal from 'react-modal';
 import serializeForm from 'form-serialize';
 
-
 class App extends Component {
 
 	constructor(props) {
 		super(props); 
 		this.state = {
 			postModalIsOpen: false,
-			currentCategory: this.props.location.pathname,
+			currentPath: this.props.location.pathname,
 			sortBy: 'none'
 		}
 	}
+
+	componentDidMount() {
+		const cachedPosts = localStorage.getItem('reactReadable')
+
+		this.props.fetchCategories()
+	}
+
 
 	handleSubmit = (e) => {
 		e.preventDefault() 
 		let post = serializeForm(e.target, {hash: true} )
 			
-		post['id'] = '4kj45kj4kjkjj4çl';
+		post['id'] = Math.random().toString(36).substr(2,9);
 		post['timestamp'] = Date.now();
-		this.props.postNewPost(post)
+		this.props.postNewPost(post);
 		this.closePostModal();
 	}	
 
 	updateCategory = (history, category) => {
-		this.setState( () => {
-			currentCategory: category
-		})		
+		this.setState( () => ({
+			currentPath: "/"+category
+		}
+		))		
 		history.push("/"+category)
 	}
 
@@ -54,14 +61,10 @@ class App extends Component {
 		))
 	}
 
-	componentDidMount() {
-		console.log(this.props.location.pathname)
-		this.props.fetchCategories()
-	}
 
   	render() {
   		const { categories, avatars } = this.props
-  		const { postModalIsOpen, currentCategory } = this.state
+  		const { postModalIsOpen, currentPath } = this.state
 
 	    return (
 	      <div className="App">
@@ -80,7 +83,7 @@ class App extends Component {
 		      	<CategoryList 
 		      		categories={categories} 
 		      		updateCategory={(history, category) => this.updateCategory(history, category)}  
-		      		currentCategory={currentCategory}
+		      		currentPath={currentPath}
 		      	/>
 		      	<span> Order by: </span> 
 		    </div>
@@ -108,7 +111,7 @@ class App extends Component {
 	      
 	      	<Modal
 	      		className="post-modal"
-	      		overlayClassName="post-overlay"
+	      		overlayClassName="overlay"
 	      		isOpen={postModalIsOpen}
 	      		onRequestClose={this.closePostModal}
 	      		contentLabel="PostModal">
@@ -146,6 +149,7 @@ class App extends Component {
 		      				/>
 		      			</div>
 	      				<button
+	      					className="post-form-button"
 	      					type="submit"
 	      				> Post </button>
 	      				<button

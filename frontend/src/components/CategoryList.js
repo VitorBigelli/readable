@@ -1,7 +1,9 @@
 import React from 'react'; 
 import { withRouter, Route } from 'react-router-dom'; 
 
-const CategoryList = withRouter(({history, categories, updateCategory, currentCategory}) => {
+const CategoryList = withRouter(({history, categories, updateCategory, currentPath}) => {
+
+		console.log(currentPath.substring(1))
 
 		const onChangeCategory = (event) => {
 			event.preventDefault(); 
@@ -11,35 +13,20 @@ const CategoryList = withRouter(({history, categories, updateCategory, currentCa
 
 		return (
 			<select 
+				value={currentPath.substring(1)}
 				className="categories-list"
 				onChange={ (event) => onChangeCategory(event)}
-				defaultValue={currentCategory}
 			>
 				<option key="none" value="" className="categories-list-item"> All posts </option>
-			}
-			{ categories && categories.map( category => {
-				if (("/"+category.name) == currentCategory) {
-					return (
-						<option 
-							key={category.name} value={category.name} 
-							className="categories-list-item"
-							selected
-						>
-								{ category.name }
-						</option>	
-					)		
-				} else {
-					return (
-						<option 
-							key={category.name} value={category.name} 
-							className="categories-list-item"
-						>
-							{ category.name }
-						</option>			
-					)
-				}
-			})
-			}
+			{ categories && categories.map( category => (
+				<option 
+					key={category.name} value={category.name} 
+					className="categories-list-item"
+				>
+					{ category.name }
+				</option>			
+				)
+			)}
 			</select>
 		)
 	}

@@ -3,6 +3,9 @@ import { getAllPosts } from '../actions/posts';
 import { getComments } from '../actions/comments';
 import { connect } from 'react-redux';
 import { CommentList } from './CommentList';
+import '../newComment.css';
+import Modal from 'react-modal';
+import AutoheightTextarea from 'react-autoheight-textarea';
 
 class Post extends Component {
 
@@ -10,8 +13,21 @@ class Post extends Component {
 		super(props); 
 		this.state = {
 			isEditing: this.props.isEditing ? true : false,
-			isNew: this.props.isNew ? true : false
+			isNew: this.props.isNew ? true : false,
+			commentModalIsOpen: false,
+			currentComment: ""
 		}
+	}
+
+	handleSubmit(event) {
+		event.preventDefault(); 
+
+		const comment = event.target.comment
+		
+		this.setState( () => ({
+			currentComment: comment.value,
+			commentModalIsOpen: true
+		}))
 	}
 
 	componentDidMount() {
@@ -20,59 +36,100 @@ class Post extends Component {
 
 	render() {
 		const { post, comments } = this.props
-		const { isEditing, isNew } = this.state
+		const { isEditing, isNew, commentModalIsOpen, currentComment } = this.state
 		const date = new Date(post.timestamp)
 		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 		const fullDate = months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " at " + date.getHours() + ":" + date.getMinutes() 
 
 		return (
-			!isEditing && 
-			!isNew && 
-			<div className="post-container">
-				
-				<div className="post-header">
-					<div className="post-info">
-						<img 
-							className="post-avatar"
-							src={post.avatar}
-							width={80}
-							alt="avatar"
-						/>
-						<p className="post-main-info"> {post.author} 
-							<span className="post-complement-info"> posted on {post.category} category </span>
-							<br/>
-							<span className="post-date"> { fullDate } </span>
-						</p>
-			 		</div>
-			 	</div>
+			<div className="post-view">
+			{
+				!isEditing && 
+				!isNew && 
+				<div className="post-container">
+					
+					<div className="post-header">
+						<div className="post-info">
+							<img 
+								className="post-avatar"
+								src={post.avatar}
+								width={80}
+								alt="avatar"
+							/>
+							<p className="post-main-info"> {post.author} 
+								<span className="post-complement-info"> posted on {post.category} category </span>
+								<br/>
+								<span className="post-date"> { fullDate } </span>
+							</p>
+				 		</div>
+				 	</div>
 
-		 		<div className="post-content">
-		 			<h4 className="post-title"> {post.title} </h4> 
-					<p className="post-body"> {post.body} </p>
-				</div>
-
-				<div className="post-footer"> 
-					<div className="post-interact"> 
-						<span> Vote up </span>
-						<span> Vote down </span>
+			 		<div className="post-content">
+			 			<h4 className="post-title"> {post.title} </h4> 
+						<p className="post-body"> {post.body} </p>
 					</div>
-					<div className="post-comment">
-						
-						<textarea 
-							className="comment-input"
-							type="text"
-							value=""
-							placeholder="Write a comment"
-						/>
 
+					<div className="post-footer"> 
+						<div className="post-interact"> 
+							<span> Vote up </span>
+							<span> Vote down </span>
+						</div>
+						<div className="post-comment">
+							<form 
+								onSubmit={ (event) => this.handleSubmit(event) } 
+							>
+								<AutoheightTextarea 
+									defaultValue={currentComment}
+									className="comment-input"
+									type="text"
+									name="comment"
+									placeholder="Write a comment..."
+								></AutoheightTextarea>
+								<button 
+									className="comment-button"	
+									type="submit"
+								>	Send
+								</button>
+							</form>
+						</div>
 					</div>
+
+						{ comments && 
+							<CommentList comments={comments[post.id]} />
+						}
+
 				</div>
+			}
 
-					{ comments && 
-						<CommentList comments={comments[post.id]} />
-					}
+		<Modal 
+			isOpen={commentModalIsOpen}
+			className="comment-modal"
+			overlayClassName="overlay"
+		>
+			<p> Write your name/nickname to post your comment: </p>
+				<form 
+					className="comment-author-form"
+					onSubmit={ (event) => this.createComment(event)}
+				>	
+					<input 
+						type="text"
+							className="comment-author"
 
-			</div>
+						/>
+					<button
+						className="save-comment">
+						Post comment
+					</button>
+					<button
+						className="cancel-comment"
+					>
+						Cancel comment
+					</button>
+				</form>
+		</Modal>
+
+		</div>
+
 		)
 	}
 
