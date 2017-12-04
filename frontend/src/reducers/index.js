@@ -1,6 +1,6 @@
 import { RECEIVE_CATEGORIES, ADD_CATEGORY } from '../actions/index'; 
-import posts from './posts';
-import comments from './comments';
+import posts from './reducer_posts';
+import comments from './reducer_comments';
 import { combineReducers } from 'redux';
 
 function categories ( state = [], action ) {

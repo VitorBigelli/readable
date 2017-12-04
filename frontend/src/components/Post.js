@@ -1,9 +1,8 @@
 import React, { Component } from 'react'; 
-import { getAllPosts } from '../actions/posts';
-import { getComments, postComment } from '../actions/comments';
+import { getAllPosts } from '../actions/actions_posts';
+import { getComments, postComment } from '../actions/actions_comments';
 import { connect } from 'react-redux';
 import { CommentList } from './CommentList';
-import '../newComment.css';
 import Modal from 'react-modal';
 import AutoheightTextarea from 'react-autoheight-textarea';
 
@@ -19,6 +18,10 @@ class Post extends Component {
 		}
 	}
 
+	generateId() {
+		return Math.random().toString(36).substr(2,9);
+	}
+
 	handleSubmit(event) {
 		event.preventDefault(); 
 
@@ -30,8 +33,6 @@ class Post extends Component {
 		}))
 	}
 
-
-
 	componentDidMount() {
 		this.props.getComments(this.props.post.id)
 	}
@@ -40,14 +41,15 @@ class Post extends Component {
 		event.preventDefault(); 
 
 		const comment = {
-			id: "sdklfjsadlf", 
-			author: event.target.author.value, 
-			body: this.state.currentComment, 
-			timestamp: Date.now(),
-			parentId: this.props.post.id
+			id: this.generateId(),
+			parentId: this.props.post.id,
+			timestamp: Date.now(), 
+			body: this.state.currentComment,
+			author: event.target.author.value
 		}
 
-		this.props.createComment(comment)
+		this.props.createComment(comment);
+		this.closeCommentModal();
 	}
 
 	closeCommentModal = () => {
@@ -84,6 +86,11 @@ class Post extends Component {
 								<span className="post-date"> { fullDate } </span>
 							</p>
 				 		</div>
+
+				 		<div className="post-options">
+					 		
+				 		</div>
+
 				 	</div>
 
 			 		<div className="post-content">

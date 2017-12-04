@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS, CREATE_POST } from '../actions/posts';
+import { RECEIVE_POSTS, CREATE_POST } from '../actions/actions_posts';
 
 function posts (state = [], action) {
 	switch(action.type) {

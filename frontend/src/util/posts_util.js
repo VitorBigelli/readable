@@ -24,12 +24,14 @@ export const getByCategory = (categoryName) => {
 
 export const postNewPost = (post) => {
 
+	var body = JSON.stringify(post);
+
 	return (
 		fetch(
 			"http://localhost:3001/posts/",
 			{
 				method: "POST",
-				body: JSON.stringify(post),
+				body: body,
 				headers: {
 					'Authorization': 'post-post'
 				}
@@ -40,7 +42,12 @@ export const postNewPost = (post) => {
 				console.log("Something went wrong")
 			}
 
-			return response
+			return response;
+
+			response.json().then( (data) => {
+				return data;
+			})
+
 		})
 		.catch( function(err) {
 			console.log('ERROR')

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import { connect } from 'react-redux'; 
-import { getPostsByCategory, getAllPosts } from '../actions/posts';
+import { getPostsByCategory, getAllPosts } from '../actions/actions_posts';
 import Post from './Post'; 
 import { withRouter } from 'react-router-dom';
 

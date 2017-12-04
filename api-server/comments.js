@@ -66,6 +66,7 @@ function add (token, comment) {
       body: comment.body,
       author: comment.author,
       parentId: comment.parentId,
+      avatar: comment.avatar ? comment.avatar :  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWI9PhMgJSUt9yo_jUN5RVEjqOfv0G5pcHKHrQA-q0QQRlWUfG',
       voteScore: 1,
       deleted: false,
       parentDeleted: false

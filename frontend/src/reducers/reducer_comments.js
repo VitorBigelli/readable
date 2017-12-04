@@ -1,4 +1,4 @@
-import { RECEIVE_COMMENTS, CREATE_COMMENT } from '../actions/comments';
+import { RECEIVE_COMMENTS, CREATE_COMMENT } from '../actions/actions_comments';
 
 function comments (state = {}, action) {
 	switch(action.type) {
@@ -17,7 +17,9 @@ function comments (state = {}, action) {
 			const { comment } = action
 			return {
 				...state,
-				[comment.parentId]: state[comment.parentId].concat([comment])
+				[comment.parentId]: state[comment.parentId] ? 
+									state[comment.parentId].concat([comment]) : 
+									[comment]
 			}
 		default:  
 			return state

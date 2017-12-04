@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../actions/index'
-import { postNewPost } from '../actions/posts';
+import { postNewPost } from '../actions/actions_posts';
 import CategoryList from './CategoryList';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import PostList from './PostList';
@@ -26,13 +26,24 @@ class App extends Component {
 		this.props.fetchCategories()
 	}
 
+	generateId() {
+		return Math.random().toString(36).substr(2,9);
+	}
 
 	handleSubmit = (e) => {
 		e.preventDefault() 
-		let post = serializeForm(e.target, {hash: true} )
+		
+		let values = serializeForm(e.target, {hash: true} )
 			
-		post['id'] = Math.random().toString(36).substr(2,9);
-		post['timestamp'] = Date.now();
+		const post = {
+			id: this.generateId(),
+			timestamp: Date.now(),
+			title: values.title, 
+			body: values.body,
+			author: values.author, 
+			category: values.category
+		}
+
 		this.props.postNewPost(post);
 		this.closePostModal();
 	}	
@@ -113,6 +124,7 @@ class App extends Component {
 	      		className="post-modal"
 	      		overlayClassName="overlay"
 	      		isOpen={postModalIsOpen}
+	      		onRequestClose={this.closePostModal}
 	      		contentLabel="PostModal">
 	      			<form
 	      				className="post-form"

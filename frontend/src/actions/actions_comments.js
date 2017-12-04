@@ -36,9 +36,8 @@ export const postComment = comment => dispatch => (
 
 	CommentsAPI.postComment(comment)
 		.then( function(response) {
-			console.log(response)
 			response.json().then( function(data) {
-				dispatch(createComment(comment))
+				dispatch(createComment(Object.assign(comment, data)))
 			})
 		})
 )

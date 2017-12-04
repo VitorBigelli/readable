@@ -1,5 +1,7 @@
 body {
   background-color: #dfdfdf;
+  font-family: "Ubuntu", sans-serif;
+
 }
 
 h2 {
@@ -309,6 +311,7 @@ footer {
   font-size: 12px; 
   color: #fff;
   text-align: center;
+  bottom: 0;
 }
 
 footer a {
@@ -337,8 +340,58 @@ footer a {
 }
 
 .comment-author {
-  border: 1px solid #ddd;
-  border-radius: 10px;
   width: 100%;
   margin-bottom: 10px;
+}
+
+.post-comment {
+  position: relative;
+  width: 100%; 
+  margin: auto;
+  border: 2px solid #eee;
+  min-height: 10px;
+  height: auto;
+  border-radius: 10px;
+  padding: 0;
+}
+
+.comment-button {
+  position: absolute;
+  right: 1px;
+  width: 15%;
+  min-width: 30px;
+  bottom: 5px;
+  border: none;
+  background-color: #d44;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.comment-input {
+  position: relative;
+  display: inline-block;
+  min-width: 280px;
+  width: 85%;
+  resize: none;
+  height: 15px;
+  border: none;
+  border: 0;
+  margin: 0;
+}
+
+.comment-input:focus {
+  outline: none !important;
+  border: none; 
+}
+
+.post-options {
+  width: 50px;
+}
+
+.post-dropdown-options { 
+  display: none;   
+}
+
+.show {
+  display: block;
 }
