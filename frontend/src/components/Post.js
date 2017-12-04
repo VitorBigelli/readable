@@ -1,10 +1,13 @@
 import React, { Component } from 'react'; 
-import { getAllPosts } from '../actions/actions_posts';
-import { getComments, postComment } from '../actions/actions_comments';
 import { connect } from 'react-redux';
-import { CommentList } from './CommentList';
 import Modal from 'react-modal';
 import AutoheightTextarea from 'react-autoheight-textarea';
+import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+
+import { CommentList } from './CommentList';
+
+import { getAllPosts } from '../actions/actions_posts';
+import { getComments, postComment } from '../actions/actions_comments';
 
 class Post extends Component {
 
@@ -14,7 +17,8 @@ class Post extends Component {
 			isEditing: this.props.isEditing ? true : false,
 			isNew: this.props.isNew ? true : false,
 			commentModalIsOpen: false,
-			currentComment: ""
+			currentComment: "",
+			dropdownOpen: false
 		}
 	}
 
@@ -58,6 +62,13 @@ class Post extends Component {
 		}))
 	}
 
+	toggle() {
+		this.setState( () => ({
+				dropdownOpen: !this.state.dropdownOpen
+			})
+		)
+	}
+
 	render() {
 		const { post, comments } = this.props
 		const { isEditing, isNew, commentModalIsOpen, currentComment } = this.state
@@ -88,7 +99,15 @@ class Post extends Component {
 				 		</div>
 
 				 		<div className="post-options">
-					 		
+					 		<ButtonDropdown isOpen={false} toggle={this.toggle} >
+					 			<DropdownToggle caret>
+					 				Options
+					 			</DropdownToggle>
+					 			<DropdownMenu>
+					 				<DropdownItem> Edit post </DropdownItem>
+					 				<DropdownItem> Delete post </DropdownItem>
+					 			</DropdownMenu>
+					 		</ButtonDropdown>
 				 		</div>
 
 				 	</div>
