@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import AutoheightTextarea from 'react-autoheight-textarea';
-import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { CommentList } from './CommentList';
-
 import { getAllPosts } from '../actions/actions_posts';
 import { getComments, postComment } from '../actions/actions_comments';
 
 class Post extends Component {
 
 	constructor(props) {
-		super(props); 
+		super(props);
+
+		this.toggle = this.toggle.bind(this);
+
 		this.state = {
 			isEditing: this.props.isEditing ? true : false,
 			isNew: this.props.isNew ? true : false,
@@ -62,7 +63,7 @@ class Post extends Component {
 		}))
 	}
 
-	toggle() {
+	toggle = () => {
 		this.setState( () => ({
 				dropdownOpen: !this.state.dropdownOpen
 			})
@@ -84,32 +85,28 @@ class Post extends Component {
 				<div className="post-container">
 					
 					<div className="post-header">
-						<div className="post-info">
-							<img 
-								className="post-avatar"
-								src={post.avatar}
-								width={80}
-								alt="avatar"
-							/>
-							<p className="post-main-info"> {post.author} 
-								<span className="post-complement-info"> posted on {post.category} category </span>
-								<br/>
-								<span className="post-date"> { fullDate } </span>
-							</p>
-				 		</div>
+						
+						<img 
+							className="post-avatar"
+							src={post.avatar}
+							width={80}
+							alt="avatar"
+						/>
 
-				 		<div className="post-options">
-					 		<ButtonDropdown isOpen={false} toggle={this.toggle} >
-					 			<DropdownToggle caret>
-					 				Options
-					 			</DropdownToggle>
-					 			<DropdownMenu>
-					 				<DropdownItem> Edit post </DropdownItem>
-					 				<DropdownItem> Delete post </DropdownItem>
-					 			</DropdownMenu>
-					 		</ButtonDropdown>
-				 		</div>
+						<p className="post-main-info"> {post.author} 
+							<span className="post-complement-info"> posted on {post.category} category </span>
+							<br/>
+							<span className="post-date"> { fullDate } </span>
+						</p>
 
+						<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+				        	<DropdownToggle caret></DropdownToggle>
+				        	<DropdownMenu>
+				          		<DropdownItem>Edit post</DropdownItem>
+				        		<DropdownItem className="delete-post-button">Delete post</DropdownItem>
+				    		</DropdownMenu>
+				    	</Dropdown>
+				    	
 				 	</div>
 
 			 		<div className="post-content">

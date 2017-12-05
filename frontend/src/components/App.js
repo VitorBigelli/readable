@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../styles/bootstrap.min.css';
 import '../App.css';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../actions/index'
