@@ -3,7 +3,6 @@ import { withRouter, Route } from 'react-router-dom';
 
 const CategoryList = withRouter(({history, categories, updateCategory, currentPath}) => {
 
-		console.log(currentPath.substring(1))
 
 		const onChangeCategory = (event) => {
 			event.preventDefault(); 

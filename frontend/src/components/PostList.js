@@ -8,7 +8,7 @@ class PostList extends Component {
 
 	componentDidMount() {
 		if (!this.props.category) {
-			this.props.fetchAllPosts();
+			this.props.fetchAllPosts()
 		} else {
 			this.props.fetchPostsByCategory(this.props.category)
 		}
@@ -22,7 +22,8 @@ class PostList extends Component {
 			<div className="main"> 
 				<h2> {postListTitle} </h2>
 				<ul className="posts-list"> 				        	
-				{ posts && posts.map( post => (
+				{ (posts != null) && posts.map( post => (
+					!post.deleted &&
 					<li key={post.id}> <Post post={post} /> </li>
 				))} 
 				</ul>
@@ -33,8 +34,19 @@ class PostList extends Component {
 }
 
 function mapStateToProps( {posts} ) {
+
+	let newPosts = []
+
+	for (let post in posts) {
+
+		if (posts.hasOwnProperty(post)) {
+			newPosts = newPosts.concat([ posts[post] ])
+		}
+
+	}
+
 	return {
-		posts: posts
+		posts: newPosts
 	}
 }
 

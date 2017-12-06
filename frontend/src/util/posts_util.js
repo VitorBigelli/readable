@@ -1,7 +1,30 @@
+export const getAll = () => {
+
+	return (
+		fetch(
+			'http://localhost:3001/posts', 
+			{
+				headers: {
+					'Authorization': 'get-posts'
+				}
+			}
+		)
+		.then( function(response) {
+			if (response.status !== 200) {
+				console.log('Something went wrong')
+			}
+
+			return response
+		})
+		.catch( function(err) {
+			console.log("ERROR")
+		})
+	)
+}
+
 export const getByCategory = (categoryName) => {
 
 	return (
-
 		fetch(
 			'http://localhost:3001/'+categoryName+'/posts', 
 			{
@@ -55,27 +78,22 @@ export const postNewPost = (post) => {
 	)
 }
 
-export const getAll = () => {
 
+
+export const deletePost = (postId) => {
 	return (
-
 		fetch(
-			'http://localhost:3001/posts', 
+			'http://localhost:3001/posts/'+postId, 
 			{
+				method: "DELETE",
 				headers: {
-					'Authorization': 'get-posts'
+					'Authorization': 'delete-post'
 				}
 			}
 		)
 		.then( function(response) {
-			if (response.status !== 200) {
-				console.log('Something went wrong')
-			}
+			return response;
+		})
 
-			return response
-		})
-		.catch( function(err) {
-			console.log("ERROR")
-		})
 	)
 }

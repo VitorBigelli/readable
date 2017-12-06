@@ -14,10 +14,17 @@ export const receivePosts = posts => {
 	}
 }
 
-export const createPost = post => {
+export const createPost = ({id, timestamp, title, body, author, category, voteScore, deleted }) => {
 	return {
 		type: CREATE_POST,
-		post
+		id,
+		timestamp,
+		title,
+		body, 
+		author,
+		category,
+		voteScore, 
+		deleted
 	}
 }
 
@@ -45,9 +52,25 @@ export const getAllPosts = () => dispatch => (
 
 	PostAPI.getAll()
 		.then( function(response) {
-			response.json().then( function(data) {
+			response.json().then( (data) => (
 				dispatch(receivePosts(data))
-			})
+			))
 		})
 )
 
+export const removePost = (deletedPost) => {
+	return {
+		type: DELETE_POST,
+		deletedPost
+	}
+}
+
+export const deletePost = (postId) => dispatch => (
+
+	PostAPI.deletePost(postId)
+		.then( function(response) {
+			response.json().then( function(data) {
+				dispatch(removePost(data))
+			})
+		})
+)

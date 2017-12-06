@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import AutoheightTextarea from 'react-autoheight-textarea';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { CommentList } from './CommentList';
-import { getAllPosts } from '../actions/actions_posts';
+import { getAllPosts, deletePost } from '../actions/actions_posts';
 import { getComments, postComment } from '../actions/actions_comments';
 
 class Post extends Component {
@@ -71,7 +71,7 @@ class Post extends Component {
 	}
 
 	render() {
-		const { post, comments } = this.props
+		const { post, comments, removePost } = this.props
 		const { isEditing, isNew, commentModalIsOpen, currentComment } = this.state
 		const date = new Date(post.timestamp)
 		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -103,10 +103,13 @@ class Post extends Component {
 				        	<DropdownToggle caret></DropdownToggle>
 				        	<DropdownMenu>
 				          		<DropdownItem>Edit post</DropdownItem>
-				        		<DropdownItem className="delete-post-button">Delete post</DropdownItem>
+				        		<DropdownItem 
+				        			className="delete-post-button"
+				        			onClick={ () => (removePost(post.id))}
+				        		> Delete post</DropdownItem>
 				    		</DropdownMenu>
 				    	</Dropdown>
-				    	
+
 				 	</div>
 
 			 		<div className="post-content">
@@ -184,7 +187,7 @@ class Post extends Component {
 
 }
 
-function mapStateToProps ({comments}) {
+function mapStateToProps ({comments, posts}) {
 	return {
 		comments: comments
 	}
@@ -194,7 +197,8 @@ function mapDispatchToProps (dispatch) {
 	return {
 		getAllPosts: () => dispatch(getAllPosts()),
 		getComments: (postId) => dispatch(getComments(postId)),
-		createComment: (comment) => dispatch(postComment(comment))
+		createComment: (comment) => dispatch(postComment(comment)),
+		removePost: (postId) => dispatch(deletePost(postId)),
 	}
 }
 
