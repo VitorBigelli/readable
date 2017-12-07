@@ -6,6 +6,7 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 import { CommentList } from './CommentList';
 import { getAllPosts, deletePost } from '../actions/actions_posts';
 import { getComments, postComment } from '../actions/actions_comments';
+import { PostModal } from './PostModal';
 
 class Post extends Component {
 
@@ -57,6 +58,14 @@ class Post extends Component {
 		this.closeCommentModal();
 	}
 
+	editPost = () => {
+		this.setState( () => (
+			{
+			isEditing: true
+			}
+		))
+	}
+
 	closeCommentModal = () => {
 		this.setState( () => ({
 			commentModalIsOpen: false
@@ -71,17 +80,17 @@ class Post extends Component {
 	}
 
 	render() {
-		const { post, comments, removePost } = this.props
+		const { post, comments, removePost, categories } = this.props
 		const { isEditing, isNew, commentModalIsOpen, currentComment } = this.state
 		const date = new Date(post.timestamp)
 		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-		const fullDate = months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " at " + date.getHours() + ":" + date.getMinutes() 
+		const minutes = (date.getMinutes() > 10) ?  date.getMinutes() : ("0" + date.getMinutes()) 
+		const fullDate = months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " at " + date.getHours() + ":" + minutes 
 
 		return (
 			<div className="post-view">
 			{
-				!isEditing && 
-				!isNew && 
+
 				<div className="post-container">
 					
 					<div className="post-header">
@@ -102,7 +111,10 @@ class Post extends Component {
 						<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
 				        	<DropdownToggle caret></DropdownToggle>
 				        	<DropdownMenu>
-				          		<DropdownItem>Edit post</DropdownItem>
+				          		<DropdownItem
+				          			className="edit-post-button"
+				          			onClick={ () => (this.editPost())}
+				          		> Edit post</DropdownItem>
 				        		<DropdownItem 
 				        			className="delete-post-button"
 				        			onClick={ () => (removePost(post.id))}
@@ -180,6 +192,16 @@ class Post extends Component {
 				</form>
 		</Modal>
 
+		<Modal
+			isOpen={isEditing}
+			className="post-modal"
+			onRequestClose={this.closeEditPostModal}
+			overlayClassName="overlay"
+			contentLabel="EditPostModal"
+		>
+			<PostModal categories={categories} post={post}/>
+		</Modal>
+
 		</div>
 
 		)
@@ -187,9 +209,10 @@ class Post extends Component {
 
 }
 
-function mapStateToProps ({comments, posts}) {
+function mapStateToProps ({categories, comments}) {
 	return {
-		comments: comments
+		comments: comments,
+		categories: categories
 	}
 }
 

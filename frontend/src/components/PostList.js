@@ -32,6 +32,7 @@ class PostList extends Component {
 		)
 	}
 
+
 }
 
 function mapStateToProps( {posts} ) {

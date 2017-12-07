@@ -14,7 +14,7 @@ export const receivePosts = posts => {
 	}
 }
 
-export const createPost = ({id, timestamp, title, body, author, category, voteScore, deleted }) => {
+export const createPost = ({id, timestamp, title, body, author, avatar, category, voteScore, deleted }) => {
 	return {
 		type: CREATE_POST,
 		id,
@@ -22,6 +22,7 @@ export const createPost = ({id, timestamp, title, body, author, category, voteSc
 		title,
 		body, 
 		author,
+		avatar,
 		category,
 		voteScore, 
 		deleted
@@ -58,10 +59,18 @@ export const getAllPosts = () => dispatch => (
 		})
 )
 
-export const removePost = (deletedPost) => {
+export const removePost = ({id, timestamp, title, body, author, avatar, category, voteScore, deleted }) => {
 	return {
 		type: DELETE_POST,
-		deletedPost
+		id,
+		timestamp,
+		title,
+		body, 
+		author,
+		avatar,
+		category,
+		voteScore, 
+		deleted
 	}
 }
 
