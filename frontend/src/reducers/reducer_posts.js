@@ -11,8 +11,6 @@ function posts (state = null, action) {
 				posts[action.posts[post].id] = action.posts[post]
 			}
 
-			console.log(posts)
-
 			return posts
 
 		case CREATE_POST:
@@ -27,8 +25,6 @@ function posts (state = null, action) {
 				voteScore: action.voteScore,
 				deleted: action.deleted
 			}
-
-			console.log(newPosts)
 
 			return newPosts
 

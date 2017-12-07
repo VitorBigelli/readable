@@ -23,7 +23,8 @@ class PostList extends Component {
 				<h2> {postListTitle} </h2>
 				<ul className="posts-list"> 				        	
 				{ (posts != null) && posts.map( post => (
-					!post.deleted &&
+					!post.deleted && 
+					(post.category === category || !category) &&
 					<li key={post.id}> <Post post={post} /> </li>
 				))} 
 				</ul>
