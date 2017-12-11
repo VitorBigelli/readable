@@ -1,21 +1,17 @@
 import { url, headers, validateResponse } from './api_helper'
 
-export const getCommentsByPost = (postId) => {
-
+export const getCommentsByPost = (parentId) => {
+	console.log(url+parentId+"/comments")
 	return (
 		fetch(
-			'http://localhost:3001/posts/'+postId+'/comments', 
+			url + "posts/" + parentId + '/comments', 
 			{
-				headers: {
-					'Authorization': 'get-comments'
-				}
+				"method": "GET",
+				headers
 			}
 		)
 		.then( function(response) {
-			if (response.status !== 200) {
-				console.log("Something went wrong")
-			}
-			return response;
+			return validateResponse(response)
 		})
 		.catch( function(err) {
 			console.log("ERROR")
@@ -28,12 +24,11 @@ export const postComment = (comment) => {
 
 	return (
 		fetch(
-			'http://localhost:3001/comments', 
+			url + '/comments', 
 			{
 				method: "POST",
-				headers: {
-					'Authorization': 'get-comments'
-				}
+				headers,
+				body: JSON.stringify(comment)
 			}
 		)
 		.then( function(response) {

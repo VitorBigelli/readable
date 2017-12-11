@@ -114,6 +114,8 @@ class Post extends Component {
 		const minutes = (date.getMinutes() > 10) ?  date.getMinutes() : ("0" + date.getMinutes()) 
 		const fullDate = months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " at " + date.getHours() + ":" + minutes 
 
+		const postComments = comments.filter( comment => comment.parentId === post.id)
+
 		return (
 			<div className="post-view">
 
@@ -170,8 +172,8 @@ class Post extends Component {
 							</p>
 						
 							<p className="total-comments">
-								{ comments[post.id] && comments[post.id].length + " comments"}
-								{ !comments[post.id] && "No comments"}
+								{ postComments && postComments.length + " comments"}
+								{ !postComments && "No comments"}
 							</p>
 
 						</div>
@@ -181,8 +183,8 @@ class Post extends Component {
 						</Link>
 					</div>
 
-					{ comments && comments[post.id] &&
-							<CommentList comments={comments[post.id]} />
+					{ postComments && 
+							<CommentList comments={postComments} />
 					}
 				</div>
 
@@ -260,8 +262,16 @@ function mapStateToProps ({categories, comments, posts}) {
 
 	}
 
+	let newComments = []
+
+	for (let post in comments) {
+		for (let comment in comments[post]) {
+			newComments = newComments.concat([ comments[post][comment] ])
+		}
+	}
+
 	return {
-		comments: comments,
+		comments: newComments,
 		categories: categories,
 		posts: newPosts 
 	}
