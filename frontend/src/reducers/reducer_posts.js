@@ -1,8 +1,9 @@
-import { RECEIVE_POSTS, CREATE_POST, DELETE_POST, EDIT_POST } from '../actions/actions_posts';
+import { RECEIVE_POSTS, CREATE_POST, DELETE_POST, EDIT_POST, VOTE_POST } from '../actions/actions_posts';
 
 function posts (state = null, action) {
 	var newPosts = state;
 	var posts = {}
+	const { id } = action
 
 	switch(action.type) {
 		case RECEIVE_POSTS:
@@ -30,10 +31,13 @@ function posts (state = null, action) {
 
 		case DELETE_POST: 
 
-			const { id, deleted } = action
-			newPosts[id].deleted = deleted
-			
-			return newPosts;
+			return {
+				...state, 
+				[id]: {
+					...state[id],
+					'voteScore': action.voteScore
+				}
+			}
 
 		case EDIT_POST:
 
@@ -50,6 +54,13 @@ function posts (state = null, action) {
 			}
 
 			return newPosts;
+
+		case VOTE_POST:
+
+			const { voteScore } = action
+			newPosts[id].voteScore = voteScore
+
+			return newPosts
 		
 		default: 
 			return state

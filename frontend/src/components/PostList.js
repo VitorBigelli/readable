@@ -4,6 +4,12 @@ import { getPostsByCategory, getAllPosts } from '../actions/actions_posts';
 import Post from './Post'; 
 import { withRouter } from 'react-router-dom';
 
+/* 
+#########################################################################
+							POST LIST COMPONENT 
+#########################################################################
+*/
+
 class PostList extends Component {
 
 	componentDidMount() {

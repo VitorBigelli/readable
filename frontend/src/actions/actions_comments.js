@@ -5,8 +5,8 @@ export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT'; 
 export const DELETE_COMMENT = 'DELETE_COMMENT'; 
-export const VOTE_SCORE_UP_COMMENT = 'VOTE_SCORE_UP_COMMENT';
-export const VOTE_SCORE_DOWN_COMMENT = 'VOTE_SCORE_DOWN_COMMENT'; 
+export const UP_VOTE = 'UP_VOTE';
+export const DOWN_VOTE = 'DOWN_VOTE'; 
 
 export const receiveComments = comments => {
 	return {

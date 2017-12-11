@@ -1,5 +1,11 @@
 import React, { Component } from 'react'; 
 
+/* 
+#########################################################################
+							COMMENT COMPONENT 
+#########################################################################
+*/
+
 class Comment extends Component {
 
 	render() {

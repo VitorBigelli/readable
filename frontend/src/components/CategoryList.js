@@ -1,6 +1,12 @@
 import React from 'react'; 
 import { withRouter } from 'react-router-dom'; 
 
+/* 
+#########################################################################
+							CATEGORY LIST COMPONENT 
+#########################################################################
+*/
+
 const CategoryList = withRouter(({history, categories, updateCategory, currentPath}) => {
 
 

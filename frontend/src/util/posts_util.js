@@ -1,6 +1,14 @@
 const url = "http://localhost:3001/"; 
 const headers = { 'Content-Type': 'application/json', 'Authorization': 'react-readable'}
 
+function validateResponse(response) {
+	if (response.status !== 200) {
+		console.log('Something went wrong')
+	}
+	return response
+}
+
+
 export const getAll = () => {
 
 	return (
@@ -11,11 +19,7 @@ export const getAll = () => {
 			}
 		)
 		.then( function(response) {
-			if (response.status !== 200) {
-				console.log('Something went wrong')
-			}
-
-			return response
+			return validateResponse(response)
 		})
 		.catch( function(err) {
 			console.log("ERROR")
@@ -33,10 +37,7 @@ export const getByCategory = (categoryName) => {
  			}
  		)
  		.then( function(response) {
- 			if (response.status !== 200 ) {
- 				console.log('Something went wrong.')
- 			}
- 			return response;
+			return validateResponse(response)
  		})
  		.catch( function(err) {
  			console.log("ERROR")
@@ -56,16 +57,7 @@ export const postNewPost = (post) => {
 			}
 		)
 		.then( function(response) {
-			if (response.status !== 200 ) {
-				console.log("Something went wrong")
-			}
-
-			return response;
-
-			response.json().then( (data) => {
-				return data;
-			})
-
+			return validateResponse(response)
 		})
 		.catch( function(err) {
 			console.log('ERROR')
@@ -83,9 +75,11 @@ export const deletePost = (postId) => {
 			}
 		)
 		.then( function(response) {
-			return response;
+			return validateResponse(response)
 		})
-
+		.catch( function(err) {
+			console.log("ERROR")
+		})
 	)
 }
 
@@ -100,13 +94,30 @@ export const editPost = ( postId, title, body ) => {
 			}
 		)
 		.then( function(response) {
-			if (response.status !== 200) {
-				console.log("Something went wrong")
-			}
-
-			return response;
+			return validateResponse(response)
 		})
-
+		.catch( function(err) {
+			console.log("ERROR")
+		})
 	)
 
+}
+
+export const votePost = (postId, option) => {
+	return (
+		fetch(
+			url + "posts/" + postId,
+			{
+				method: "POST",
+				headers, 
+				body: JSON.stringify( { option } )
+			}
+		)
+		.then( function(response) {
+			return validateResponse(response)
+		})
+		.catch( function(err) {
+			console.log("ERROR")
+		})
+	)
 }

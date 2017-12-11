@@ -1,15 +1,31 @@
+// Importing react packages
 import React, { Component } from 'react';
-import '../styles/bootstrap.min.css';
-import '../App.css';
 import { connect } from 'react-redux';
-import { fetchCategories } from '../actions/index'
-import { postNewPost } from '../actions/actions_posts';
-import CategoryList from './CategoryList';
-import { Route, Switch, withRouter } from 'react-router-dom';
-import PostList from './PostList';
-import { PostModal } from './PostModal';
 import Modal from 'react-modal';
 import serializeForm from 'form-serialize';
+import { Route, Switch, withRouter } from 'react-router-dom';
+
+// Importing /components
+import CategoryList from './CategoryList';
+import PostList from './PostList';
+import { PostModal } from './PostModal';
+
+// Importing /actions
+import { fetchCategories } from '../actions/index'
+import { postNewPost } from '../actions/actions_posts';
+
+//Importing from /util
+import generateId from '../util/idGenerator'
+
+// Importing stylesheets 
+import '../styles/bootstrap.min.css';
+import '../App.css';
+
+/* 
+#########################################################################
+							APP COMPONENT 
+#########################################################################
+*/
 
 class App extends Component {
 
@@ -23,13 +39,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		const cachedPosts = localStorage.getItem('reactReadable')
-
 		this.props.fetchCategories()
-	}
-
-	generateId() {
-		return Math.random().toString(36).substr(2,9);
 	}
 
 	handleSubmit = (e) => {
@@ -38,7 +48,7 @@ class App extends Component {
 		let values = serializeForm(e.target, {hash: true} )
 			
 		const post = {
-			id: this.generateId(),
+			id: generateId(),
 			timestamp: Date.now(),
 			title: values.title, 
 			body: values.body,
@@ -51,9 +61,10 @@ class App extends Component {
 	}	
 
 	updateCategory = (history, category) => {
-		this.setState( () => ({
+		this.setState( () => (
+			{
 			currentPath: "/"+category
-		}
+			}
 		))		
 		history.push("/"+category)
 	}
@@ -91,50 +102,52 @@ class App extends Component {
 				    > New Post </button>
 	      	</header>
 
-	      	<div className="nav-bar">
-				<span> Filter: </span> 
-		      	<CategoryList 
-		      		categories={categories} 
-		      		updateCategory={(history, category) => this.updateCategory(history, category)}  
-		      		currentPath={currentPath}
-		      	/>
-		      	<span> Order by: </span> 
-		    </div>
+	      	<div className="container">
+		      	<div className="nav-bar">
+					<span> Filter: </span> 
+			      	<CategoryList 
+			      		categories={categories} 
+			      		updateCategory={(history, category) => this.updateCategory(history, category)}  
+			      		currentPath={currentPath}
+			      	/>
+			      	<span> Order by: </span> 
+			    </div>
 
-			<Switch>
-				<Route 
-		      		exact path="/" 
-		      		render={ () => (
-		      			<PostList />
-					)} 
-				/>
-	  			{ categories && categories.map( category => (
-	  				<Route
-	  					key={category.name} 
-		  				path={"/" + category.path}
-		  				render={ () => {
-							return (
-							<PostList category={category.name} /> 
-							)
-						}
-						}
-	  				/>
-	  			))}
-  			</Switch>
-	      
-	      	<Modal
-	      		className="post-modal"
-	      		overlayClassName="overlay"
-	      		isOpen={postModalIsOpen}
-	      		onRequestClose={this.closePostModal}
-	      		contentLabel="PostModal"
-	      	>
-	      		<PostModal categories={categories} closePostModal={this.closePostModal} handleSubmit={this.handleSubmit} />	      			
-	      	</Modal>
+				<Switch>
+					<Route 
+			      		exact path="/" 
+			      		render={ () => (
+			      			<PostList />
+						)} 
+					/>
+		  			{ categories && categories.map( category => (
+		  				<Route
+		  					key={category.name} 
+			  				path={"/" + category.path}
+			  				render={ () => {
+								return (
+								<PostList category={category.name} /> 
+								)
+							}
+							}
+		  				/>
+		  			))}
+	  			</Switch>
+		      
+		      	<Modal
+		      		className="post-modal"
+		      		overlayClassName="overlay"
+		      		isOpen={postModalIsOpen}
+		      		onRequestClose={this.closePostModal}
+		      		contentLabel="PostModal"
+		      	>
+		      		<PostModal categories={categories} closePostModal={this.closePostModal} handleSubmit={this.handleSubmit} />	      			
+		      	</Modal>
 
-		   	<footer> 
-       	  		Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
-       	  	</footer>
+			   	<footer> 
+	       	  		Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+	       	  	</footer>
+	    	</div>
 	    </div>
 	    )
 	}

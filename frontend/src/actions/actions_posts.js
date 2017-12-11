@@ -3,8 +3,7 @@ import * as PostAPI from '../util/posts_util';
 export const CREATE_POST = 'CREATE_POST'; 
 export const EDIT_POST = 'EDIT_POST'; 
 export const DELETE_POST = 'DELETE_POST'; 
-export const VOTE_SCORE_UP_POST = 'VOTE_SCORE_UP_POST'; 
-export const VOTE_SCORE_DOWN_POST = 'VOTE_SCORE_DOWN_POST'; 
+export const VOTE_POST = 'VOTE_POST' 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 
 export const receivePosts = posts => {
@@ -43,6 +42,14 @@ export const updatePost  = ({id, title, body}) => {
 		id, 
 		title,
 		body
+	}
+}
+
+export const updatePostScore = ({ id, voteScore }) => {
+	return {
+		type: VOTE_POST,
+		id,
+		voteScore
 	}
 }
 
@@ -94,3 +101,13 @@ export const editPost = (id, title, body) => dispatch => (
 			))
 		})
 )
+
+export const votePost = (id, option) => dispatch => (
+	PostAPI.votePost(id, option)
+		.then( function(response) {
+			response.json().then( (data) => (
+				dispatch(updatePostScore(data))
+			))
+		})
+)
+

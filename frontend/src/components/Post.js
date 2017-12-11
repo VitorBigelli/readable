@@ -12,10 +12,17 @@ import { CommentList } from './CommentList';
 import { PostModal } from './PostModal';
 
 // Importing from /actions
-import { getAllPosts, deletePost, editPost } from '../actions/actions_posts';
+import { deletePost, editPost, votePost } from '../actions/actions_posts';
 import { getComments, postComment } from '../actions/actions_comments';
 
+// Importing from /util
+import generateId from '../util/idGenerator'
 
+/* 
+#########################################################################
+							POST COMPONENT 
+#########################################################################
+*/
 class Post extends Component {
 
 	constructor(props) {
@@ -31,8 +38,8 @@ class Post extends Component {
 		}
 	}
 
-	generateId() {
-		return Math.random().toString(36).substr(2,9);
+	componentDidMount() {
+		this.props.getComments(this.props.post.id)
 	}
 
 	handleSubmit(event) {
@@ -62,15 +69,20 @@ class Post extends Component {
 		))
 	}
 
-	componentDidMount() {
-		this.props.getComments(this.props.post.id)
+	editPost = (e, id) => {
+		e.preventDefault() 
+		
+		let values = serializeForm(e.target, {hash: true} )
+
+		this.props.editPost(id, values.title, values.body);
+		this.closePostModal();
 	}
 
 	createComment = (event) => {
 		event.preventDefault(); 
 
 		const comment = {
-			id: this.generateId(),
+			id: generateId(),
 			parentId: this.props.post.id,
 			timestamp: Date.now(), 
 			body: this.state.currentComment,
@@ -81,14 +93,6 @@ class Post extends Component {
 		this.closeCommentModal();
 	}
 
-	editPost = (e, id) => {
-		e.preventDefault() 
-		
-		let values = serializeForm(e.target, {hash: true} )
-
-		this.props.editPost(id, values.title, values.body);
-		this.closePostModal();
-	}
 
 	closeCommentModal = () => {
 		this.setState( () => ({
@@ -103,7 +107,7 @@ class Post extends Component {
 	}
 
 	render() {
-		const { post, comments, removePost, categories } = this.props
+		const { post, comments, removePost, categories, votePost, posts } = this.props
 		const { isEditing, commentModalIsOpen, currentComment } = this.state
 		const date = new Date(post.timestamp)
 		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -112,10 +116,11 @@ class Post extends Component {
 
 		return (
 			<div className="post-view">
+
+				{/* POST VIEW*/}
 				<div className="post-container">
 						
 					<div className="post-header">
-							
 						<img 
 							className="post-avatar"
 							src={post.avatar}
@@ -144,27 +149,34 @@ class Post extends Component {
 				    	</Dropdown>
 					</div>
 
-				 		<div className="post-content">
-				 			<h4 className="post-title"> {post.title} </h4> 
-							<p className="post-body"> {post.body} </p>
-						</div>
+			 		<div className="post-content">
+			 			<h4 className="post-title"> {post.title} </h4> 
+						<p className="post-body"> {post.body} </p>
+					</div>
 
-						<div className="post-footer"> 
-							<div className="post-interact"> 
-								<span> Vote up </span>
-								<span> Vote down </span>
-							</div>
-							<Link to={"posts/"+post.id} className="post-details-link">
-								See details
-							</Link>
+					<div className="post-footer"> 
+						<div className="post-interact">
+							<p>Post score: { post.voteScore } </p> 
+							<button
+								onClick={ () => votePost(post.id, "upVote")}
+								className="post-vote-button"
+							> Vote up </button>
+							<button
+								onClick={ () => votePost(post.id, "downVote")}
+								className="post-vote-button"
+							> Vote down </button>
 						</div>
+						<Link to={"posts/"+post.id} className="post-details-link">
+							See details
+						</Link>
+					</div>
 
-						{ comments && 
-							<CommentList comments={comments[post.id]} />
-						}
+					{ comments && 
+						<CommentList comments={comments[post.id]} />
+					}
 				</div>
 
-				{/* Comment Modal */}
+				{/* COMMENT MODAL */}
 				<Modal 
 					isOpen={commentModalIsOpen}
 					className="comment-modal"
@@ -195,7 +207,7 @@ class Post extends Component {
 						</form>
 				</Modal>
 
-				{/* Edit post Modal */}
+				{/* (EDIT) POST MODAL */}
 				<Modal
 					isOpen={isEditing}
 					className="post-modal"
@@ -214,20 +226,32 @@ class Post extends Component {
 
 }
 
-function mapStateToProps ({categories, comments}) {
+function mapStateToProps ({categories, comments, posts}) {
+	
+	let newPosts = []
+
+	for (let post in posts) {
+
+		if (posts.hasOwnProperty(post)) {
+			newPosts = newPosts.concat([ posts[post] ])
+		}
+
+	}
+
 	return {
 		comments: comments,
-		categories: categories
+		categories: categories,
+		posts: newPosts 
 	}
 }
 
 function mapDispatchToProps (dispatch) {
 	return {
-		getAllPosts: () => dispatch(getAllPosts()),
 		getComments: (postId) => dispatch(getComments(postId)),
 		createComment: (comment) => dispatch(postComment(comment)),
 		removePost: (postId) => dispatch(deletePost(postId)),
-		editPost: (id, title, body) => dispatch(editPost(id, title, body)),
+		editPost: (postId, title, body) => dispatch(editPost(postId, title, body)),
+		votePost: (postId, option) => dispatch(votePost(postId, option))
 	}
 }
 

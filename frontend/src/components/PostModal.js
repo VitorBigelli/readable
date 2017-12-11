@@ -1,5 +1,11 @@
 import React from 'react'; 
 
+/* 
+#########################################################################
+							POST MODAL 
+#########################################################################
+*/
+
 export const PostModal = ({categories, post = {}, closePostModal, handleSubmit }) => {
 	
 	return (
@@ -9,7 +15,9 @@ export const PostModal = ({categories, post = {}, closePostModal, handleSubmit }
 				handleSubmit(event, post.id)
 			}}
 		> 
-			<h3> New post </h3>
+			{ post.id && <h3> Editing post </h3> }
+			{ !post.id && <h3> New post </h3> }
+
 			<input
 				className="post-form-title"
 				type="text"
@@ -39,12 +47,29 @@ export const PostModal = ({categories, post = {}, closePostModal, handleSubmit }
 
 			<div className="post-author-info"> 
 				<span> Name: </span>
+				{ 
+
+				// If editing an existing post, make the author field readonly
+				post.id &&  
+				<input 
+					className="post-author-name"
+					type="text"
+					name="author"
+					value={post.author}
+					readOnly
+				/>
+				}
+
+				{
+				!post.id && 
 				<input 
 					className="post-author-name"
 					type="text"
 					name="author"
 					defaultValue={post.author}
 				/>
+				
+				}
 			</div>
 
 			<button

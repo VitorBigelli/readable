@@ -1,5 +1,5 @@
 body {
-  background-color: #dfdfdf;
+  background-color: #efefef;
   font-family: "Ubuntu", sans-serif;
 
 }
@@ -10,8 +10,9 @@ h2 {
   max-width: 700px;
   margin: auto;
   margin-top: 10px;
+  margin-bottom: 20px;
   padding: 0;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 header {
@@ -147,6 +148,11 @@ footer a {
   font-size: 13px;
 }
 
+.post-vote-button {
+  border: none; 
+  background-color: transparent;
+}
+
 .comment-footer {
   display: flex;
   flex-wrap: wrap;
@@ -180,17 +186,13 @@ footer a {
   max-width: 650px;
   float: right;
   margin-right: 0;
-  background-color: #fff;
+  background-color: transparent;
   font-size: 14px;
 }
 
 .post-body, 
 .post-title {
   padding-left: 5px;
-}
-
-.post-footer {
-  background-color: #fff;
 }
 
 .post-footer span {
@@ -285,14 +287,13 @@ footer a {
 }
 
 .nav-bar {
-  width: calc(90% + 10px);
+  width: 100%;
   max-width: 700px;
   display: flex;
   flex-wrap: wrap;
   padding: 5px;
   font-size: 14px;
   margin: auto;
-  background-color: #fff;
 }
 
 .nav-bar select {
@@ -396,6 +397,7 @@ footer a {
   height: 15px;
   padding: 0;
   border: none;
+  background-color: transparent;
 }
 
 .active {
@@ -404,7 +406,8 @@ footer a {
 
 .dropdown {
   float: right;
-  height: 15px;  
+  height: 15px; 
+  background-color: transparent; 
 }
 
 .dropdown-menu {

@@ -1,4 +1,4 @@
-import { RECEIVE_CATEGORIES, ADD_CATEGORY } from '../actions/index'; 
+import { RECEIVE_CATEGORIES } from '../actions/index'; 
 import posts from './reducer_posts';
 import comments from './reducer_comments';
 import { combineReducers } from 'redux';

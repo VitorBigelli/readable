@@ -1,6 +1,12 @@
 import React, { Component } from 'react'; 
 import Comment from './Comment';
 
+/* 
+#########################################################################
+							COMMENT LIST COMPONENT 
+#########################################################################
+*/
+
 export const CommentList = ({comments}) => {
 
 	return (
