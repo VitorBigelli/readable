@@ -2,7 +2,7 @@
 import React, { Component } from 'react'; 
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, Route } from 'react-router-dom';
 import AutoheightTextarea from 'react-autoheight-textarea';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import serializeForm from 'form-serialize'
@@ -156,23 +156,33 @@ class Post extends Component {
 
 					<div className="post-footer"> 
 						<div className="post-interact">
-							<p>Post score: { post.voteScore } </p> 
-							<button
-								onClick={ () => votePost(post.id, "upVote")}
-								className="post-vote-button"
-							> Vote up </button>
-							<button
-								onClick={ () => votePost(post.id, "downVote")}
-								className="post-vote-button"
-							> Vote down </button>
+							
+							<p className="score-info">
+								Post score: { post.voteScore } |
+								<button
+									onClick={ () => votePost(post.id, "upVote")}
+									className="vote-up-button"
+								>  Up vote </button>
+								<button
+									onClick={ () => votePost(post.id, "downVote")}
+									className="vote-down-button"
+								> Down vote </button>
+							</p>
+						
+							<p className="total-comments">
+								{ comments[post.id] && comments[post.id].length + " comments"}
+								{ !comments[post.id] && "No comments"}
+							</p>
+
 						</div>
-						<Link to={"posts/"+post.id} className="post-details-link">
+
+						<Link to={"/posts/"+post.id} className="post-details-link">
 							See details
 						</Link>
 					</div>
 
-					{ comments && 
-						<CommentList comments={comments[post.id]} />
+					{ comments && comments[post.id] &&
+							<CommentList comments={comments[post.id]} />
 					}
 				</div>
 
@@ -220,6 +230,18 @@ class Post extends Component {
 						closePostModal={this.closePostModal} 
 						handleSubmit={ (event, id) => this.editPost(event, id)} />
 				</Modal>
+
+				<Route 
+					exact 
+					path={"/posts/" + post.id} 
+					render={ () => {
+						console.log("Working")
+						return (
+							<p> Testing </p>
+						)
+					}}
+				/>
+
 			</div>
 		)
 	}
@@ -255,4 +277,6 @@ function mapDispatchToProps (dispatch) {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Post); 
+export default withRouter(
+	connect(mapStateToProps, mapDispatchToProps)(Post)
+); 

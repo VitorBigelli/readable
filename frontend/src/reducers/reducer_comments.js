@@ -1,26 +1,40 @@
-import { RECEIVE_COMMENTS, CREATE_COMMENT } from '../actions/actions_comments';
+import { RECEIVE_COMMENTS, CREATE_COMMENT, VOTE_COMMENT } from '../actions/actions_comments';
 
 function comments (state = {}, action) {
+
+	const { id } = action
+
 	switch(action.type) {
 		case RECEIVE_COMMENTS: 
-			const { comments } = action
-			if (comments.length !== 0) {
-				return {
-					...state,
-					[comments[0].parentId]: comments
-				}
+
+			for (let i in action.comments) {
+				const c = action.comments[i]
+				
+				state[c.parentId] = state[c.parentId] ? state[c.parentId].concat([c]) : [c]
 			}
-			else {
-				return state;
-			}
+
+			return state
+
 		case CREATE_COMMENT: 
-			const { comment } = action
+
 			return {
 				...state,
-				[comment.parentId]: state[comment.parentId] ? 
-									state[comment.parentId].concat([comment]) : 
-									[comment]
+				[action.parentId]: {
+					...state[action.parentId], 
+					[id]: action
 			}
+		}
+
+		case VOTE_COMMENT: 
+
+			for (let comment in state[action.parentId]) {
+				if (state[action.parentId][comment].id === action.id) {
+					state[action.parentId][comment].voteScore = action.voteScore
+				}
+			}
+
+			return state
+
 		default:  
 			return state
 	}

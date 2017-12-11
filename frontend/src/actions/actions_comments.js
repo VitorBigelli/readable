@@ -5,8 +5,7 @@ export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT'; 
 export const DELETE_COMMENT = 'DELETE_COMMENT'; 
-export const UP_VOTE = 'UP_VOTE';
-export const DOWN_VOTE = 'DOWN_VOTE'; 
+export const VOTE_COMMENT = 'VOTE_COMMENT';
 
 export const receiveComments = comments => {
 	return {
@@ -32,6 +31,15 @@ export const createComment = comment => {
 	}
 }
 
+export const updateCommentScore = ({ id, parentId, voteScore }) => {
+	return {
+		type: VOTE_COMMENT,
+		id,
+		parentId,
+		voteScore
+	}
+}
+
 export const postComment = comment => dispatch => (
 
 	CommentsAPI.postComment(comment)
@@ -39,5 +47,15 @@ export const postComment = comment => dispatch => (
 			response.json().then( function(data) {
 				dispatch(createComment(Object.assign(comment, data)))
 			})
+		})
+)
+
+
+export const voteComment = (id, option) => dispatch => (
+	CommentsAPI.voteComment(id, option)
+		.then( function(response) {
+			response.json().then( (data) => (
+				dispatch(updateCommentScore(data))
+			))
 		})
 )

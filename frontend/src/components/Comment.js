@@ -1,4 +1,7 @@
 import React, { Component } from 'react'; 
+import { voteComment } from '../actions/actions_comments';
+import { connect } from 'react-redux';
+
 
 /* 
 #########################################################################
@@ -9,7 +12,7 @@ import React, { Component } from 'react';
 class Comment extends Component {
 
 	render() {
-		const { comment } = this.props
+		const { comment, voteComment } = this.props
 		const date = new Date(comment.timestamp)
 		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 		const minutes = (date.getMinutes() > 10) ?  date.getMinutes() : ("0" + date.getMinutes()) 
@@ -30,8 +33,15 @@ class Comment extends Component {
 
 				<div className="comment-footer">
 					<div className="comment-interact">
-						<span> Vote up </span> 
-						<span> Vote down </span> 
+						Comment score: {comment.voteScore} | 
+						<button 
+							onClick={ () => voteComment(comment.id, "upVote")}
+							className="vote-up-button"
+						> Vote up </button> 
+						<button 
+							onClick={ () => voteComment(comment.id, "downVote")}
+							className="vote-down-button"
+						> Vote down </button>
 					</div>
 
 					<div className="comment-date">
@@ -44,4 +54,16 @@ class Comment extends Component {
 	}
 }
 
-export default Comment;
+function mapStateToProps({comments}) {
+	return {
+		comments: comments
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		voteComment: (commentId, option) => dispatch(voteComment(commentId, option))
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Comment);

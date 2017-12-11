@@ -20,3 +20,6 @@ export const CommentList = ({comments}) => {
 		</ul>
 	)
 }
+
+
+

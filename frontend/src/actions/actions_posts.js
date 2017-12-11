@@ -96,7 +96,7 @@ export const deletePost = (postId) => dispatch => (
 export const editPost = (id, title, body) => dispatch => (
 	PostAPI.editPost(id, title, body)
 		.then( function(response) {
-			response.json().then( (data) => (
+			response.json().then( (data) => ( 
 				dispatch(updatePost(data))
 			))
 		})

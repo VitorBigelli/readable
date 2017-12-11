@@ -1,13 +1,4 @@
-const url = "http://localhost:3001/"; 
-const headers = { 'Content-Type': 'application/json', 'Authorization': 'react-readable'}
-
-function validateResponse(response) {
-	if (response.status !== 200) {
-		console.log('Something went wrong')
-	}
-	return response
-}
-
+import { url, headers, validateResponse } from './api_helper'
 
 export const getAll = () => {
 

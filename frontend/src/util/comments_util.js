@@ -1,3 +1,5 @@
+import { url, headers, validateResponse } from './api_helper'
+
 export const getCommentsByPost = (postId) => {
 
 	return (
@@ -39,6 +41,26 @@ export const postComment = (comment) => {
 				console.log("Something went wrong")
 			}
 			return response;
+		})
+		.catch( function(err) {
+			console.log("ERROR")
+		})
+	)
+}
+
+
+export const voteComment = (commentId, option) => {
+	return (
+		fetch(
+			url + "comments/" + commentId,
+			{
+				method: "POST",
+				headers, 
+				body: JSON.stringify( { option } )
+			}
+		)
+		.then( function(response) {
+			return validateResponse(response)
 		})
 		.catch( function(err) {
 			console.log("ERROR")
