@@ -129,7 +129,7 @@ class App extends Component {
 	      		onRequestClose={this.closePostModal}
 	      		contentLabel="PostModal"
 	      	>
-	      		<PostModal categories={categories}/>	      			
+	      		<PostModal categories={categories} closePostModal={this.closePostModal} handleSubmit={this.handleSubmit} />	      			
 	      	</Modal>
 
 		   	<footer> 

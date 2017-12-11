@@ -1,12 +1,20 @@
+// Importing from react modules
 import React, { Component } from 'react'; 
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
+import { Link, withRouter } from 'react-router-dom';
 import AutoheightTextarea from 'react-autoheight-textarea';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import serializeForm from 'form-serialize'
+
+// Importing from /components
 import { CommentList } from './CommentList';
-import { getAllPosts, deletePost } from '../actions/actions_posts';
-import { getComments, postComment } from '../actions/actions_comments';
 import { PostModal } from './PostModal';
+
+// Importing from /actions
+import { getAllPosts, deletePost, editPost } from '../actions/actions_posts';
+import { getComments, postComment } from '../actions/actions_comments';
+
 
 class Post extends Component {
 
@@ -17,7 +25,6 @@ class Post extends Component {
 
 		this.state = {
 			isEditing: this.props.isEditing ? true : false,
-			isNew: this.props.isNew ? true : false,
 			commentModalIsOpen: false,
 			currentComment: "",
 			dropdownOpen: false
@@ -39,6 +46,22 @@ class Post extends Component {
 		}))
 	}
 
+	openPostModal = () => {
+		this.setState( () => (
+			{
+			isEditing: true
+			}
+		))
+	}
+
+	closePostModal = () => {
+		this.setState( () => (
+			{
+			isEditing: false
+			}
+		))
+	}
+
 	componentDidMount() {
 		this.props.getComments(this.props.post.id)
 	}
@@ -58,12 +81,13 @@ class Post extends Component {
 		this.closeCommentModal();
 	}
 
-	editPost = () => {
-		this.setState( () => (
-			{
-			isEditing: true
-			}
-		))
+	editPost = (e, id) => {
+		e.preventDefault() 
+		
+		let values = serializeForm(e.target, {hash: true} )
+
+		this.props.editPost(id, values.title, values.body);
+		this.closePostModal();
 	}
 
 	closeCommentModal = () => {
@@ -74,14 +98,13 @@ class Post extends Component {
 
 	toggle = () => {
 		this.setState( () => ({
-				dropdownOpen: !this.state.dropdownOpen
-			})
-		)
+			dropdownOpen: !this.state.dropdownOpen
+		}))
 	}
 
 	render() {
 		const { post, comments, removePost, categories } = this.props
-		const { isEditing, isNew, commentModalIsOpen, currentComment } = this.state
+		const { isEditing, commentModalIsOpen, currentComment } = this.state
 		const date = new Date(post.timestamp)
 		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 		const minutes = (date.getMinutes() > 10) ?  date.getMinutes() : ("0" + date.getMinutes()) 
@@ -89,12 +112,10 @@ class Post extends Component {
 
 		return (
 			<div className="post-view">
-			{
-
 				<div className="post-container">
-					
-					<div className="post-header">
 						
+					<div className="post-header">
+							
 						<img 
 							className="post-avatar"
 							src={post.avatar}
@@ -113,7 +134,7 @@ class Post extends Component {
 				        	<DropdownMenu>
 				          		<DropdownItem
 				          			className="edit-post-button"
-				          			onClick={ () => (this.editPost())}
+				          			onClick={ () => (this.openPostModal())}
 				          		> Edit post</DropdownItem>
 				        		<DropdownItem 
 				        			className="delete-post-button"
@@ -121,89 +142,73 @@ class Post extends Component {
 				        		> Delete post</DropdownItem>
 				    		</DropdownMenu>
 				    	</Dropdown>
-
-				 	</div>
-
-			 		<div className="post-content">
-			 			<h4 className="post-title"> {post.title} </h4> 
-						<p className="post-body"> {post.body} </p>
 					</div>
 
-					<div className="post-footer"> 
-						<div className="post-interact"> 
-							<span> Vote up </span>
-							<span> Vote down </span>
+				 		<div className="post-content">
+				 			<h4 className="post-title"> {post.title} </h4> 
+							<p className="post-body"> {post.body} </p>
 						</div>
-						<div className="post-comment">
-							<form 
-								onSubmit={ (event) => this.handleSubmit(event) } 
-							>
-								<AutoheightTextarea 
-									defaultValue={currentComment}
-									className="comment-input"
-									type="text"
-									name="comment"
-									placeholder="Write a comment..."
-								></AutoheightTextarea>
-								<button 
-									className="comment-button"	
-									type="submit"
-								>	Send
-								</button>
-							</form>
+
+						<div className="post-footer"> 
+							<div className="post-interact"> 
+								<span> Vote up </span>
+								<span> Vote down </span>
+							</div>
+							<Link to={"posts/"+post.id} className="post-details-link">
+								See details
+							</Link>
 						</div>
-					</div>
 
 						{ comments && 
 							<CommentList comments={comments[post.id]} />
 						}
-
 				</div>
-			}
 
-		<Modal 
-			isOpen={commentModalIsOpen}
-			className="comment-modal"
-			onRequestClose={this.closeCommentModal}
-			overlayClassName="overlay"
-			contentLabel="CommentModal"
-		>
-			<p> Write your name/nickname to post your comment: </p>
-				<form 
-					className="comment-author-form"
-					onSubmit={ (event) => { 
-						this.createComment(event)
-					}}
-				>	
-					<input 
-						type="text"
-						className="comment-author"
-						name="author"
-					/>
-					<button
-						type="submit"
-						className="save-comment">
-						Post comment
-					</button>
-					<button 
-						onClick={ () => this.closeCommentModal() }
-						className="cancel-comment"
-					> Cancel comment </button>
-				</form>
-		</Modal>
+				{/* Comment Modal */}
+				<Modal 
+					isOpen={commentModalIsOpen}
+					className="comment-modal"
+					onRequestClose={this.closeCommentModal}
+					overlayClassName="overlay"
+					contentLabel="CommentModal">
+					<p> Write your name/nickname to post your comment: </p>
+						<form 
+							className="comment-author-form"
+							onSubmit={ (event) => { 
+								this.createComment(event)
+							}}
+						>	
+							<input 
+								type="text"
+								className="comment-author"
+								name="author"
+							/>
+							<button
+								type="submit"
+								className="save-comment">
+								Post comment
+							</button>
+							<button 
+								onClick={ () => this.closeCommentModal() }
+								className="cancel-comment"
+							> Cancel comment </button>
+						</form>
+				</Modal>
 
-		<Modal
-			isOpen={isEditing}
-			className="post-modal"
-			onRequestClose={this.closeEditPostModal}
-			overlayClassName="overlay"
-			contentLabel="EditPostModal"
-		>
-			<PostModal categories={categories} post={post}/>
-		</Modal>
-
-		</div>
-
+				{/* Edit post Modal */}
+				<Modal
+					isOpen={isEditing}
+					className="post-modal"
+					onRequestClose={this.closeEditPostModal}
+					overlayClassName="overlay"
+					contentLabel="EditPostModal">
+					<PostModal 
+						categories={categories} 
+						post={post} 
+						closePostModal={this.closePostModal} 
+						handleSubmit={ (event, id) => this.editPost(event, id)} />
+				</Modal>
+			</div>
 		)
 	}
 
@@ -222,6 +227,7 @@ function mapDispatchToProps (dispatch) {
 		getComments: (postId) => dispatch(getComments(postId)),
 		createComment: (comment) => dispatch(postComment(comment)),
 		removePost: (postId) => dispatch(deletePost(postId)),
+		editPost: (id, title, body) => dispatch(editPost(id, title, body)),
 	}
 }
 

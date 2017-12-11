@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS, CREATE_POST, DELETE_POST } from '../actions/actions_posts';
+import { RECEIVE_POSTS, CREATE_POST, DELETE_POST, EDIT_POST } from '../actions/actions_posts';
 
 function posts (state = null, action) {
 	var newPosts = state;
@@ -29,10 +29,27 @@ function posts (state = null, action) {
 			return newPosts
 
 		case DELETE_POST: 
-			const { deletedPost } = action
-			newPosts[deletedPost.id].deleted = deletedPost.deleted
+
+			const { id, deleted } = action
+			newPosts[id].deleted = deleted
 			
-			return newPosts
+			return newPosts;
+
+		case EDIT_POST:
+
+			newPosts[action.id] = {
+				id: action.id, 
+				timestamp: Date.now(), 
+				title: action.title, 
+				body: action.body,
+				author: action.author,
+				avatar: action.avatar, 
+				category: action.category,
+				voteScore: action.voteScore,
+				deleted: action.deleted
+			}
+
+			return newPosts;
 		
 		default: 
 			return state

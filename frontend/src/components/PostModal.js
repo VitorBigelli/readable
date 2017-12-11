@@ -1,11 +1,12 @@
 import React from 'react'; 
 
-export const PostModal = ({categories, post = {} }) => {
+export const PostModal = ({categories, post = {}, closePostModal, handleSubmit }) => {
+	
 	return (
 		<form
 			className="post-form"
 			onSubmit={ (event) =>  {
-				this.handleSubmit(event)
+				handleSubmit(event, post.id)
 			}}
 		> 
 			<h3> New post </h3>
@@ -13,37 +14,49 @@ export const PostModal = ({categories, post = {} }) => {
 				className="post-form-title"
 				type="text"
 				name="title"
-				value={post.title}
+				defaultValue={post.title}
 				placeholder="Title"
 			/>
 			<textarea 
 				name="body"
 				className="post-form-body"
-				value={post.body}
+				defaultValue={post.body}
 				placeholder="Write your post here... "
 			/>
-			<span> Category: </span>
-				<select className="post-category" name="category" defaultValue={post.category}> 
+			
+			<p> Category: 
+				<select 
+					className="post-category" 
+					name="category" 
+					defaultValue={post.category} > 
+					
 					{categories && categories.map( category => (
 						<option key={category.name} name={category.name} value={category.name}> {category.name} </option>
 					))}
+
 				</select>
-				<br/>
+			</p>
+
 			<div className="post-author-info"> 
 				<span> Name: </span>
 				<input 
 					className="post-author-name"
 					type="text"
 					name="author"
-					value={post.author}
+					defaultValue={post.author}
 				/>
 			</div>
+
 			<button
-				className="post-form-button"
+				className="save-post"
 				type="submit"
 			> Post </button>
 			<button
-				onClick={() => this.closePostModal()}
+				className="cancel-post"
+				onClick={(e) => {
+					e.preventDefault();
+					closePostModal();
+				}}
 			> Cancel </button>
 		</form>
 

@@ -67,6 +67,7 @@ function getAll (token) {
 }
 
 function add (token, post) {
+
   return new Promise((res) => {
     let posts = getData(token)
 
@@ -114,6 +115,7 @@ function disable (token, id) {
 }
 
 function edit (token, id, post) {
+
     return new Promise((res) => {
         let posts = getData(token)
         for (prop in post) {

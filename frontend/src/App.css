@@ -237,7 +237,7 @@ footer a {
   width: calc(100% - 20px);
 }
 
-.post-form-button {
+.cancel-post {
   background-color: #fff; 
   border: none;
 }
@@ -312,9 +312,7 @@ footer a {
   top: 10px;
 }
 
-
-
-.save-comment {
+.cancel-comment {
   min-width: 100px;
   height: 25px;
   padding: 5px;
@@ -325,13 +323,12 @@ footer a {
   margin-right: 10px;
 }
 
-.cancel-comment {
-  min-width: 100px;
-  height: 25px;
-  padding: 5px;
-  border: 1px #d44 solid;
-  color: #d44;
-  background-color: #fff;
+.save-comment,
+.save-post {
+  min-width: 80px;
+  border: none;
+  color: #fff;
+  background-color: #d44;
   border-radius: 10px;
 }
 

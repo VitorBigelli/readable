@@ -1,5 +1,5 @@
 import React from 'react'; 
-import { withRouter, Route } from 'react-router-dom'; 
+import { withRouter } from 'react-router-dom'; 
 
 const CategoryList = withRouter(({history, categories, updateCategory, currentPath}) => {
 

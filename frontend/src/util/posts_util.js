@@ -1,12 +1,13 @@
+const url = "http://localhost:3001/"; 
+const headers = { 'Content-Type': 'application/json', 'Authorization': 'react-readable'}
+
 export const getAll = () => {
 
 	return (
 		fetch(
-			'http://localhost:3001/posts', 
+			url + 'posts', 
 			{
-				headers: {
-					'Authorization': 'get-posts'
-				}
+				headers
 			}
 		)
 		.then( function(response) {
@@ -26,11 +27,9 @@ export const getByCategory = (categoryName) => {
 
 	return (
 		fetch(
-			'http://localhost:3001/'+categoryName+'/posts', 
+			url + categoryName + '/posts', 
 			{
-		  	  headers: { 
-		     		'Authorization': 'get-categories' 
-		      }
+		  	  headers
  			}
  		)
  		.then( function(response) {
@@ -47,17 +46,13 @@ export const getByCategory = (categoryName) => {
 
 export const postNewPost = (post) => {
 
-	var body = JSON.stringify(post);
-
 	return (
 		fetch(
-			"http://localhost:3001/posts/",
+			url + "posts/",
 			{
 				method: "POST",
-				body: body,
-				headers: {
-					'Authorization': 'post-post'
-				}
+				headers,
+				body: JSON.stringify(post)
 			}
 		)
 		.then( function(response) {
@@ -78,17 +73,13 @@ export const postNewPost = (post) => {
 	)
 }
 
-
-
 export const deletePost = (postId) => {
 	return (
 		fetch(
-			'http://localhost:3001/posts/'+postId, 
+			url + "posts/" + postId, 
 			{
 				method: "DELETE",
-				headers: {
-					'Authorization': 'delete-post'
-				}
+				headers
 			}
 		)
 		.then( function(response) {
@@ -96,4 +87,26 @@ export const deletePost = (postId) => {
 		})
 
 	)
+}
+
+export const editPost = ( postId, title, body ) => {
+	return (
+		fetch(
+			url + "posts/" + postId, 
+			{
+				method: "PUT",
+				headers,
+				body: JSON.stringify( { title, body } )
+			}
+		)
+		.then( function(response) {
+			if (response.status !== 200) {
+				console.log("Something went wrong")
+			}
+
+			return response;
+		})
+
+	)
+
 }
