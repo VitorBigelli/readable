@@ -288,7 +288,7 @@ footer a {
   top: 100px;
   left: 10%;
   right: 10%;
-  height: 130px;
+  height: auto;
   min-width: 300px;
   background-color: #fff;
   padding: 10px;
@@ -397,6 +397,8 @@ footer a {
 .comment-author {
   width: 100%;
   margin-bottom: 10px;
+  border: 1px #ddd solid;
+  height: 25px;
 }
 
 .post-comment {
@@ -426,17 +428,15 @@ footer a {
   display: inline-block;
   min-width: 280px;
   width: 100%;
-  resize: none;
-  height: 25px;
-  border: none;
+  resize: vertical;
   border: 1px solid #ddd;
   margin: 0;
   font-size: 13px;
+  height: 50px;
 }
 
 .comment-input:focus {
   outline: none !important;
-  border: none; 
 }
 
 .new-comment {

@@ -35,7 +35,6 @@ class Post extends Component {
 		this.state = {
 			isEditing: this.props.isEditing ? true : false,
 			commentModalIsOpen: false,
-			currentComment: "",
 			dropdownOpen: false,
 			sortOption: 'timestamp',
 			commentAvatar: null
@@ -46,13 +45,8 @@ class Post extends Component {
 		this.props.getComments(this.props.post.id)
 	}
 
-	handleCommentSubmit(event) {
-		event.preventDefault(); 
-
-		const comment = event.target.comment
-		
+	openCommentModal = () => {
 		this.setState( () => ({
-			currentComment: comment.value,
 			commentModalIsOpen: true
 		}))
 	}
@@ -85,17 +79,26 @@ class Post extends Component {
 	createComment = (event, avatar) => {
 		event.preventDefault(); 
 
+		const { post } = this.props
+		const { currentComment } = this.state
+
+
 		const comment = {
 			id: generateId(),
-			parentId: this.props.post.id,
+			parentId: post.id,
 			timestamp: Date.now(), 
 			avatar: avatar,
-			body: this.state.currentComment,
+			body: event.target.comment.value,
 			author: event.target.author.value
 		}
 
+		this.setState( () => ({
+			currentComment: ""
+		}))
+
 		this.props.createComment(comment);
 		this.closeCommentModal();
+		this.props.history.push("/"+post.category+"/"+post.id)
 	}
 
 	pickedAvatar = (avatar) => {
@@ -129,7 +132,7 @@ class Post extends Component {
 
 	render() {
 		const { post, comments, removePost, categories, votePost, posts, isDetails } = this.props
-		const { isEditing, commentModalIsOpen, currentComment, commentAvatar } = this.state
+		const { isEditing, commentModalIsOpen, commentAvatar } = this.state
 		
 		const date = new Date(post.timestamp)
 		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -207,24 +210,18 @@ class Post extends Component {
 								See post details
 							</button>
 						)}
+
+						{isDetails && (
+							<button 
+								className="new-comment-button"
+								onClick={this.openCommentModal}
+							> New comment </button> 
+						)}
 						
 						</p>
 					</div>
 
-					{ isDetails && (
-						<form className="new-comment" onSubmit={ (event) => this.handleCommentSubmit(event)}>
-							<AutoheightTextarea
-								name="comment" 
-								className="comment-input"
-								placeholder="Write your comment..."
-							/>
-							<button
-								className="comment-button"
-							> Send </button>
-						</form>
-					)}
-
-					{ isDetails && postComments && 
+					{ isDetails && postComments &&
 						<CommentList comments={postComments} />
 					}
 				</div>
@@ -237,11 +234,18 @@ class Post extends Component {
 					overlayClassName="overlay"
 					contentLabel="CommentModal">
 					<form 
-						className="comment-author-form"
+						className="new-comment-form"
 						onSubmit={ (event) => { 
 							this.createComment(event, commentAvatar)
 						}}
 					>	
+						<p> Comment: </p>
+						<AutoheightTextarea
+							name="comment" 
+							className="comment-input"
+							defaultValue=""
+							placeholder="Write your comment..."
+						/>
 						<p> Name/nickname: </p>
 						<input 
 							type="text"
@@ -276,6 +280,7 @@ class Post extends Component {
 						closePostModal={this.closePostModal} 
 						handleSubmit={ (event, id, avatar) => this.editPost(event, id, avatar)} />
 				</Modal>
+				
 			</div>
 		)
 	}
