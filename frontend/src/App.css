@@ -480,3 +480,49 @@ footer a {
   font-size: 12px;
 }
 
+.avatar-item {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.avatar-list {
+  display: flex;
+  flex-wrap: wrap; 
+  padding: 0;
+}
+
+.avatar-image {
+  background-repeat: no-repeat;
+  background-size: 70px; 
+  width: 70px; 
+  height: 70px;
+}
+
+.avatar-checkbox {
+  -webkit-appearance: none;
+  width: 70px; 
+  height: 70px; 
+  position: absolute;
+  background-color: transparent;
+  background: no-repeat;
+}
+
+.beth-avatar {
+  background-image: url('./icons/beth.png');
+}
+
+.summer-avatar {
+  background-image: url('./icons/summer.jpg');
+}
+
+.morty-avatar {
+  background-image: url('./icons/morty.jpg');
+}
+
+.rick-avatar {
+  background-image: url('./icons/rick.png');
+}
+
+.jerry-avatar {
+  background-image: url('./icons/jerry.png');
+}

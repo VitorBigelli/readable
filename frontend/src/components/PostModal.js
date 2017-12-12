@@ -44,7 +44,15 @@ export const PostModal = ({categories, post = {}, closePostModal, handleSubmit }
 
 				</select>
 			</p>
-
+			<p> Pick an avatar: </p>
+			<ul className="avatar-list"> 
+				<li className="avatar-item"> <input type="checkbox" name="beth" className="avatar-checkbox"/><div className="beth-avatar avatar-image"></div> </li>
+				<li className="avatar-item"> <input type="checkbox" name="summer" className="avatar-checkbox"/><div className="summer-avatar avatar-image"></div> </li>
+				<li className="avatar-item"> <input type="checkbox" name="rick" className="avatar-checkbox"/><div className="rick-avatar avatar-image"></div> </li>
+				<li className="avatar-item"> <input type="checkbox" name="morty" className="avatar-checkbox"/><div className="morty-avatar avatar-image"></div> </li>
+				<li className="avatar-item"> <input type="checkbox" name="jerry" className="avatar-checkbox"/><div  className="jerry-avatar avatar-image"></div> </li>
+			</ul>
+		
 			<div className="post-author-info"> 
 				<span> Name: </span>
 				{ 

@@ -193,6 +193,7 @@ class Post extends Component {
 								See post details
 							</button>
 						)}
+						
 						</p>
 					</div>
 
