@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import serializeForm from 'form-serialize';
 import { Route, Switch, withRouter, Link } from 'react-router-dom';
+import sortBy from 'sort-by';
 
 // Importing /components
 import CategoryList from './CategoryList';
@@ -36,7 +37,7 @@ class App extends Component {
 		this.state = {
 			postModalIsOpen: false,
 			currentPath: this.props.location.pathname,
-			sortBy: null
+			sort: null
 		}
 	}
 
@@ -88,34 +89,37 @@ class App extends Component {
 	}
 
 	sortPostsBy = (option) => {
-		this.setState( () => {
-			sortBy: option
+		console.log(option)
+		this.setState( () => ({
+			sort: option
 		})
+		)
 	}
 
   	render() {
   		const { categories, avatars, posts } = this.props
-  		const { postModalIsOpen, currentPath, sortBy } = this.state
+  		const { postModalIsOpen, currentPath, sort } = this.state
+  		let sortedPosts = []
 
-  		switch(sortBy) {
+  		console.log(sortedPosts)
+
+  		switch(sort) {
   			case "newest": 
-  				posts.sort(sortBy('timestamp'))
+  				sortedPosts = posts.sort(sortBy('timestamp')).reverse()
   				break;
   			case "oldest": 
-  				posts.sort(sortBy('timestamp')).reverse()
+  				sortedPosts = posts.sort(sortBy('timestamp'))
   				break;
   			case "highest": 
-  				posts.sort(sortBy('voteScore')).reverse()
+  				sortedPosts = posts.sort(sortBy('voteScore')).reverse()
   				break;
   			case "lowest": 
-  				posts.sort(sortBy('voteScore'))
+  				sortedPosts = posts.sort(sortBy('voteScore'))
   				break;
   			default: 
+  				sortedPosts = posts.sort(sortBy('timestamp')).reverse()
   				break;
   		}
-  		}
-
-
 
 	    return (
 	      <div className="App">
@@ -140,14 +144,14 @@ class App extends Component {
 			      		currentPath={currentPath}
 			      	/>
 			      	<span> Order by: </span> 
-			      	<SortBy sort={ (option) => this.sortPostsBy(option) } />
+			      	<SortBy sortBy={ (option) => this.sortPostsBy(option) } />
 			    </div>
 
 				<Switch>
 					<Route 
 			      		exact path="/" 
 			      		render={ () => (
-			      			<PostList />
+			      			<PostList posts={sortedPosts} />
 						)} 
 					/>
 		  			{ categories && categories.map( category => (
@@ -157,7 +161,7 @@ class App extends Component {
 			  				path={"/" + category.path}
 			  				render={ () => {
 								return (
-								<PostList category={category.name} /> 
+								<PostList category={category.name} posts={sortedPosts} /> 
 								)
 							}
 							}

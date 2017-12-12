@@ -27,7 +27,7 @@ class PostList extends Component {
 	render() {
 		const { posts, category } = this.props
 		const postListTitle = category ? ("Posts about " + category) : "All posts"
-
+		console.log(posts)
 		return (
 			<div className="main"> 
 				<h2> {postListTitle} </h2>
@@ -50,20 +50,10 @@ class PostList extends Component {
 
 }
 
-function mapStateToProps( {posts} ) {
-
-	let newPosts = []
-
-	for (let post in posts) {
-
-		if (posts.hasOwnProperty(post)) {
-			newPosts = newPosts.concat([ posts[post] ])
-		}
-
-	}
+function mapStateToProps( {categories} ) {
 
 	return {
-		posts: newPosts
+		categories: categories
 	}
 }
 
