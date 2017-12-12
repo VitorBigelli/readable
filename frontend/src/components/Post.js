@@ -149,7 +149,10 @@ class Post extends Component {
 						</p>
 
 						{isDetails && (
-						<OptionsMenu post={post} />
+						<OptionsMenu 
+							post={post} 
+							openModal={() => this.openPostModal()}
+							delete={ () => this.deletePost(post.id)}/>
 				    	)}
 					</div>
 
