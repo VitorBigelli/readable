@@ -1,4 +1,4 @@
-import { RECEIVE_COMMENTS, CREATE_COMMENT, VOTE_COMMENT, DELETE_COMMENT } from '../actions/actions_comments';
+import { RECEIVE_COMMENTS, CREATE_COMMENT, VOTE_COMMENT, DELETE_COMMENT, EDIT_COMMENT } from '../actions/actions_comments';
 
 function comments (state = {}, action) {
 	const comments = state
@@ -38,7 +38,21 @@ function comments (state = {}, action) {
 					...state[action.parentId],
 					[id]: {
 						...state[action.parentId][id],
-						"deleted": action.deleted
+						"deleted": action.deleted,
+						"timestamp": Date.now()
+					}
+				}
+			}
+
+		case EDIT_COMMENT: 
+
+			return {
+				...state, 
+				[action.parentId]: {
+					...state[action.parentId],
+					[id]: {
+						...state[action.parentId][id],
+						"body": action.body
 					}
 				}
 			}

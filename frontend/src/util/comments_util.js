@@ -79,3 +79,24 @@ export const deleteComment = (commentId) => {
 		})
 	)
 }
+
+export const editComment = (commentId, body) => {
+	return (
+		fetch(
+			url + "comments/" + commentId,
+			{
+				method: "PUT",
+				headers,
+				body: JSON.stringify({body})
+			}
+		)
+		.then( function(response) {
+			return validateResponse(response)
+		})
+		.catch( function(err) {
+			console.log("ERROR")
+		})
+
+
+	)
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; 
-import { voteComment, deleteComment } from '../actions/actions_comments';
+import { voteComment, deleteComment, editComment } from '../actions/actions_comments';
 import { connect } from 'react-redux';
 import OptionsMenu from './OptionsMenu';
 import Modal from 'react-modal';
@@ -23,8 +23,10 @@ class Comment extends Component {
 
 	editComment = (event) => {
 		event.preventDefault();
-
-		console.log(event)
+		const { comment } = this.props
+		console.log(event.target.comment.value)
+		this.props.editComment(comment.id, event.target.comment.value)
+		this.closeCommentModal();
 	}
 
 	deleteComment = (commentId) => {
@@ -90,7 +92,11 @@ class Comment extends Component {
 					onRequestClose={this.closeCommentModal}
 					overlayClassName="overlay"
 					contentLabel="CommentModal">
-					<CommentModal isEditing={true} editComment={(event) => this.editComment(event) } />
+					<CommentModal 
+						isEditing={true} 
+						editComment={(event) => this.editComment(event) } 
+						comment={comment} 
+						closeCommentModal={ () => this.closeCommentModal()}/>
 				</Modal>
 
 			</div>
@@ -107,7 +113,8 @@ function mapStateToProps({comments}) {
 function mapDispatchToProps(dispatch) {
 	return {
 		voteComment: (commentId, option) => dispatch(voteComment(commentId, option)),
-		deleteComment: (commentId) => dispatch(deleteComment(commentId))
+		deleteComment: (commentId) => dispatch(deleteComment(commentId)),
+		editComment: (commentId, commentBody) => dispatch(editComment(commentId, commentBody))
 	}
 }
 

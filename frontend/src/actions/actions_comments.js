@@ -49,6 +49,15 @@ export const removeComment = ( { id, parentId, deleted } ) => {
 	}
 }
 
+export const modifyComment = ( { parentId, id, body } ) => {
+	return {
+		type: EDIT_COMMENT,
+		id, 
+		parentId,
+		body
+	}
+}
+
 export const postComment = comment => dispatch => (
 
 	CommentsAPI.postComment(comment)
@@ -74,6 +83,16 @@ export const deleteComment = (commentId) => dispatch => (
 		.then( function(response) {
 			response.json().then( (data) => (
 				dispatch(removeComment(data))
+			))
+		})
+
+)
+
+export const editComment = (commentId, commentBody) => dispatch => (
+	CommentsAPI.editComment(commentId, commentBody)
+		.then( function(response) {
+			response.json().then( (data) => (
+				dispatch(modifyComment(data))
 			))
 		})
 
