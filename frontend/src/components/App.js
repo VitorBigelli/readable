@@ -10,6 +10,7 @@ import CategoryList from './CategoryList';
 import PostList from './PostList';
 import Post from './Post';
 import { PostModal } from './PostModal';
+import { SortBy } from './SortBy';
 
 // Importing /actions
 import { fetchCategories } from '../actions/index'
@@ -35,7 +36,7 @@ class App extends Component {
 		this.state = {
 			postModalIsOpen: false,
 			currentPath: this.props.location.pathname,
-			sortBy: 'none'
+			sortBy: null
 		}
 	}
 
@@ -86,10 +87,35 @@ class App extends Component {
 		))
 	}
 
+	sortPostsBy = (option) => {
+		this.setState( () => {
+			sortBy: option
+		})
+	}
 
   	render() {
   		const { categories, avatars, posts } = this.props
-  		const { postModalIsOpen, currentPath } = this.state
+  		const { postModalIsOpen, currentPath, sortBy } = this.state
+
+  		switch(sortBy) {
+  			case "newest": 
+  				posts.sort(sortBy('timestamp'))
+  				break;
+  			case "oldest": 
+  				posts.sort(sortBy('timestamp')).reverse()
+  				break;
+  			case "highest": 
+  				posts.sort(sortBy('voteScore')).reverse()
+  				break;
+  			case "lowest": 
+  				posts.sort(sortBy('voteScore'))
+  				break;
+  			default: 
+  				break;
+  		}
+  		}
+
+
 
 	    return (
 	      <div className="App">
@@ -114,6 +140,7 @@ class App extends Component {
 			      		currentPath={currentPath}
 			      	/>
 			      	<span> Order by: </span> 
+			      	<SortBy sort={ (option) => this.sortPostsBy(option) } />
 			    </div>
 
 				<Switch>

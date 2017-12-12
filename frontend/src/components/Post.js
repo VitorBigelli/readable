@@ -34,7 +34,8 @@ class Post extends Component {
 			isEditing: this.props.isEditing ? true : false,
 			commentModalIsOpen: false,
 			currentComment: "",
-			dropdownOpen: false
+			dropdownOpen: false,
+			sortOption: 'timestamp'
 		}
 	}
 
@@ -143,6 +144,7 @@ class Post extends Component {
 							<span className="post-date"> { fullDate } </span>
 						</p>
 
+						{isDetails && (
 						<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
 				        	<DropdownToggle caret></DropdownToggle>
 				        	<DropdownMenu>
@@ -156,7 +158,7 @@ class Post extends Component {
 				        		> Delete post</DropdownItem>
 				    		</DropdownMenu>
 				    	</Dropdown>
-
+				    	)}
 					</div>
 
 			 		<div className="post-content">
@@ -207,7 +209,7 @@ class Post extends Component {
 						</form>
 					)}
 
-					{ postComments && 
+					{ isDetails && postComments && 
 						<CommentList comments={postComments} />
 					}
 				</div>

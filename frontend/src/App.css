@@ -41,11 +41,13 @@ footer a {
   color: #ddd;
 }
 
-.categories-list {
+.categories-list, 
+.sort-posts {
   display: flex;
   flex-wrap: wrap;
   padding: 5px;
   margin-right: 10px;
+  font-family: "Ubuntu", sans-serif;
 }
 
 .categories-list-header {
