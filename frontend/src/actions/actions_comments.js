@@ -40,6 +40,15 @@ export const updateCommentScore = ({ id, parentId, voteScore }) => {
 	}
 }
 
+export const removeComment = ( { id, parentId, deleted } ) => {
+	return {
+		type: DELETE_COMMENT,
+		id,
+		parentId, 
+		deleted
+	}
+}
+
 export const postComment = comment => dispatch => (
 
 	CommentsAPI.postComment(comment)
@@ -58,4 +67,14 @@ export const voteComment = (id, option) => dispatch => (
 				dispatch(updateCommentScore(data))
 			))
 		})
+)
+
+export const deleteComment = (commentId) => dispatch => (
+	CommentsAPI.deleteComment(commentId)
+		.then( function(response) {
+			response.json().then( (data) => (
+				dispatch(removeComment(data))
+			))
+		})
+
 )

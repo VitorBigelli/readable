@@ -61,3 +61,21 @@ export const voteComment = (commentId, option) => {
 		})
 	)
 }
+
+export const deleteComment = (commentId) => {
+	return (
+		fetch(
+			url + "comments/" + commentId,
+			{
+				method: "DELETE",
+				headers
+			}
+		)
+		.then( function(response) {
+			return validateResponse(response)
+		})
+		.catch( function(err) {
+			console.log("ERROR")
+		})
+	)
+}

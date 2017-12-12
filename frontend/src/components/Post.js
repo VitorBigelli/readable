@@ -10,6 +10,7 @@ import serializeForm from 'form-serialize'
 import { CommentList } from './CommentList';
 import { PostModal } from './PostModal';
 import { CommentModal } from './CommentModal';
+import OptionsMenu from './OptionsMenu';
 
 // Importing from /actions
 import { deletePost, editPost, votePost } from '../actions/actions_posts';
@@ -29,12 +30,9 @@ class Post extends Component {
 	constructor(props) {
 		super(props);
 
-		this.toggle = this.toggle.bind(this);
-
 		this.state = {
 			isEditing: this.props.isEditing ? true : false,
 			commentModalIsOpen: false,
-			dropdownOpen: false,
 			sortOption: 'timestamp',
 			commentAvatar: null
 		}
@@ -117,11 +115,6 @@ class Post extends Component {
 		this.props.history.push("/")
 	}
 
-	toggle = () => {
-		this.setState( () => ({
-			dropdownOpen: !this.state.dropdownOpen
-		}))
-	}
 
 	render() {
 		const { post, comments, removePost, categories, votePost, posts, isDetails } = this.props
@@ -132,8 +125,9 @@ class Post extends Component {
 		const minutes = (date.getMinutes() > 10) ?  date.getMinutes() : ("0" + date.getMinutes()) 
 		const fullDate = months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " at " + date.getHours() + ":" + minutes 
 
-		const postComments = comments ? comments.filter( comment => comment.parentId === post.id) : []
-
+		let postComments = comments ? comments.filter( comment => comment.parentId === post.id) : []
+		postComments = postComments.filter( comment => !comment.deleted)
+		
 		return (
 			<div className="post-view">
 
@@ -155,19 +149,7 @@ class Post extends Component {
 						</p>
 
 						{isDetails && (
-						<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-				        	<DropdownToggle caret></DropdownToggle>
-				        	<DropdownMenu>
-				          		<DropdownItem
-				          			className="edit-post-button"
-				          			onClick={ () => (this.openPostModal())}
-				          		> Edit post</DropdownItem>
-				        		<DropdownItem 
-				        			className="delete-post-button"
-				        			onClick={ () => (this.deletePost(post.id))}
-				        		> Delete post</DropdownItem>
-				    		</DropdownMenu>
-				    	</Dropdown>
+						<OptionsMenu post={post} />
 				    	)}
 					</div>
 
