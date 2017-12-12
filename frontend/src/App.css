@@ -375,14 +375,13 @@ footer a {
 }
 
 .cancel-comment {
-  min-width: 100px;
-  height: 25px;
-  padding: 5px;
-  background-color: #d44;
-  color: #fff;
+  min-width: 80px;
+  background-color: transparent;
+  color: #d44;
+  border: 1px solid #d44;
   border-radius: 10px;
-  border: none;
-  margin-right: 10px;
+  font-size: 14px;
+  margin-left: 10px;
 }
 
 .save-comment,
@@ -392,6 +391,7 @@ footer a {
   color: #fff;
   background-color: #d44;
   border-radius: 10px;
+  font-size: 14px;
 }
 
 .comment-author {
@@ -505,6 +505,10 @@ footer a {
   position: absolute;
   background-color: transparent;
   background: no-repeat;
+}
+
+.avatar-checkbox:checked {
+  border: 2px solid #52f;
 }
 
 .beth-avatar {

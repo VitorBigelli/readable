@@ -1,5 +1,5 @@
 import React from 'react'; 
-
+import { AvatarsList } from './AvatarsList';
 /* 
 #########################################################################
 							POST MODAL 
@@ -51,29 +51,7 @@ export const PostModal = ({categories, post = {}, closePostModal, handleSubmit }
 				</select>
 			</p>
 			<p> Pick an avatar: </p>
-			<ul className="avatar-list"> 
-				<li className="avatar-item"> 
-					<input type="checkbox" className="avatar-checkbox" onChange={ () => onCheck('/avatars/rick.jpg') }/><div className="rick-avatar avatar-image"></div> 
-				</li>
-				<li className="avatar-item"> 
-					<input type="checkbox" className="avatar-checkbox" onChange={ () => onCheck('/avatars/morty.jpg') }/><div className="morty-avatar avatar-image"></div>
-				</li>
-				<li className="avatar-item">
-					<input type="checkbox" className="avatar-checkbox" onChange={ () => onCheck('/avatars/summer.jpg') }/><div className="summer-avatar avatar-image"></div> 
-				</li>
-				<li className="avatar-item"> 
-					<input type="checkbox" className="avatar-checkbox" onChange={ () => onCheck('/avatars/beth.png') }/><div className="beth-avatar avatar-image"></div> 
-				</li>
-				<li className="avatar-item"> 
-					<input type="checkbox" className="avatar-checkbox" onChange={ () => onCheck('/avatars/jerry.jpg') }/><div  className="jerry-avatar avatar-image"></div> 
-				</li>
-				<li className="avatar-item"> 
-					<input type="checkbox" className="avatar-checkbox" onChange={ () => onCheck('/avatars/puppybuthole.jpg') }/><div className="puppybuthole-avatar avatar-image"></div> 
-				</li>
-				<li className="avatar-item"> 
-					<input type="checkbox" className="avatar-checkbox" onChange={ () => onCheck('/avatars/meeseeks.png') }/><div  className="meeseeks-avatar avatar-image"></div> 
-				</li>
-			</ul>
+			<AvatarsList pickedAvatar={ (avatar) => onCheck(avatar)} />
 		
 			<div className="post-author-info"> 
 				<span> Name: </span>

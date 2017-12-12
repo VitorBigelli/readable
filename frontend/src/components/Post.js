@@ -10,6 +10,7 @@ import serializeForm from 'form-serialize'
 // Importing from /components
 import { CommentList } from './CommentList';
 import { PostModal } from './PostModal';
+import { AvatarsList } from './AvatarsList';
 
 // Importing from /actions
 import { deletePost, editPost, votePost } from '../actions/actions_posts';
@@ -36,7 +37,8 @@ class Post extends Component {
 			commentModalIsOpen: false,
 			currentComment: "",
 			dropdownOpen: false,
-			sortOption: 'timestamp'
+			sortOption: 'timestamp',
+			commentAvatar: null
 		}
 	}
 
@@ -80,13 +82,14 @@ class Post extends Component {
 		this.closePostModal();
 	}
 
-	createComment = (event) => {
+	createComment = (event, avatar) => {
 		event.preventDefault(); 
 
 		const comment = {
 			id: generateId(),
 			parentId: this.props.post.id,
 			timestamp: Date.now(), 
+			avatar: avatar,
 			body: this.state.currentComment,
 			author: event.target.author.value
 		}
@@ -95,6 +98,11 @@ class Post extends Component {
 		this.closeCommentModal();
 	}
 
+	pickedAvatar = (avatar) => {
+		this.setState( () => ({
+			commentAvatar: avatar
+		}))
+	}
 
 	closeCommentModal = () => {
 		this.setState( () => ({
@@ -108,6 +116,11 @@ class Post extends Component {
 		this.props.displayPostDetails(this.props.history, category, id)
 	}
 
+	deletePost = (postId) => {
+		this.props.removePost(postId)
+		this.props.history.push("/")
+	}
+
 	toggle = () => {
 		this.setState( () => ({
 			dropdownOpen: !this.state.dropdownOpen
@@ -116,7 +129,7 @@ class Post extends Component {
 
 	render() {
 		const { post, comments, removePost, categories, votePost, posts, isDetails } = this.props
-		const { isEditing, commentModalIsOpen, currentComment } = this.state
+		const { isEditing, commentModalIsOpen, currentComment, commentAvatar } = this.state
 		
 		const date = new Date(post.timestamp)
 		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -155,7 +168,7 @@ class Post extends Component {
 				          		> Edit post</DropdownItem>
 				        		<DropdownItem 
 				        			className="delete-post-button"
-				        			onClick={ () => (removePost(post.id))}
+				        			onClick={ () => (this.deletePost(post.id))}
 				        		> Delete post</DropdownItem>
 				    		</DropdownMenu>
 				    	</Dropdown>
@@ -223,28 +236,31 @@ class Post extends Component {
 					onRequestClose={this.closeCommentModal}
 					overlayClassName="overlay"
 					contentLabel="CommentModal">
-					<p> Write your name/nickname to post your comment: </p>
-						<form 
-							className="comment-author-form"
-							onSubmit={ (event) => { 
-								this.createComment(event)
-							}}
-						>	
-							<input 
-								type="text"
-								className="comment-author"
-								name="author"
-							/>
-							<button
-								type="submit"
-								className="save-comment">
-								Post comment
-							</button>
-							<button 
-								onClick={ () => this.closeCommentModal() }
-								className="cancel-comment"
-							> Cancel comment </button>
-						</form>
+					<form 
+						className="comment-author-form"
+						onSubmit={ (event) => { 
+							this.createComment(event, commentAvatar)
+						}}
+					>	
+						<p> Name/nickname: </p>
+						<input 
+							type="text"
+							className="comment-author"
+							name="author"
+						/>
+						<p> Pick an avatar (optional): </p>
+						<AvatarsList pickedAvatar={ (option) => this.pickedAvatar(option)} />
+
+						<button
+							type="submit"
+							className="save-comment">
+							Post
+						</button>
+						<button 
+							onClick={ () => this.closeCommentModal() }
+							className="cancel-comment"
+						> Cancel </button>
+					</form>
 				</Modal>
 
 				{/* (EDIT) POST MODAL */}
