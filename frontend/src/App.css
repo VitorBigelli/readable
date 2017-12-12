@@ -508,21 +508,29 @@ footer a {
 }
 
 .beth-avatar {
-  background-image: url('./icons/beth.png');
+  background-image: url('./avatars/beth.png');
 }
 
 .summer-avatar {
-  background-image: url('./icons/summer.jpg');
+  background-image: url('./avatars/summer.jpg');
 }
 
 .morty-avatar {
-  background-image: url('./icons/morty.jpg');
+  background-image: url('./avatars/morty.jpg');
 }
 
 .rick-avatar {
-  background-image: url('./icons/rick.png');
+  background-image: url('./avatars/rick.jpg');
 }
 
 .jerry-avatar {
-  background-image: url('./icons/jerry.png');
+  background-image: url('./avatars/jerry.jpg');
+}
+
+.meeseeks-avatar {
+  background-image: url('./avatars/meeseeks.png');
+}
+
+.puppybuthole-avatar {
+  background-image: url('./avatars/puppybuthole.jpg');
 }

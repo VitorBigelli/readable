@@ -45,9 +45,9 @@ class App extends Component {
 		this.props.fetchCategories()
 	}
 
-	handleSubmit = (e) => {
+	handleSubmit = (e, id, url) => {
 		e.preventDefault() 
-		
+		console.log(url)
 		let values = serializeForm(e.target, {hash: true} )
 			
 		const post = {
@@ -55,6 +55,7 @@ class App extends Component {
 			timestamp: Date.now(),
 			title: values.title, 
 			body: values.body,
+			avatar: url,
 			author: values.author, 
 			category: values.category
 		}
@@ -100,8 +101,6 @@ class App extends Component {
   		const { categories, avatars, posts } = this.props
   		const { postModalIsOpen, currentPath, sort } = this.state
   		let sortedPosts = []
-
-  		console.log(sortedPosts)
 
   		switch(sort) {
   			case "newest": 
@@ -188,7 +187,7 @@ class App extends Component {
 		      		onRequestClose={this.closePostModal}
 		      		contentLabel="PostModal"
 		      	>
-		      		<PostModal categories={categories} closePostModal={this.closePostModal} handleSubmit={this.handleSubmit} />	      			
+		      		<PostModal categories={categories} closePostModal={this.closePostModal} handleSubmit={ (e, id, avatar) => this.handleSubmit(e, id, avatar)} />	      			
 		      	</Modal>
 
 	    	</div>

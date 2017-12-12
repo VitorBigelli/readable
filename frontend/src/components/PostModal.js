@@ -8,11 +8,17 @@ import React from 'react';
 
 export const PostModal = ({categories, post = {}, closePostModal, handleSubmit }) => {
 	
+	let avatar = null
+
+	function onCheck(checkedAvatar) {
+		avatar = checkedAvatar
+	}
+
 	return (
 		<form
 			className="post-form"
 			onSubmit={ (event) =>  {
-				handleSubmit(event, post.id)
+				handleSubmit(event, post.id, avatar)
 			}}
 		> 
 			{ post.id && <h3> Editing post </h3> }
@@ -46,11 +52,27 @@ export const PostModal = ({categories, post = {}, closePostModal, handleSubmit }
 			</p>
 			<p> Pick an avatar: </p>
 			<ul className="avatar-list"> 
-				<li className="avatar-item"> <input type="checkbox" name="beth" className="avatar-checkbox"/><div className="beth-avatar avatar-image"></div> </li>
-				<li className="avatar-item"> <input type="checkbox" name="summer" className="avatar-checkbox"/><div className="summer-avatar avatar-image"></div> </li>
-				<li className="avatar-item"> <input type="checkbox" name="rick" className="avatar-checkbox"/><div className="rick-avatar avatar-image"></div> </li>
-				<li className="avatar-item"> <input type="checkbox" name="morty" className="avatar-checkbox"/><div className="morty-avatar avatar-image"></div> </li>
-				<li className="avatar-item"> <input type="checkbox" name="jerry" className="avatar-checkbox"/><div  className="jerry-avatar avatar-image"></div> </li>
+				<li className="avatar-item"> 
+					<input type="checkbox" className="avatar-checkbox" onChange={ () => onCheck('/avatars/rick.jpg') }/><div className="rick-avatar avatar-image"></div> 
+				</li>
+				<li className="avatar-item"> 
+					<input type="checkbox" className="avatar-checkbox" onChange={ () => onCheck('/avatars/morty.jpg') }/><div className="morty-avatar avatar-image"></div>
+				</li>
+				<li className="avatar-item">
+					<input type="checkbox" className="avatar-checkbox" onChange={ () => onCheck('/avatars/summer.jpg') }/><div className="summer-avatar avatar-image"></div> 
+				</li>
+				<li className="avatar-item"> 
+					<input type="checkbox" className="avatar-checkbox" onChange={ () => onCheck('/avatars/beth.png') }/><div className="beth-avatar avatar-image"></div> 
+				</li>
+				<li className="avatar-item"> 
+					<input type="checkbox" className="avatar-checkbox" onChange={ () => onCheck('/avatars/jerry.jpg') }/><div  className="jerry-avatar avatar-image"></div> 
+				</li>
+				<li className="avatar-item"> 
+					<input type="checkbox" className="avatar-checkbox" onChange={ () => onCheck('/avatars/puppybuthole.jpg') }/><div className="puppybuthole-avatar avatar-image"></div> 
+				</li>
+				<li className="avatar-item"> 
+					<input type="checkbox" className="avatar-checkbox" onChange={ () => onCheck('/avatars/meeseeks.png') }/><div  className="meeseeks-avatar avatar-image"></div> 
+				</li>
 			</ul>
 		
 			<div className="post-author-info"> 

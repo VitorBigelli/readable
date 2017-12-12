@@ -18,6 +18,7 @@ import { getComments, postComment } from '../actions/actions_comments';
 // Importing from /util
 import generateId from '../util/idGenerator'
 
+
 /* 
 #########################################################################
 							POST COMPONENT 
@@ -133,7 +134,7 @@ class Post extends Component {
 					<div className="post-header">
 						<img 
 							className="post-avatar"
-							src={post.avatar}
+							src={process.env.PUBLIC_URL + post.avatar}
 							width={80}
 							alt="avatar"
 						/>
@@ -257,7 +258,7 @@ class Post extends Component {
 						categories={categories} 
 						post={post} 
 						closePostModal={this.closePostModal} 
-						handleSubmit={ (event, id) => this.editPost(event, id)} />
+						handleSubmit={ (event, id, avatar) => this.editPost(event, id, avatar)} />
 				</Modal>
 			</div>
 		)
