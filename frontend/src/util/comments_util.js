@@ -23,7 +23,7 @@ export const postComment = (comment) => {
 
 	return (
 		fetch(
-			url + '/comments', 
+			url + 'comments', 
 			{
 				method: "POST",
 				headers,

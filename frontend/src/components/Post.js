@@ -42,7 +42,7 @@ class Post extends Component {
 		this.props.getComments(this.props.post.id)
 	}
 
-	handleSubmit(event) {
+	handleCommentSubmit(event) {
 		event.preventDefault(); 
 
 		const comment = event.target.comment
@@ -156,6 +156,7 @@ class Post extends Component {
 				        		> Delete post</DropdownItem>
 				    		</DropdownMenu>
 				    	</Dropdown>
+
 					</div>
 
 			 		<div className="post-content">
@@ -178,21 +179,25 @@ class Post extends Component {
 						</p>
 					
 						<p className="post-details">
-							{ postComments && postComments.length + " comments | "}
-							{ !postComments && "No comments | "}
-						&nbsp;
-						<button 
-							onClick={ (event) => this.showPostDetails(event, post)}
-							className="post-details-link"
-						>
-							See post details
-						</button>
+							{ postComments && postComments.length + " comments"}
+							{ !postComments && "No comments "}
+						&nbsp; | &nbsp;
+
+						{!isDetails && (
+							<button 
+								onClick={ (event) => this.showPostDetails(event, post)}
+								className="post-details-link"
+							>
+								See post details
+							</button>
+						)}
 						</p>
 					</div>
 
 					{ isDetails && (
-						<form className="new-comment">
-							<AutoheightTextarea 
+						<form className="new-comment" onSubmit={ (event) => this.handleCommentSubmit(event)}>
+							<AutoheightTextarea
+								name="comment" 
 								className="comment-input"
 								placeholder="Write your comment..."
 							/>
@@ -251,9 +256,6 @@ class Post extends Component {
 						closePostModal={this.closePostModal} 
 						handleSubmit={ (event, id) => this.editPost(event, id)} />
 				</Modal>
-
-				
-
 			</div>
 		)
 	}

@@ -24,9 +24,9 @@ function comments (state = {}, action) {
 
 			return {
 				...state,
-				[action.parentId]: {
-					...state[action.parentId], 
-					[id]: action
+				[action.comment.parentId]: {
+					...state[action.comment.parentId], 
+					[action.comment.id]: action.comment
 			}
 		}
 
