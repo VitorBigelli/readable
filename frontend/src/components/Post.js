@@ -3,14 +3,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import { Link, withRouter, Route } from 'react-router-dom';
-import AutoheightTextarea from 'react-autoheight-textarea';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import serializeForm from 'form-serialize'
 
 // Importing from /components
 import { CommentList } from './CommentList';
 import { PostModal } from './PostModal';
-import { AvatarsList } from './AvatarsList';
+import { CommentModal } from './CommentModal';
 
 // Importing from /actions
 import { deletePost, editPost, votePost } from '../actions/actions_posts';
@@ -99,12 +98,6 @@ class Post extends Component {
 		this.props.createComment(comment);
 		this.closeCommentModal();
 		this.props.history.push("/"+post.category+"/"+post.id)
-	}
-
-	pickedAvatar = (avatar) => {
-		this.setState( () => ({
-			commentAvatar: avatar
-		}))
 	}
 
 	closeCommentModal = () => {
@@ -233,38 +226,7 @@ class Post extends Component {
 					onRequestClose={this.closeCommentModal}
 					overlayClassName="overlay"
 					contentLabel="CommentModal">
-					<form 
-						className="new-comment-form"
-						onSubmit={ (event) => { 
-							this.createComment(event, commentAvatar)
-						}}
-					>	
-						<p> Comment: </p>
-						<AutoheightTextarea
-							name="comment" 
-							className="comment-input"
-							defaultValue=""
-							placeholder="Write your comment..."
-						/>
-						<p> Name/nickname: </p>
-						<input 
-							type="text"
-							className="comment-author"
-							name="author"
-						/>
-						<p> Pick an avatar (optional): </p>
-						<AvatarsList pickedAvatar={ (option) => this.pickedAvatar(option)} />
-
-						<button
-							type="submit"
-							className="save-comment">
-							Post
-						</button>
-						<button 
-							onClick={ () => this.closeCommentModal() }
-							className="cancel-comment"
-						> Cancel </button>
-					</form>
+					<CommentModal isEditing={false} createComment={(event, avatar) => this.createComment(event, avatar) } />
 				</Modal>
 
 				{/* (EDIT) POST MODAL */}
@@ -280,7 +242,7 @@ class Post extends Component {
 						closePostModal={this.closePostModal} 
 						handleSubmit={ (event, id, avatar) => this.editPost(event, id, avatar)} />
 				</Modal>
-				
+
 			</div>
 		)
 	}
