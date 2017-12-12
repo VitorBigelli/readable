@@ -55,19 +55,24 @@ class Comment extends Component {
 
 		return (
 			<div>
-				<img
-					className="comment-avatar"
-					src={comment.avatar}
-					alt="avatar"
-				/>
+				<div className="comment-container">
+					<img
+						className="comment-avatar"
+						src={comment.avatar}
+						alt="avatar"
+					/>
 
-				<div className="comment-content">
-					<span className="comment-author"> {comment.author} </span> 
-					<span> {comment.body} </span>
+					<OptionsMenu 
+						className="comment-options"
+						comment={comment} 
+						openModal={ () => this.openCommentModal()} 
+						delete={ () => this.deleteComment(comment.id)}/>
+
+					<div className="comment-content">
+						<span className="comment-author"> {comment.author} </span> 
+						<span> {comment.body} </span>
+					</div>
 				</div>
-
-				<OptionsMenu comment={comment} openModal={ () => this.openCommentModal()} delete={ () => this.deleteComment(comment.id)}/>
-
 				<div className="comment-footer">
 					<div className="comment-interact">
 						Comment score: {comment.voteScore} | 
