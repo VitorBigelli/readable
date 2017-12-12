@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import serializeForm from 'form-serialize';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter, Link } from 'react-router-dom';
 
 // Importing /components
 import CategoryList from './CategoryList';
 import PostList from './PostList';
+import Post from './Post';
 import { PostModal } from './PostModal';
 
 // Importing /actions
@@ -87,14 +88,16 @@ class App extends Component {
 
 
   	render() {
-  		const { categories, avatars } = this.props
+  		const { categories, avatars, posts } = this.props
   		const { postModalIsOpen, currentPath } = this.state
 
 	    return (
 	      <div className="App">
 
 	      	<header>
-	      			<h1> React readable </h1>
+	      			<Link to="/">
+	      				<h1> React readable </h1>
+	      			</Link>
 		      		<button
 				      		className="new-post-button"
 				      		onClick={this.openPostModal}
@@ -123,6 +126,7 @@ class App extends Component {
 		  			{ categories && categories.map( category => (
 		  				<Route
 		  					key={category.name} 
+		  					exact
 			  				path={"/" + category.path}
 			  				render={ () => {
 								return (
@@ -132,7 +136,19 @@ class App extends Component {
 							}
 		  				/>
 		  			))}
-	  			</Switch>
+		  			{ posts && posts.map( post => (
+		  				<Route 
+							key={post.id}
+							exact
+							path={"/"+post.category+"/"+post.id} 
+							render={ () => {
+								return (
+									<Post post={post} isDetails={true} />
+								)
+							}}
+						/>
+		  			))}
+				</Switch>
 		      
 		      	<Modal
 		      		className="post-modal"
@@ -154,9 +170,20 @@ class App extends Component {
 	}
 }
 
-function mapStateToProps ({categories}) {
+function mapStateToProps ({categories, posts}) {
+	let newPosts = []
+
+	for (let post in posts) {
+
+		if (posts.hasOwnProperty(post)) {
+			newPosts = newPosts.concat([ posts[post] ])
+		}
+
+	}
+
 	return {
-		categories: categories
+		categories: categories,
+		posts: newPosts
 	}
 }
 

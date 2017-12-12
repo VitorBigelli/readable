@@ -18,8 +18,6 @@ function comments (state = {}, action) {
 				comments[c.parentId][c.id] = c
 			}
 
-			console.log(comments)
-
 			return comments
 
 		case CREATE_COMMENT: 

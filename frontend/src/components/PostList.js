@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'; 
 import { getPostsByCategory, getAllPosts } from '../actions/actions_posts';
 import Post from './Post'; 
-import { withRouter } from 'react-router-dom';
+import { withRouter, Switch, Route } from 'react-router-dom';
 
 /* 
 #########################################################################
@@ -20,6 +20,10 @@ class PostList extends Component {
 		}
 	}
 
+	displayPostDetails = (history, category, id) => {
+		history.push("/" + category + "/" + id)
+	}
+
 	render() {
 		const { posts, category } = this.props
 		const postListTitle = category ? ("Posts about " + category) : "All posts"
@@ -31,10 +35,15 @@ class PostList extends Component {
 				{ (posts != null) && posts.map( post => (
 					!post.deleted && 
 					(post.category === category || !category) &&
-					<li key={post.id}> <Post post={post} /> </li>
+					<li key={post.id}> 
+						<Post post={post} displayPostDetails={ (history, category, id) => this.displayPostDetails(history, category, id)} /> 
+					</li>
 				))} 
 				</ul>
 			</div>
+
+
+
 		)
 	}
 

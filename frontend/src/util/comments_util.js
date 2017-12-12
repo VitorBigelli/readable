@@ -1,7 +1,6 @@
 import { url, headers, validateResponse } from './api_helper'
 
 export const getCommentsByPost = (parentId) => {
-	console.log(url+parentId+"/comments")
 	return (
 		fetch(
 			url + "posts/" + parentId + '/comments', 

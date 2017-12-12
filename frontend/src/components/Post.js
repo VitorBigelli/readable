@@ -100,6 +100,12 @@ class Post extends Component {
 		}))
 	}
 
+	showPostDetails = (e, post) => {
+		e.preventDefault()
+		const { category, id } = post
+		this.props.displayPostDetails(this.props.history, category, id)
+	}
+
 	toggle = () => {
 		this.setState( () => ({
 			dropdownOpen: !this.state.dropdownOpen
@@ -107,14 +113,15 @@ class Post extends Component {
 	}
 
 	render() {
-		const { post, comments, removePost, categories, votePost, posts } = this.props
+		const { post, comments, removePost, categories, votePost, posts, isDetails } = this.props
 		const { isEditing, commentModalIsOpen, currentComment } = this.state
+		
 		const date = new Date(post.timestamp)
 		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 		const minutes = (date.getMinutes() > 10) ?  date.getMinutes() : ("0" + date.getMinutes()) 
 		const fullDate = months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " at " + date.getHours() + ":" + minutes 
 
-		const postComments = comments.filter( comment => comment.parentId === post.id)
+		const postComments = comments ? comments.filter( comment => comment.parentId === post.id) : []
 
 		return (
 			<div className="post-view">
@@ -157,34 +164,46 @@ class Post extends Component {
 					</div>
 
 					<div className="post-footer"> 
-						<div className="post-interact">
 							
-							<p className="score-info">
-								Post score: { post.voteScore } |
-								<button
-									onClick={ () => votePost(post.id, "upVote")}
-									className="vote-up-button"
-								>  Up vote </button>
-								<button
-									onClick={ () => votePost(post.id, "downVote")}
-									className="vote-down-button"
-								> Down vote </button>
-							</p>
-						
-							<p className="total-comments">
-								{ postComments && postComments.length + " comments"}
-								{ !postComments && "No comments"}
-							</p>
-
-						</div>
-
-						<Link to={"/posts/"+post.id} className="post-details-link">
-							See details
-						</Link>
+						<p className="score-info">
+							Post score: { post.voteScore } |
+							<button
+								onClick={ () => votePost(post.id, "upVote")}
+								className="vote-up-button"
+							>  Up vote </button>
+							<button
+								onClick={ () => votePost(post.id, "downVote")}
+								className="vote-down-button"
+							> Down vote </button>
+						</p>
+					
+						<p className="post-details">
+							{ postComments && postComments.length + " comments | "}
+							{ !postComments && "No comments | "}
+						&nbsp;
+						<button 
+							onClick={ (event) => this.showPostDetails(event, post)}
+							className="post-details-link"
+						>
+							See post details
+						</button>
+						</p>
 					</div>
 
+					{ isDetails && (
+						<form className="new-comment">
+							<AutoheightTextarea 
+								className="comment-input"
+								placeholder="Write your comment..."
+							/>
+							<button
+								className="comment-button"
+							> Send </button>
+						</form>
+					)}
+
 					{ postComments && 
-							<CommentList comments={postComments} />
+						<CommentList comments={postComments} />
 					}
 				</div>
 
@@ -233,16 +252,7 @@ class Post extends Component {
 						handleSubmit={ (event, id) => this.editPost(event, id)} />
 				</Modal>
 
-				<Route 
-					exact 
-					path={"/posts/" + post.id} 
-					render={ () => {
-						console.log("Working")
-						return (
-							<p> Testing </p>
-						)
-					}}
-				/>
+				
 
 			</div>
 		)
