@@ -129,111 +129,118 @@ class Post extends Component {
 		postComments = postComments.filter( comment => !comment.deleted)
 		
 		return (
-			<div>
 
-				{/* POST VIEW*/}
-				<div className="post-container">
-						
-					<div className="post-header">
-						<img 
-							className="post-avatar"
-							src={process.env.PUBLIC_URL + post.avatar}
-							width={80}
-							alt="avatar"
-						/>
-
-						<p className="post-main-info"> {post.author} 
-							<span className="post-complement-info"> posted on {post.category} category </span>
-							<br/>
-							<span className="post-date"> { fullDate } </span>
-						</p>
-
-						{isDetails && (
-						<OptionsMenu 
-							post={post} 
-							openModal={() => this.openPostModal()}
-							delete={ () => this.deletePost(post.id)}/>
-				    	)}
-					</div>
-
-			 		<div className="post-content">
-			 			<h4 className="post-title"> {post.title} </h4> 
-						<p className="post-body"> {post.body} </p>
-					</div>
-
-					<div className="post-footer"> 
+			<div> 
+				{ !post.deleted && 
+				<div>
+					{/* POST VIEW*/}
+					<div className="post-container">
 							
-						<p className="post-score-info">
-							Post score: { post.voteScore } | &nbsp;
-							<button
-								onClick={ () => votePost(post.id, "upVote")}
-								className="vote-up-button"
-							>  Vote up </button>
-							<button
-								onClick={ () => votePost(post.id, "downVote")}
-								className="vote-down-button"
-							> Vote down </button>
-						</p>
-					
-						<p className="post-details">
-							<span> { postComments && postComments.length + " comments"}
-							{ !postComments && "No comments "}
-							&nbsp; | &nbsp; 
-							</span>
+						<div className="post-header">
+							<img 
+								className="post-avatar"
+								src={process.env.PUBLIC_URL + post.avatar}
+								width={80}
+								alt="avatar"
+							/>
 
-						{!isDetails && (
-							<button 
-								onClick={ (event) => this.showPostDetails(event, post)}
-								className="post-details-link"
-							>
-								See details
-							</button>
-						)}
+							<p className="post-main-info"> {post.author} 
+								<span className="post-complement-info"> posted on {post.category} category </span>
+								<br/>
+								<span className="post-date"> { fullDate } </span>
+							</p>
 
-						{isDetails && (
-							<button 
-								className="new-comment-button"
-								onClick={this.openCommentModal}
-							> New comment </button> 
-						)}
+							{isDetails && (
+							<OptionsMenu 
+								post={post} 
+								openModal={() => this.openPostModal()}
+								delete={ () => this.deletePost(post.id)}/>
+					    	)}
+						</div>
+
+				 		<div className="post-content">
+				 			<h4 className="post-title"> {post.title} </h4> 
+							<p className="post-body"> {post.body} </p>
+						</div>
+
+						<div className="post-footer"> 
+								
+							<p className="post-score-info">
+								Post score: { post.voteScore } | &nbsp;
+								<button
+									onClick={ () => votePost(post.id, "upVote")}
+									className="vote-up-button"
+								>  Vote up </button>
+								<button
+									onClick={ () => votePost(post.id, "downVote")}
+									className="vote-down-button"
+								> Vote down </button>
+							</p>
 						
-						</p>
+							<p className="post-details">
+								<span> { postComments && postComments.length + " comments"}
+								{ !postComments && "No comments "}
+								&nbsp; | &nbsp; 
+								</span>
+
+							{!isDetails && (
+								<button 
+									onClick={ (event) => this.showPostDetails(event, post)}
+									className="post-details-link"
+								>
+									See details
+								</button>
+							)}
+
+							{isDetails && (
+								<button 
+									className="new-comment-button"
+									onClick={this.openCommentModal}
+								/> 
+							)}
+							
+							</p>
+						</div>
+
+						{ isDetails && postComments &&
+							<CommentList comments={postComments} />
+						}
 					</div>
 
-					{ isDetails && postComments &&
-						<CommentList comments={postComments} />
-					}
+					{/* COMMENT MODAL */}
+					<Modal 
+						isOpen={commentModalIsOpen}
+						className="comment-modal"
+						onRequestClose={this.closeCommentModal}
+						overlayClassName="overlay"
+						contentLabel="CommentModal">
+						<CommentModal 
+							isEditing={false} 
+							createComment={(event, avatar) => this.createComment(event, avatar) } 
+							closeCommentModal={ () => this.closeCommentModal()}
+							/>
+					</Modal>
+
+					{/* (EDIT) POST MODAL */}
+					<Modal
+						isOpen={isEditing}
+						className="post-modal"
+						onRequestClose={this.closeEditPostModal}
+						overlayClassName="overlay"
+						contentLabel="EditPostModal">
+						<PostModal 
+							categories={categories} 
+							post={post} 
+							isEditing={true}
+							closePostModal={this.closePostModal} 
+							handleSubmit={ (event, id, avatar) => this.editPost(event, id, avatar)} />
+					</Modal>
+
 				</div>
-
-				{/* COMMENT MODAL */}
-				<Modal 
-					isOpen={commentModalIsOpen}
-					className="comment-modal"
-					onRequestClose={this.closeCommentModal}
-					overlayClassName="overlay"
-					contentLabel="CommentModal">
-					<CommentModal 
-						isEditing={false} 
-						createComment={(event, avatar) => this.createComment(event, avatar) } 
-						closeCommentModal={ () => this.closeCommentModal()}
-						/>
-				</Modal>
-
-				{/* (EDIT) POST MODAL */}
-				<Modal
-					isOpen={isEditing}
-					className="post-modal"
-					onRequestClose={this.closeEditPostModal}
-					overlayClassName="overlay"
-					contentLabel="EditPostModal">
-					<PostModal 
-						categories={categories} 
-						post={post} 
-						isEditing={true}
-						closePostModal={this.closePostModal} 
-						handleSubmit={ (event, id, avatar) => this.editPost(event, id, avatar)} />
-				</Modal>
-
+			}
+			{ post.deleted && (
+				<h3> POST DELETED </h3>
+			)}
 			</div>
 		)
 	}

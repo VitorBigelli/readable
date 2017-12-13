@@ -112,7 +112,7 @@ class Comment extends Component {
 	}
 }
 
-function mapStateToProps({}) {
+function mapStateToProps() {
 	return {}
 }
 

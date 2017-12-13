@@ -16,7 +16,7 @@ import { SortBy } from './SortBy';
 
 // Importing /actions
 import { fetchCategories } from '../actions/index'
-import { postNewPost } from '../actions/actions_posts';
+import { postNewPost, getAllPosts } from '../actions/actions_posts';
 
 //Importing from /util
 import generateId from '../util/idGenerator'
@@ -45,6 +45,7 @@ class App extends Component {
 
 	componentDidMount() {
 		this.props.fetchCategories()
+		this.props.getAllPosts()
 	}
 
 	handleSubmit = (e, url) => {
@@ -152,7 +153,19 @@ class App extends Component {
 			    </div>
 
 				<Switch>
-					<Route 
+					{ posts && posts.map( post => (
+		  				<Route 
+							key={post.id}
+							exact
+							path={"/"+post.category+"/"+post.id} 
+							render={ () => {
+								return (
+									<Post post={post} isDetails={true} />
+								)
+							}}
+						/>
+		  			))}
+		  			<Route 
 			      		exact path="/" 
 			      		render={ () => (
 			      			<PostList posts={sortedPosts} />
@@ -171,18 +184,7 @@ class App extends Component {
 							}
 		  				/>
 		  			))}
-		  			{ posts && posts.map( post => (
-		  				<Route 
-							key={post.id}
-							exact
-							path={"/"+post.category+"/"+post.id} 
-							render={ () => {
-								return (
-									<Post post={post} isDetails={true} />
-								)
-							}}
-						/>
-		  			))}
+		  			
 				</Switch>
 		      
 		      	<Modal
@@ -227,6 +229,7 @@ function mapStateToProps ({categories, posts}) {
 function mapDispatchToProps (dispatch) {
 	return {
 		fetchCategories: () => dispatch(fetchCategories()),
+		getAllPosts: () => dispatch(getAllPosts()),
 		createPost: (post) => dispatch(postNewPost(post))
 	}
 }

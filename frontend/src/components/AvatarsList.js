@@ -10,7 +10,6 @@ export const AvatarsList = ({pickedAvatar}) => {
 
 	return (
 		<ul className="avatar-list"> 
-
 			{ avatarNames.map( avatar => (
 				<li className="avatar-item" key={avatar} > 
 					<input name="avatar" type="radio" className="avatar-checkbox" onChange={ () => onCheck('/avatars/'+avatar) }/>

@@ -31,7 +31,7 @@ export const CommentModal = ({ isEditing, createComment, editComment, comment, c
 						defaultValue={comment.body}
 						placeholder="Write your comment..."
 					/>
-					<p> Name/nickname: </p>
+					<p> Name/nickname:
 					<input 
 						type="text"
 						className="comment-author-input"
@@ -39,6 +39,7 @@ export const CommentModal = ({ isEditing, createComment, editComment, comment, c
 						value={comment.author}
 						readOnly
 					/>
+					</p>
 					<button
 						type="submit"
 						className="save-comment">
@@ -65,14 +66,16 @@ export const CommentModal = ({ isEditing, createComment, editComment, comment, c
 						defaultValue=""
 						placeholder="Write your comment..."
 					/>
-					<p> Name/nickname: </p>
+					<p> Name/nickname:
 					<input 
 						type="text"
 						className="comment-author-input"
 						name="author"
 					/>
-					<p> Pick an avatar (optional): </p>
+					</p>
+					<p> Pick an avatar (optional):
 					<AvatarsList pickedAvatar={ (option) => pickedAvatar(option)} />
+					</p>
 					<button
 						type="submit"
 						className="save-comment">

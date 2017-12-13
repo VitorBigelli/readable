@@ -1,4 +1,10 @@
 /*  PAGE STYLES */
+  
+  input,
+  select,
+  textarea {
+    font-family: "Ubuntu", sans-serif;
+  }
 
   body {
     background-color: #efefef;
@@ -174,6 +180,7 @@
   .post-details {
     width: 45%;
     margin: 0;
+    height: 20px;
     text-align: right;
   }
 
@@ -185,6 +192,15 @@
     color: #66a;
     border: none;
     cursor: pointer;
+  }
+
+  .new-comment-button {
+    background-image: url("./icons/comment.svg");
+    background-repeat: no-repeat;
+    background-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: transparent;
   }
 
   .post-complement-info {
@@ -325,10 +341,20 @@
   .post-author-name {
     width: 200px;
     margin-right: auto;
+    height: 20px;
   }
 
-  .post-category {
+  .post-author-info {
     margin-bottom: 10px;
+  }
+  
+  .post-category {
+    margin: 0;
+    margin-bottom: 5px;
+  }
+
+  .post-category select {
+    margin-left: 5px;
   }
 
 /* COMMENT MODAL STYLES */
@@ -390,25 +416,15 @@
     background-color: rgba(0, 0, 0, 0.75);
   }
 
-  .post-modal {
-    position: absolute;
-    top: 100px;
-    left: 10%;
-    right: 10%;
-    height: auto;
-    min-width: 500px;
-    background-color: #fff;
-  }
-
+  .post-modal, 
   .comment-modal {
     position: absolute;
-    top: 100px;
-    left: 10%;
-    right: 10%;
+    top: 10px;
+    left: 5%;
+    right: 5%;
     height: auto;
     min-width: 300px;
     background-color: #fff;
-    padding: 10px;
   }
 
 /*  OPTIONS MENU STYLES */
@@ -479,4 +495,3 @@
   .avatar-checkbox:checked {
     border: 3px solid #d44;
   }
-
