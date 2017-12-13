@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 /* 
 #########################################################################
-							CATEGORY LIST COMPONENT 
+							CATEGORY LIST (STATELESS) COMPONENT 
 #########################################################################
 */
 

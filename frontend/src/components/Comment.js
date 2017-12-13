@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
 import { voteComment, deleteComment, editComment } from '../actions/actions_comments';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import OptionsMenu from './OptionsMenu';
 import Modal from 'react-modal';
 import { CommentModal } from './CommentModal';
@@ -126,3 +127,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comment);
+
+Comment.propTypes = {
+	comments: PropTypes.array.isRequired, 
+	voteComment: PropTypes.func.isRequired,
+	deleteComment: PropTypes.func.isRequired,
+	editComment: PropTypes.func.isRequired
+}

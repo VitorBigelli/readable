@@ -4,7 +4,7 @@ import AutoheightTextarea from 'react-autoheight-textarea';
 
 /* 
 #########################################################################
-							COMMENT MODAL 
+							COMMENT MODAL (STATELESS) COMPONENT
 #########################################################################
 */
 export const CommentModal = ({ isEditing, createComment, editComment, comment, closeCommentModal }) => {

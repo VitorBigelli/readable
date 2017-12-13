@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import serializeForm from 'form-serialize';
 import { Route, Switch, withRouter, Link } from 'react-router-dom';
 import sortBy from 'sort-by';
+import PropTypes from 'prop-types';
 
 // Importing /components
 import CategoryList from './CategoryList';
@@ -34,6 +35,7 @@ class App extends Component {
 
 	constructor(props) {
 		super(props); 
+
 		this.state = {
 			postModalIsOpen: false,
 			currentPath: this.props.location.pathname,
@@ -45,9 +47,9 @@ class App extends Component {
 		this.props.fetchCategories()
 	}
 
-	handleSubmit = (e, id, url) => {
-		e.preventDefault() 
-		console.log(url)
+	handleSubmit = (e, url) => {
+		e.preventDefault()
+		
 		let values = serializeForm(e.target, {hash: true} )
 			
 		const post = {
@@ -98,7 +100,7 @@ class App extends Component {
 	}
 
   	render() {
-  		const { categories, avatars, posts } = this.props
+  		const { categories, posts } = this.props
   		const { postModalIsOpen, currentPath, sort } = this.state
   		let sortedPosts = []
 
@@ -128,9 +130,8 @@ class App extends Component {
 	      				<h1> React readable </h1>
 	      			</Link>
 		      		<button
-				      		className="new-post-button"
-				      		onClick={this.openPostModal}
-				      		className="new-post"
+				      	onClick={this.openPostModal}
+				      	className="new-post"
 				    > New Post </button>
 	      	</header>
 
@@ -187,13 +188,17 @@ class App extends Component {
 		      		onRequestClose={this.closePostModal}
 		      		contentLabel="PostModal"
 		      	>
-		      		<PostModal categories={categories} closePostModal={this.closePostModal} handleSubmit={ (e, id, avatar) => this.handleSubmit(e, id, avatar)} />	      			
+		      		<PostModal 
+		      			isEditing={false} 
+		      			categories={categories} 
+		      			closePostModal={this.closePostModal} 
+		      			handleSubmit={ (e, avatar) => this.handleSubmit(e, avatar)} />	      			
 		      	</Modal>
 
 	    	</div>
 
 	     	<footer> 
-	      		Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+	      		Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer">CC 3.0 BY</a>
 	     	</footer>
 	    </div>
 	    )
@@ -204,11 +209,9 @@ function mapStateToProps ({categories, posts}) {
 	let newPosts = []
 
 	for (let post in posts) {
-
 		if (posts.hasOwnProperty(post)) {
 			newPosts = newPosts.concat([ posts[post] ])
 		}
-
 	}
 
 	return {
@@ -228,3 +231,9 @@ export default withRouter(
 	connect(mapStateToProps, mapDispatchToProps)(App)
 );
 
+App.propTypes = {
+	categories: PropTypes.array.isRequired, 
+	posts: PropTypes.array.isRequired,
+	fetchCategories: PropTypes.func.isRequired,
+	postNewPost: PropTypes.func.isRequired
+}

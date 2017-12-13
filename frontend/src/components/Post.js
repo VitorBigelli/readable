@@ -2,9 +2,9 @@
 import React, { Component } from 'react'; 
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
-import { Link, withRouter, Route } from 'react-router-dom';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import serializeForm from 'form-serialize'
+import { withRouter } from 'react-router-dom';
+import serializeForm from 'form-serialize'; 
+import PropTypes from 'prop-types';
 
 // Importing from /components
 import { CommentList } from './CommentList';
@@ -34,7 +34,6 @@ class Post extends Component {
 			isEditing: this.props.isEditing ? true : false,
 			commentModalIsOpen: false,
 			sortOption: 'timestamp',
-			commentAvatar: null
 		}
 	}
 
@@ -77,8 +76,6 @@ class Post extends Component {
 		event.preventDefault(); 
 
 		const { post } = this.props
-		const { currentComment } = this.state
-
 
 		const comment = {
 			id: generateId(),
@@ -117,14 +114,14 @@ class Post extends Component {
 
 
 	render() {
-		const { post, comments, removePost, categories, votePost, posts, isDetails } = this.props
-		const { isEditing, commentModalIsOpen, commentAvatar } = this.state
+		const { post, comments, categories, votePost, isDetails } = this.props
+		const { isEditing, commentModalIsOpen } = this.state
 		
 		const date = new Date(post.timestamp)
 		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 		const minutes = (date.getMinutes() > 10) ?  date.getMinutes() : ("0" + date.getMinutes()) 
 		const fullDate = months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " at " + date.getHours() + ":" + minutes 
-
+		console.log(post)
 		let postComments = comments ? comments.filter( comment => comment.parentId === post.id) : []
 		postComments = postComments.filter( comment => !comment.deleted)
 		
@@ -229,6 +226,7 @@ class Post extends Component {
 					<PostModal 
 						categories={categories} 
 						post={post} 
+						isEditing={true}
 						closePostModal={this.closePostModal} 
 						handleSubmit={ (event, id, avatar) => this.editPost(event, id, avatar)} />
 				</Modal>
@@ -279,3 +277,14 @@ function mapDispatchToProps (dispatch) {
 export default withRouter(
 	connect(mapStateToProps, mapDispatchToProps)(Post)
 ); 
+
+Post.propTypes = {
+	comments: PropTypes.array.isRequired, 
+	categories: PropTypes.array.isRequired, 
+	posts: PropTypes.array.isRequired,
+	getComments: PropTypes.func.isRequired, 
+	createComment: PropTypes.func.isRequired, 
+	removePost: PropTypes.func.isRequired, 
+	votePost: PropTypes.func.isRequired,
+	isDetails: PropTypes.bool
+}

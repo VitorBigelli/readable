@@ -1,8 +1,7 @@
 import { RECEIVE_POSTS, CREATE_POST, DELETE_POST, EDIT_POST, VOTE_POST } from '../actions/actions_posts';
 
 function posts (state = null, action) {
-	var newPosts = state;
-	var posts = {}
+	let posts = {}
 	const { id } = action
 
 	switch(action.type) {
@@ -52,8 +51,6 @@ function posts (state = null, action) {
 					'body': action.body
 				}
 			}
-
-			return newPosts;
 
 		case VOTE_POST:
 

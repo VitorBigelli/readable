@@ -1,9 +1,9 @@
-import React, { Component } from 'react'; 
+import React from 'react'; 
 import Comment from './Comment';
 
 /* 
 #########################################################################
-							COMMENT LIST COMPONENT 
+							COMMENT LIST (STATELESS) COMPONENT 
 #########################################################################
 */
 

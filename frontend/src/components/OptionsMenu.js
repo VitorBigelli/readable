@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class OptionsMenu extends Component {
 
@@ -20,7 +21,7 @@ class OptionsMenu extends Component {
 	}
 
 	render() {
-		const { post, comment } = this.props
+		const { post = {} , comment = {} } = this.props
 
 		const id = post ? post.id : comment.id
 
@@ -46,3 +47,8 @@ class OptionsMenu extends Component {
 }
 
 export default OptionsMenu;
+
+OptionsMenu.propTypes = {
+	post: PropTypes.object,
+	comment: PropTypes.object
+}
