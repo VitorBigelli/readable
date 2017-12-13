@@ -176,9 +176,10 @@ class Post extends Component {
 						</p>
 					
 						<p className="post-details">
-							{ postComments && postComments.length + " comments"}
+							<span> { postComments && postComments.length + " comments"}
 							{ !postComments && "No comments "}
-						&nbsp; | &nbsp;
+							&nbsp; | &nbsp; 
+							</span>
 
 						{!isDetails && (
 							<button 
@@ -191,7 +192,7 @@ class Post extends Component {
 
 						{isDetails && (
 							<button 
-								className="new-comment-button"
+								className="post-details-link"
 								onClick={this.openCommentModal}
 							> New comment </button> 
 						)}
@@ -211,7 +212,11 @@ class Post extends Component {
 					onRequestClose={this.closeCommentModal}
 					overlayClassName="overlay"
 					contentLabel="CommentModal">
-					<CommentModal isEditing={false} createComment={(event, avatar) => this.createComment(event, avatar) } />
+					<CommentModal 
+						isEditing={false} 
+						createComment={(event, avatar) => this.createComment(event, avatar) } 
+						closeCommentModal={ () => this.closeCommentModal()}
+						/>
 				</Modal>
 
 				{/* (EDIT) POST MODAL */}

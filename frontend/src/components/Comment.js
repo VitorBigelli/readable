@@ -23,8 +23,10 @@ class Comment extends Component {
 
 	editComment = (event) => {
 		event.preventDefault();
+		
+
 		const { comment } = this.props
-		console.log(event.target.comment.value)
+
 		this.props.editComment(comment.id, event.target.comment.value)
 		this.closeCommentModal();
 	}

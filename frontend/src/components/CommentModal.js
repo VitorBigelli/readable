@@ -79,7 +79,7 @@ export const CommentModal = ({ isEditing, createComment, editComment, comment, c
 						Post
 					</button>
 					<button 
-						onClick={ () => this.closeCommentModal() }
+						onClick={ () => closeCommentModal() }
 						className="cancel-comment"
 					> Cancel </button>
 				</form>
