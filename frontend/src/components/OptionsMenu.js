@@ -30,11 +30,11 @@ class OptionsMenu extends Component {
 		        <DropdownToggle caret></DropdownToggle>
 	        	<DropdownMenu>
 	          		<DropdownItem
-	          			className="edit-post-button"
+	          			className="edit-button"
 	          			onClick={ () => (this.props.openModal())}
 	          		> Edit</DropdownItem>
 	        		<DropdownItem 
-	        			className="delete-post-button"
+	        			className="delete-button"
 	        			onClick={ () => (this.props.delete(id))}
 	        		> Delete</DropdownItem>
 	    		</DropdownMenu>

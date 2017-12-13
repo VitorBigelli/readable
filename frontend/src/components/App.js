@@ -62,8 +62,12 @@ class App extends Component {
 			category: values.category
 		}
 
-		this.props.postNewPost(post);
-		this.closePostModal();
+		if (values.title && values.body && values.author && values.category) {
+			this.props.createPost(post);
+			this.closePostModal();			
+		} else {
+			window.alert("Please, fill all the fields to public your post");
+		}
 	}	
 
 	updateCategory = (history, category) => {
@@ -223,7 +227,7 @@ function mapStateToProps ({categories, posts}) {
 function mapDispatchToProps (dispatch) {
 	return {
 		fetchCategories: () => dispatch(fetchCategories()),
-		postNewPost: (post) => dispatch(postNewPost(post))
+		createPost: (post) => dispatch(postNewPost(post))
 	}
 }
 
@@ -235,5 +239,5 @@ App.propTypes = {
 	categories: PropTypes.array.isRequired, 
 	posts: PropTypes.array.isRequired,
 	fetchCategories: PropTypes.func.isRequired,
-	postNewPost: PropTypes.func.isRequired
+	createPost: PropTypes.func.isRequired
 }

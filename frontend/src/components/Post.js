@@ -18,6 +18,7 @@ import { getComments, postComment } from '../actions/actions_comments';
 
 // Importing from /util
 import generateId from '../util/idGenerator'
+import { getFullDate } from '../util/getFullDate'
 
 
 /* 
@@ -72,27 +73,33 @@ class Post extends Component {
 		this.closePostModal();
 	}
 
-	createComment = (event, avatar) => {
-		event.preventDefault(); 
+	createComment = (e, avatar) => {
+		e.preventDefault(); 
 
 		const { post } = this.props
+		const values = serializeForm(e.target, { hash: true } )
 
-		const comment = {
-			id: generateId(),
-			parentId: post.id,
-			timestamp: Date.now(), 
-			avatar: avatar,
-			body: event.target.comment.value,
-			author: event.target.author.value
+		if (values.comment && values.author) {
+
+			const comment = {
+				id: generateId(),
+				parentId: post.id,
+				timestamp: Date.now(), 
+				avatar: avatar,
+				body: values.comment,
+				author: values.author
+			}
+			
+			this.props.createComment(comment);
+			this.closeCommentModal();
+			this.props.history.push("/"+post.category+"/"+post.id)
+
+		} else {
+			window.alert("Please, fill all the required fields to public your comment")
 		}
 
-		this.setState( () => ({
-			currentComment: ""
-		}))
 
-		this.props.createComment(comment);
-		this.closeCommentModal();
-		this.props.history.push("/"+post.category+"/"+post.id)
+		
 	}
 
 	closeCommentModal = () => {
@@ -116,17 +123,13 @@ class Post extends Component {
 	render() {
 		const { post, comments, categories, votePost, isDetails } = this.props
 		const { isEditing, commentModalIsOpen } = this.state
+		const fullDate = getFullDate(post.timestamp)
 		
-		const date = new Date(post.timestamp)
-		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-		const minutes = (date.getMinutes() > 10) ?  date.getMinutes() : ("0" + date.getMinutes()) 
-		const fullDate = months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " at " + date.getHours() + ":" + minutes 
-		console.log(post)
 		let postComments = comments ? comments.filter( comment => comment.parentId === post.id) : []
 		postComments = postComments.filter( comment => !comment.deleted)
 		
 		return (
-			<div className="post-view">
+			<div>
 
 				{/* POST VIEW*/}
 				<div className="post-container">
@@ -160,16 +163,16 @@ class Post extends Component {
 
 					<div className="post-footer"> 
 							
-						<p className="score-info">
-							Post score: { post.voteScore } |
+						<p className="post-score-info">
+							Post score: { post.voteScore } | &nbsp;
 							<button
 								onClick={ () => votePost(post.id, "upVote")}
 								className="vote-up-button"
-							>  Up vote </button>
+							>  Vote up </button>
 							<button
 								onClick={ () => votePost(post.id, "downVote")}
 								className="vote-down-button"
-							> Down vote </button>
+							> Vote down </button>
 						</p>
 					
 						<p className="post-details">
@@ -183,13 +186,13 @@ class Post extends Component {
 								onClick={ (event) => this.showPostDetails(event, post)}
 								className="post-details-link"
 							>
-								See post details
+								See details
 							</button>
 						)}
 
 						{isDetails && (
 							<button 
-								className="post-details-link"
+								className="new-comment-button"
 								onClick={this.openCommentModal}
 							> New comment </button> 
 						)}
@@ -239,6 +242,7 @@ class Post extends Component {
 
 function mapStateToProps ({categories, comments, posts}) {
 	
+	let newComments = []
 	let newPosts = []
 
 	for (let post in posts) {
@@ -246,10 +250,7 @@ function mapStateToProps ({categories, comments, posts}) {
 		if (posts.hasOwnProperty(post)) {
 			newPosts = newPosts.concat([ posts[post] ])
 		}
-
 	}
-
-	let newComments = []
 
 	for (let post in comments) {
 		for (let comment in comments[post]) {

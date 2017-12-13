@@ -1,520 +1,482 @@
-body {
-  background-color: #efefef;
-  font-family: "Ubuntu", sans-serif;
-
-}
-
-h2 {
-  text-align: center;
-  width: 90%;
-  max-width: 700px;
-  margin: auto;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  padding: 0;
-  font-size: 24px;
-}
-
-header {
-  background-color: #d44;
-  height: 50px;
-  padding: 10px;
-}
-
-h1 {
-  color: #fff;
-  float: left;
-  line-height: 30px;
-  margin: 0;
-}
-
-footer {
-  width: 100%;
-  background-color: #d44;
-  font-size: 12px; 
-  color: #fff;
-  text-align: center;
-  bottom: 0;
-}
-
-footer a {
-  color: #ddd;
-}
-
-.categories-list, 
-.sort-posts {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 5px;
-  margin-right: 10px;
-  font-family: "Ubuntu", sans-serif;
-}
-
-.categories-list-header {
-  width: 100%;
-}
-
-.categories-list-item {
-  list-style: none;
-  max-width: 400px;
-  background-color: #fff;
-  padding: 10px;
-  color: #333;
-  margin: 5px;
-}
-
-.post-container { 
-  width: 90%; 
-  max-width: 700px; 
-  margin: auto;
-  background-color: #fff;
-  padding: 10px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.post-title {
-  font-size: 15px;
-  font-weight: bold;
-  margin-top: 20px;
-  width: 100%; 
-}
-
-.post-details-link {
-  font-size: 12px; 
-  float: right;
-  background-color: transparent;
-  color: #66a;
-  border: none;
-  cursor: pointer;
-}
-
-.comment-container {
-  margin: auto;
-  background-color: #eee;
-  margin-bottom: 2px;
-  width: 100%;
-}
-
-.comment-content {
-  width: 85%;
-  float: left;
-  padding-left: 5px;
-  padding-top: 5px;
-  font-size: 13px;
-}
-
-.comment-list {
-  width: 100%;
-  padding: 0;
-  list-style: none;
-}
-
-.post-footer {
-  width: 100%;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  font-size: 12px;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 5px;
-}
-
-.post-header {
-  width: 100%;
-}
-
-.post-date,
-.comment-date {
-  color: #444;
-  font-size: 12px;
-  font-weight: normal;
-}
-
-.comment-date {
-  float: right;
-  width: calc(50% - 10px);
-  padding: 5px;
-  text-align: right;
-}
-
-.comment-interact {
-  font-size: 13px;
-  padding: 5px;
-  font-size: 12px;
-  color: #444;
-  margin: 0;
-}
-
-.comment-interact {
-  width: 50%;
-}
-
-.score-info {
-  width: 50%;
-  margin: 0;
-  float: left;
-}
-
-.main {
-  width: 100%; 
-}
-
-.post-details {
-  width: 50%;
-  margin: 0;
-  text-align: right;
-}
-
-.post-main-info {
-  padding: 5px 0 0 5px;
-  margin: 0;
-  float: left;
-  font-weight: bold;
-  width: 80%;
-  font-size: 13px;
-}
-
-.vote-up-button,
-.vote-down-button  {
-  border: none; 
-  background-color: transparent;
-  height: 20px;
-  font-size: 12px;
-  font-family: "Ubuntu", sans-serif;
-}
-
-.vote-up-button:hover {
-  cursor: pointer;
-  text-decoration: underline;
-  transition: 0.2s;
-}
-
-.vote-down-button:hover {
-  cursor: pointer;
-  text-decoration: underline;
-  transition: 0.2s;
-}
-
-.vote-up-button {
-  background-image: url("./icons/arrow-up.svg");
-  background-size: 20px;
-  background-repeat: no-repeat;
-  padding-left: 20px;
-}
-
-.vote-down-button {
-  background-image: url("./icons/arrow-down.svg");
-  background-size: 20px;
-  background-repeat: no-repeat;
-  padding-left: 20px;
-}
-
-.comment-footer {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
-.post-complement-info {
-  font-weight: normal;
-}
-
-.post-avatar {
-  border-radius: 50%;
-  width: 15%;
-  max-width: 80px;
-  height: auto;
-  float: left;
-}
-
-.posts-list {
-  list-style: none;
-  padding: 0;
-}
-
-.comment-avatar {
-  border-radius: 50%;
-  max-width: 50px;
-  width: 10%;
-  float: left;
-  padding: 5px;
-}
-
-.post-content {
-  width: 100%;
-  max-width: 650px;
-  float: right;
-  margin-right: 0;
-  background-color: transparent;
-  font-size: 14px;
-}
-
-.post-body, 
-.post-title {
-  padding-left: 5px;
-}
-
-.post-footer span {
-  margin-right: 10px;
-}
-
-.comment-footer span {
-  margin-right: 10px;
-}
-
-.overlay {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  background-color: rgba(0, 0, 0, 0.75);
-}
-
-.post-modal {
-  position: absolute;
-  top: 100px;
-  left: 10%;
-  right: 10%;
-  height: auto;
-  min-width: 500px;
-  background-color: #fff;
-}
-
-.comment-modal {
-  position: absolute;
-  top: 100px;
-  left: 10%;
-  right: 10%;
-  height: auto;
-  min-width: 300px;
-  background-color: #fff;
-  padding: 10px;
-}
-
-.post-form {
-  font-size: 14px;
-  padding: 10px;
-  width: calc(100% - 20px);
-}
-
-.cancel-post {
-  background-color: #fff; 
-  border: none;
-}
-
-.post-form-title {
-  width: 100%;
-  height: 20px;
-  margin-bottom: 10px;
-}
-
-.post-body {
-  width: 100%;
-  height: auto;
-  vertical-align: top;
-  margin-bottom: 10px;  
-  font-family: "Arial";
-}
-
-.post-form-body {
-  width: 100%;
-  height: 100px;
-  vertical-align: top;
-  margin-bottom: 10px;  
-  font-family: "Arial";
-}
-
-.post-author-info {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.post-author-name {
-  width: 200px;
-  margin-right: auto;
-}
-
-.post-category {
-  margin-bottom: 10px;
-}
-
-.post-avatar-list {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-}
-
-.nav-bar {
-  width: 100%;
-  max-width: 700px;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 5px;
-  font-size: 14px;
-  margin: auto;
-}
-
-.nav-bar select {
-  height: 20px;
-  padding: 0;
-}
-
-.new-post {
-  background-image: url('./icons/new-post.svg');
-  background-color: transparent;
-  border: none;
-  height: 30px;
-  width: 30px;
-  color: transparent;
-  float: right;
-  margin-right: 0;
-  top: 10px;
-}
-
-.cancel-comment {
-  min-width: 80px;
-  background-color: transparent;
-  color: #d44;
-  border: 1px solid #d44;
-  border-radius: 10px;
-  font-size: 14px;
-  margin-left: 10px;
-}
-
-.save-comment,
-.save-post {
-  min-width: 80px;
-  border: none;
-  color: #fff;
-  background-color: #d44;
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-.comment-author {
-  width: 100%;
-  margin-bottom: 10px;
-  height: 25px;
-  font-weight: bold;
-}
-
-.post-comment {
-  position: relative;
-  width: 100%; 
-  margin: auto;
-  border: 2px solid #eee;
-  min-height: 10px;
-  height: auto;
-  border-radius: 10px;
-  padding: 0;
-}
-
-.comment-button {
-  width: 10%;
-  min-width: 20px;
-  border: none;
-  background-color: #d44;
-  color: #fff;
-  float: right;
-  border-radius: 10px;
-  font-size: 12px;
-}
-
-.comment-input {
-  position: relative;
-  display: inline-block;
-  min-width: 280px;
-  width: 100%;
-  resize: vertical;
-  border: 1px solid #ddd;
-  margin: 0;
-  font-size: 13px;
-  height: 50px;
-}
-
-.comment-input:focus {
-  outline: none !important;
-}
-
-.new-comment {
-  width: 100%;
-}
-
-.post-options {
-  width: 50px;
-}
-
-.comment-options {
-  float: left;
-}
-
-.post-dropdown-options { 
-  display: none;   
-}
-
-.delete-post-button {
-  color: #f00;
-}
-
-.dropdown-toggle {
-  width: 15px; 
-  height: 15px;
-  padding: 0;
-  border: none;
-  background-color: transparent;
-}
-
-.active {
-  border: none;
-}
-
-.dropdown {
-  float: right;
-  margin-right: 10px;
-  height: 15px; 
-  background-color: transparent; 
-}
-
-.dropdown-menu {
-  right: 0;
-  left: -80px;
-  min-width: 40px;
-  font-size: 12px;
-}
-
-.avatar-item {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.avatar-list {
-  display: flex;
-  flex-wrap: wrap; 
-  padding: 0;
-}
-
-.avatar-image {
-  background-repeat: no-repeat;
-  background-size: 70px; 
-  width: 70px; 
-  height: 70px;
-  margin-right: 5px;
-}
-
-.avatar-checkbox {
-  -webkit-appearance: none;
-  width: 70px; 
-  height: 70px; 
-  position: absolute;
-  background-color: transparent;
-  background: no-repeat;
-  margin-right: 5px;
-}
-
-.avatar-checkbox:checked {
-  border: 3px solid #d44;
-}
+/*  PAGE STYLES */
+
+  body {
+    background-color: #efefef;
+    font-family: "Ubuntu", sans-serif;
+
+  }
+
+  h2 {
+    text-align: center;
+    width: 90%;
+    max-width: 700px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 0;
+    font-size: 24px;
+  }
+
+  header {
+    background-color: #d44;
+    height: 50px;
+    padding: 10px;
+  }
+
+  h1 {
+    color: #fff;
+    float: left;
+    line-height: 30px;
+    margin: 0;
+  }
+
+  footer {
+    width: 100%;
+    background-color: #d44;
+    font-size: 12px; 
+    color: #fff;
+    text-align: center;
+    bottom: 0;
+  }
+
+  footer a {
+    color: #ddd;
+  }
+
+  .categories-list, 
+  .sort-posts {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    margin-right: 10px;
+    font-family: "Ubuntu", sans-serif;
+  }
+
+  .categories-list-header {
+    width: 100%;
+  }
+
+  .categories-list-item {
+    list-style: none;
+    max-width: 400px;
+    background-color: #fff;
+    padding: 10px;
+    color: #333;
+    margin: 5px;
+  }
+
+  .nav-bar {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    font-size: 14px;
+    margin: auto;
+  }
+
+  .nav-bar select {
+    height: 20px;
+    padding: 0;
+  }
+
+  .new-post {
+    background-image: url('./icons/new-post.svg');
+    background-color: transparent;
+    border: none;
+    height: 30px;
+    width: 30px;
+    color: transparent;
+    float: right;
+    margin-right: 0;
+    top: 10px;
+  }
+
+  .main {
+    width: 100%; 
+  }
+  
+  .posts-list {
+    list-style: none;
+    padding: 0;
+  }
+
+/* POST STYLES */
+
+  .post-container { 
+    width: 100%;
+    max-width: 700px; 
+    margin: auto;
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .post-header {
+    width: 100%;
+  }
+
+  .post-main-info {
+    padding: 5px 0 0 5px;
+    margin: 0;
+    float: left;
+    font-weight: bold;
+    width: 80%;
+    font-size: 13px;
+  }
+
+  .post-content {
+    width: 100%;
+    max-width: 650px;
+    float: right;
+    margin-right: 0;
+    background-color: transparent;
+    font-size: 14px;
+  }
+
+  .post-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 20px;
+    width: 100%; 
+  }
+
+  .post-body {
+    width: 100%;
+    height: auto;
+    vertical-align: top;
+    margin-bottom: 10px;
+  }
+
+  .post-body, 
+  .post-title {
+    padding-left: 5px;
+  }
+
+  .post-footer {
+    width: 100%;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    font-size: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+  }
+
+  .post-score-info {
+    width: 55%;
+    margin: 0;
+    float: left;
+  }
+
+  .post-details {
+    width: 45%;
+    margin: 0;
+    text-align: right;
+  }
+
+  .post-details-link,
+  .new-comment-button {
+    font-size: 12px; 
+    float: right;
+    background-color: transparent;
+    color: #66a;
+    border: none;
+    cursor: pointer;
+  }
+
+  .post-complement-info {
+    font-weight: normal;
+  }
+
+  .post-avatar {
+    border-radius: 50%;
+    width: 15%;
+    max-width: 80px;
+    height: auto;
+    float: left;
+  }
+
+/* COMMENT STYLES */ 
+
+  .comment-container {
+    margin: auto;
+    background-color: #eee;
+    margin-bottom: 2px;
+    width: 100%;
+  }
+
+  .comment-content {
+    width: 80%;
+    float: left;
+    padding-left: 5px;
+    padding-top: 5px;
+    font-size: 13px;
+  }
+
+  .comment-list {
+    width: 100%;
+    padding: 0;
+    list-style: none;
+  }
+
+  .comment-date {
+    float: right;
+    width: calc(40%);
+    padding: 5px;
+    text-align: right;
+  }
+
+  .comment-interact {
+    font-size: 13px;
+    padding: 5px;
+    font-size: 12px;
+    color: #444;
+    margin: 0;
+    width: 60%;
+  }
+
+  .comment-footer {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    font-size: 12px; 
+    color: #333;
+  }
+
+  .comment-avatar {
+    border-radius: 50%;
+    max-width: 50px;
+    width: 10%;
+    float: left;
+    padding: 5px;
+  }
+
+/* POST AND COMMENT COMMOM STYLES */
+
+  .post-date,
+  .comment-date {
+    color: #444;
+    font-size: 12px;
+    font-weight: normal;
+  }
+
+  .vote-up-button,
+  .vote-down-button  {
+    border: none; 
+    background-color: transparent;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    margin-right: 5px;
+    font-family: "Ubuntu", sans-serif;
+  }
+
+  .vote-up-button:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    transition: 0.2s;
+  }
+
+  .vote-down-button:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    transition: 0.2s;
+  }
+
+  .save-comment,
+  .save-post {
+    min-width: 80px;
+    border: none;
+    color: #fff;
+    background-color: #d44;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+
+/* POST MODAL STYLES */ 
+
+  .post-form {
+    font-size: 14px;
+    padding: 10px;
+    width: calc(100% - 20px);
+  }
+
+  .cancel-post {
+    background-color: #fff; 
+    border: none;
+  }
+
+  .post-form-title {
+    width: 100%;
+    height: 20px;
+    margin-bottom: 10px;
+  }
+
+  .post-form-body {
+    width: 100%;
+    height: 100px;
+    vertical-align: top;
+    margin-bottom: 10px;  
+  }
+
+  .post-author-name {
+    width: 200px;
+    margin-right: auto;
+  }
+
+  .post-category {
+    margin-bottom: 10px;
+  }
+
+/* COMMENT MODAL STYLES */
+  .cancel-comment {
+    min-width: 80px;
+    background-color: transparent;
+    color: #d44;
+    border: 1px solid #d44;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-left: 10px;
+  }
+
+  .comment-author {
+    width: 100%;
+    margin-bottom: 10px;
+    height: 25px;
+    font-weight: bold;
+  }
+
+  .comment-author-input {
+    font-size: 13px; 
+    font-weight: normal;
+    font-family: "Ubuntu", sans-serif;
+  }
+
+  .comment-button {
+    width: 10%;
+    min-width: 20px;
+    border: none;
+    background-color: #d44;
+    color: #fff;
+    float: right;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+
+  .comment-input {
+    position: relative;
+    display: inline-block;
+    min-width: 280px;
+    width: 100%;
+    resize: vertical;
+    border: 1px solid #ddd;
+    margin: 0;
+    font-size: 13px;
+    height: 50px;
+    font-family: "Ubuntu", sans-serif;
+  }
+
+/* POST AND COMMENT MODAL COMMOM STYLES */
+
+  .overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+
+  .post-modal {
+    position: absolute;
+    top: 100px;
+    left: 10%;
+    right: 10%;
+    height: auto;
+    min-width: 500px;
+    background-color: #fff;
+  }
+
+  .comment-modal {
+    position: absolute;
+    top: 100px;
+    left: 10%;
+    right: 10%;
+    height: auto;
+    min-width: 300px;
+    background-color: #fff;
+    padding: 10px;
+  }
+
+/*  OPTIONS MENU STYLES */
+
+  .dropdown {
+    float: right;
+    margin-right: 10px;
+    height: 15px; 
+    width: 5%;
+    max-width: 10px;
+    background-color: transparent; 
+  }
+
+  .dropdown-toggle {
+    width: 15px; 
+    height: 15px;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+  }
+
+  .active {
+    border: none;
+  }
+
+  .dropdown-menu {
+    right: 0;
+    left: -80px;
+    min-width: 40px;
+    font-size: 12px;
+  }
+
+  .delete-button {
+      color: #f00;
+  }
+
+/* AVATARS LIST STYLES */
+
+  .avatar-item {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .avatar-list {
+    display: flex;
+    flex-wrap: wrap; 
+    padding: 0;
+  }
+
+  .avatar-image {
+    background-repeat: no-repeat;
+    background-size: 70px; 
+    width: 70px; 
+    height: 70px;
+    margin-right: 5px;
+  }
+
+  .avatar-checkbox {
+    -webkit-appearance: none;
+    width: 70px; 
+    height: 70px; 
+    position: absolute;
+    background-color: transparent;
+    background: no-repeat;
+    margin-right: 5px;
+  }
+
+  .avatar-checkbox:checked {
+    border: 3px solid #d44;
+  }
 

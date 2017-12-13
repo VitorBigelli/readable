@@ -34,7 +34,7 @@ export const CommentModal = ({ isEditing, createComment, editComment, comment, c
 					<p> Name/nickname: </p>
 					<input 
 						type="text"
-						className="comment-author"
+						className="comment-author-input"
 						name="author"
 						value={comment.author}
 						readOnly
@@ -68,7 +68,7 @@ export const CommentModal = ({ isEditing, createComment, editComment, comment, c
 					<p> Name/nickname: </p>
 					<input 
 						type="text"
-						className="comment-author"
+						className="comment-author-input"
 						name="author"
 					/>
 					<p> Pick an avatar (optional): </p>

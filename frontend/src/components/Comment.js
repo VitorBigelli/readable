@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import OptionsMenu from './OptionsMenu';
 import Modal from 'react-modal';
 import { CommentModal } from './CommentModal';
+import { getFullDate } from '../util/getFullDate';
 
 /* 
 #########################################################################
@@ -51,10 +52,8 @@ class Comment extends Component {
 	render() {
 		const { comment, voteComment } = this.props
 		const { commentModalIsOpen } = this.state
-		const date = new Date(comment.timestamp)
-		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-		const minutes = (date.getMinutes() > 10) ?  date.getMinutes() : ("0" + date.getMinutes()) 
-		const fullDate = months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " at " + date.getHours() + ":" + minutes 
+		
+		const fullDate = getFullDate(comment.timestamp)
 
 		return (
 			<div>
@@ -78,7 +77,7 @@ class Comment extends Component {
 				</div>
 				<div className="comment-footer">
 					<div className="comment-interact">
-						Comment score: {comment.voteScore} | 
+						<span className="comment-score"> Comment score: {comment.voteScore} | </span>
 						<button 
 							onClick={ () => voteComment(comment.id, "upVote")}
 							className="vote-up-button"
@@ -87,6 +86,7 @@ class Comment extends Component {
 							onClick={ () => voteComment(comment.id, "downVote")}
 							className="vote-down-button"
 						> Vote down </button>
+			
 					</div>
 
 					<div className="comment-date">
@@ -112,10 +112,8 @@ class Comment extends Component {
 	}
 }
 
-function mapStateToProps({comments}) {
-	return {
-		comments: comments
-	}
+function mapStateToProps({}) {
+	return {}
 }
 
 function mapDispatchToProps(dispatch) {
@@ -129,7 +127,6 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(Comment);
 
 Comment.propTypes = {
-	comments: PropTypes.array.isRequired, 
 	voteComment: PropTypes.func.isRequired,
 	deleteComment: PropTypes.func.isRequired,
 	editComment: PropTypes.func.isRequired
