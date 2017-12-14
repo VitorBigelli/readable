@@ -8,9 +8,14 @@
   }
 
   body {
+    width: 100%;
     background-color: #efefef;
     font-family: "Ubuntu", sans-serif;
 
+  }
+
+  html {
+    overflow-y: scroll;
   }
 
   h2 {
@@ -41,7 +46,7 @@
     width: 100%;
     text-align: center;
     margin: auto;
-    margin-top: 20px;
+    margin-top: 30px;
     text-shadow: 2px 2px 4px #222;
   }
 
@@ -59,11 +64,20 @@
     color: #ddd;
   }
 
+  .root {
+    width: 100%;
+  }
+
+  .App {
+    width: 100%;
+  }
+
   .filter,
   .sort {
     width: 50%;
     display: flex;
     flex-wrap: wrap;
+    color: #333;
   }
 
   .categories-list, 
@@ -73,6 +87,7 @@
     padding: 5px;
     margin-left: 10px;
     font-family: "Ubuntu", sans-serif;
+    color: #333;
   }
 
   .categories-list-header {
@@ -449,7 +464,7 @@
     padding: 10px;
     font-size: 14px;
     height: auto;
-    min-width: 300px;
+    min-width: 250px;
     max-width: 650px;
     background-color: #fff;
   }
