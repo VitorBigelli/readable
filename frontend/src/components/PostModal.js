@@ -38,7 +38,7 @@ export const PostModal = ({categories, isEditing, post, closePostModal, handleSu
 						placeholder="Write your post here... "
 					/>
 			
-					<p className="post-category"> Category: 
+					<span className="post-category"> Category: </span>
 						<select 
 							className="post-category" 
 							name="category" 
@@ -47,10 +47,9 @@ export const PostModal = ({categories, isEditing, post, closePostModal, handleSu
 								<option key={category.name} name={category.name} value={category.name}> {category.name} </option>
 							))}
 						</select>
-					</p>
-					<p> Pick an avatar: 
+					<br/>
+					<span> Pick an avatar: </span>
 					<AvatarsList pickedAvatar={ (avatar) => onCheck(avatar)} />
-					</p>
 					<div className="post-author-info"> 
 						<span> Name: </span>
 						<input 

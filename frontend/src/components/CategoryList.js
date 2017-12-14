@@ -22,7 +22,7 @@ const CategoryList = withRouter(({history, categories, updateCategory, currentPa
 				className="categories-list"
 				onChange={ (event) => onChangeCategory(event)}
 			>
-				<option key="none" value="" className="categories-list-item"> All posts </option>
+				<option key="none" value="" className="categories-list-item" > -------- </option>
 			{ categories && categories.map( category => (
 				<option 
 					key={category.name} value={category.name} 

@@ -104,6 +104,8 @@ class App extends Component {
 		)
 	}
 
+	
+
   	render() {
   		const { categories, posts } = this.props
   		const { postModalIsOpen, currentPath, sort } = this.state
@@ -131,13 +133,17 @@ class App extends Component {
 	      <div className="App">
 
 	      	<header>
-	      			<Link to="/">
-	      				<h1> React readable </h1>
-	      			</Link>
+      				<h1> React readable </h1>
+	      			{ (currentPath !== "/") && (
+	      				<Link
+	      					to="/"
+					      	className="back-link"
+					    />
+	      			)}
 		      		<button
 				      	onClick={this.openPostModal}
 				      	className="new-post"
-				    > New Post </button>
+				    />
 	      	</header>
 
 	      	<div className="container">

@@ -18,74 +18,79 @@ export const CommentModal = ({ isEditing, createComment, editComment, comment, c
 	return (
 			<div>
 			{ isEditing && (
-				<form 
-					className="new-comment-form"
-					onSubmit={ (event) => { 
-						editComment(event)
-					}}
-				>
-					<p> Comment: </p>
-					<AutoheightTextarea
-						name="comment" 
-						className="comment-input"
-						defaultValue={comment.body}
-						placeholder="Write your comment..."
-					/>
-					<p> Name/nickname:
-					<input 
-						type="text"
-						className="comment-author-input"
-						name="author"
-						value={comment.author}
-						readOnly
-					/>
-					</p>
-					<button
-						type="submit"
-						className="save-comment">
-						Post
-					</button>
-					<button 
-						onClick={ () => closeCommentModal() }
-						className="cancel-comment"
-					> Cancel </button>
-				</form>
+				<div>
+					<h4> Edit comment </h4>
+					<form 
+						className="new-comment-form"
+						onSubmit={ (event) => { 
+							editComment(event)
+						}}
+					>
+						<p> Comment: </p>
+						<AutoheightTextarea
+							name="comment" 
+							className="comment-input"
+							defaultValue={comment.body}
+							placeholder="Write your comment..."
+						/>
+						<span> Name/nickname: </span>
+						<input 
+							type="text"
+							className="comment-author-input"
+							name="author"
+							value={comment.author}
+							readOnly
+						/>
+						<button
+							type="submit"
+							className="save-comment">
+							Post
+						</button>
+						<button 
+							onClick={ () => closeCommentModal() }
+							className="cancel-comment"
+						> Cancel </button>
+					</form>
+				</div>
 			)} 
 
 			{!isEditing && (
-				<form 
-					className="new-comment-form"
-					onSubmit={ (event) => { 
-						createComment(event, commentAvatar)
-					}}
-				>
-					<p> Comment: </p>
-					<AutoheightTextarea
-						name="comment" 
-						className="comment-input"
-						defaultValue=""
-						placeholder="Write your comment..."
-					/>
-					<p> Name/nickname:
-					<input 
-						type="text"
-						className="comment-author-input"
-						name="author"
-					/>
-					</p>
-					<p> Pick an avatar (optional):
-					<AvatarsList pickedAvatar={ (option) => pickedAvatar(option)} />
-					</p>
-					<button
-						type="submit"
-						className="save-comment">
-						Post
-					</button>
-					<button 
-						onClick={ () => closeCommentModal() }
-						className="cancel-comment"
-					> Cancel </button>
-				</form>
+				<div>
+					<h4> New comment </h4>
+					<form 
+						className="new-comment-form"
+						onSubmit={ (event) => { 
+							createComment(event, commentAvatar)
+						}}
+					>
+						<AutoheightTextarea
+							name="comment" 
+							className="comment-input"
+							defaultValue=""
+							placeholder="Write your comment..."
+						/>
+						<span> Name/nickname: </span>
+						<input 
+							type="text"
+							className="comment-author-input"
+							name="author"
+						/>
+						<br/>
+						<span> Pick an avatar (optional): </span>  
+						<AvatarsList pickedAvatar={ (option) => pickedAvatar(option)} />
+						
+						<button
+							type="submit"
+							className="save-comment">
+							Post
+						</button>
+						
+						<button 
+							onClick={ () => closeCommentModal() }
+							className="cancel-comment"
+						> Cancel </button>
+					</form>
+				</div>
 		)}
 
 		</div>
