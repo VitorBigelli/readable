@@ -1,4 +1,4 @@
-import * as PostAPI from '../util/posts_util'; 
+import * as ReadableAPI from '../util/ReadableAPI'; 
 
 export const CREATE_POST = 'CREATE_POST'; 
 export const EDIT_POST = 'EDIT_POST'; 
@@ -55,7 +55,7 @@ export const updatePostScore = ({ id, voteScore }) => {
 
 export const getAllPosts = () => dispatch => (
 
-	PostAPI.getAll()
+	ReadableAPI.getAll()
 		.then( function(response) {
 			response.json().then( (data) => (
 				dispatch(receivePosts(data))
@@ -65,7 +65,7 @@ export const getAllPosts = () => dispatch => (
 
 export const getPostsByCategory = (category) => dispatch => (
 	
-	PostAPI.getByCategory(category)
+	ReadableAPI.getByCategory(category)
 		.then( function(response) {
 			response.json().then( (data) => (
 				dispatch(receivePosts(data))
@@ -75,7 +75,7 @@ export const getPostsByCategory = (category) => dispatch => (
 
 export const postNewPost = (post) => dispatch => (
 
-	PostAPI.postNewPost(post)
+	ReadableAPI.postNewPost(post)
 		.then( function(response) {
 			response.json().then( (data) => (
 				dispatch(createPost(data))
@@ -85,7 +85,7 @@ export const postNewPost = (post) => dispatch => (
 
 export const deletePost = (postId) => dispatch => (
 
-	PostAPI.deletePost(postId)
+	ReadableAPI.deletePost(postId)
 		.then( function(response) {
 			response.json().then( (data) => (
 				dispatch(removePost(data))
@@ -94,7 +94,7 @@ export const deletePost = (postId) => dispatch => (
 )
 
 export const editPost = (id, title, body) => dispatch => (
-	PostAPI.editPost(id, title, body)
+	ReadableAPI.editPost(id, title, body)
 		.then( function(response) {
 			response.json().then( (data) => ( 
 				dispatch(updatePost(data))
@@ -103,7 +103,7 @@ export const editPost = (id, title, body) => dispatch => (
 )
 
 export const votePost = (id, option) => dispatch => (
-	PostAPI.votePost(id, option)
+	ReadableAPI.votePost(id, option)
 		.then( function(response) {
 			response.json().then( (data) => (
 				dispatch(updatePostScore(data))

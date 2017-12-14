@@ -1,4 +1,4 @@
-import * as CommentsAPI from '../util/comments_util'
+import * as ReadableAPI from '../util/ReadableAPI'
 
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 export const CREATE_COMMENT = 'CREATE_COMMENT'; 
@@ -13,16 +13,6 @@ export const receiveComments = comments => {
 		comments
 	}
 }
-
-export const getComments = (postId) => dispatch => (
-
-	CommentsAPI.getCommentsByPost(postId)
-		.then( function(response) {
-			response.json().then( function(data) {
-				dispatch(receiveComments(data));
-			})
-		})
-)
 
 export const createComment = comment => {
 	return {
@@ -58,9 +48,19 @@ export const modifyComment = ( { parentId, id, body } ) => {
 	}
 }
 
+export const getComments = (postId) => dispatch => (
+
+	ReadableAPI.getCommentsByPost(postId)
+		.then( function(response) {
+			response.json().then( function(data) {
+				dispatch(receiveComments(data));
+			})
+		})
+)
+
 export const postComment = comment => dispatch => (
 
-	CommentsAPI.postComment(comment)
+	ReadableAPI.postComment(comment)
 		.then( function(response) {
 			response.json().then( function(data) {
 				dispatch(createComment(Object.assign(comment, data)))
@@ -70,7 +70,7 @@ export const postComment = comment => dispatch => (
 
 
 export const voteComment = (id, option) => dispatch => (
-	CommentsAPI.voteComment(id, option)
+	ReadableAPI.voteComment(id, option)
 		.then( function(response) {
 			response.json().then( (data) => (
 				dispatch(updateCommentScore(data))
@@ -79,7 +79,7 @@ export const voteComment = (id, option) => dispatch => (
 )
 
 export const deleteComment = (commentId) => dispatch => (
-	CommentsAPI.deleteComment(commentId)
+	ReadableAPI.deleteComment(commentId)
 		.then( function(response) {
 			response.json().then( (data) => (
 				dispatch(removeComment(data))
@@ -89,7 +89,7 @@ export const deleteComment = (commentId) => dispatch => (
 )
 
 export const editComment = (commentId, commentBody) => dispatch => (
-	CommentsAPI.editComment(commentId, commentBody)
+	ReadableAPI.editComment(commentId, commentBody)
 		.then( function(response) {
 			response.json().then( (data) => (
 				dispatch(modifyComment(data))

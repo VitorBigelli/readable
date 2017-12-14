@@ -1,4 +1,4 @@
-import * as CategoryAPI from '../util/categories_util'; 
+import * as ReadableAPI from '../util/ReadableAPI'; 
 
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
 
@@ -11,7 +11,7 @@ export const receiveCategories = categories =>  {
 
 export const fetchCategories = () => dispatch => {
 	
-	CategoryAPI.fetchCategories()
+	ReadableAPI.fetchCategories()
 		.then( response => {
 			response.json().then( function(data) {
 				dispatch(receiveCategories(data.categories))	
