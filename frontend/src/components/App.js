@@ -133,7 +133,6 @@ class App extends Component {
 	      <div className="App">
 
 	      	<header>
-      				<h1> React readable </h1>
 	      			{ (currentPath !== "/") && (
 	      				<Link
 	      					to="/"
@@ -144,18 +143,24 @@ class App extends Component {
 				      	onClick={this.openPostModal}
 				      	className="new-post"
 				    />
+      				<h1> React readable </h1>
+	      			
 	      	</header>
 
 	      	<div className="container">
 		      	<div className="nav-bar">
-					<span> Filter: </span> 
-			      	<CategoryList 
-			      		categories={categories} 
-			      		updateCategory={(history, category) => this.updateCategory(history, category)}  
-			      		currentPath={currentPath}
-			      	/>
-			      	<span> Order by: </span> 
-			      	<SortBy sortBy={ (option) => this.sortPostsBy(option) } />
+					<div className="filter">
+						<span> Filter: </span> 
+				      	<CategoryList 
+				      		categories={categories} 
+				      		updateCategory={(history, category) => this.updateCategory(history, category)}  
+				      		currentPath={currentPath}
+				      	/>
+				    </div>
+				    <div className="sort">
+				    	<span> Sort by: </span> 
+			      	   	<SortBy sortBy={ (option) => this.sortPostsBy(option) } />
+			      	</div>
 			    </div>
 
 				<Switch>
