@@ -17,7 +17,7 @@ yarn start
 
 Your browser will open the `localhost:3000` address and the application will be ready to be used.
 
-# Using the "My Reads" app
+# Using the "React Readable" app
 
 - The main page lists all the existing posts; 
 - User can navigate to differente posts lists using the "filter" select menu;
