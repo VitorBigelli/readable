@@ -1,22 +1,28 @@
-# Readable API Server
+# Running the "React Readable" app 
 
-This is the starter project for the final assessment project for Udacity's Redux course where you will build a content and comment web app. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
+1. Make sure that you have [Node.js](https://nodejs.org/en/download/) and npm installed.
+2. Make sure you have npm latest version installed in your computer. You can do this by running 
+```
+npm install npm@latest
+```
+3. Download or clone the repository into your computer; 
+4. Navigate to the downloaded folder (or cloned repository) and run the following commands: 
+```
+yarn install
+```
+and 
+```
+yarn start
+```
 
-This repository includes the code for the backend API Server that you'll use to develop and interact with the front-end portion of the project.
+Your browser will open the `localhost:3000` address and the application will be ready to be used.
 
-## Start Developing
+# Using the "My Reads" app
 
-To get started developing right away:
-
-* Install and start the API server
-    - `cd api-server`
-    - `npm install`
-    - `node server`
-* In another terminal window, use Create React App to scaffold out the front-end
-    - `create-react-app frontend`
-    - `cd frontend`
-    - `npm start`
-
-## API Server
-
-Information about the API server and how to use it can be found in its [README file](api-server/README.md).
+- The main page lists all the existing posts; 
+- User can navigate to differente posts lists using the "filter" select menu;
+- User can sort using differente post attributes using the "sort" select menu;
+- Create a new post by clicking the icon on the right top corner; 
+- Acces the details of a post by clicking the "See details" link on each post footer; 
+- The details page allows the user to delete or edit a post (dropdown menu on the post right top corner), see the comments of the post, as well create a new comment by clicking the chat baloon button;
+- Comments can also be deleted and edited; 

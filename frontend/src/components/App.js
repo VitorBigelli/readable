@@ -104,6 +104,11 @@ class App extends Component {
 		)
 	}
 
+	updateCurrentPath = (path) => {
+		this.setState( () => ({
+			currentPath: path
+		}))
+	}
 	
 
   	render() {
@@ -137,6 +142,7 @@ class App extends Component {
 	      				<Link
 	      					to="/"
 					      	className="back-link"
+					      	onClick={ () => this.updateCurrentPath("/")}
 					    />
 	      			)}
 		      		<button
