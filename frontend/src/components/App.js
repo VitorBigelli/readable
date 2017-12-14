@@ -138,7 +138,7 @@ class App extends Component {
 	      <div className="App">
 
 	      	<header>
-	      			{ (currentPath !== "/") && (
+	      			{ (this.props.location.pathname !== "/") && (
 	      				<Link
 	      					to="/"
 					      	className="back-link"
