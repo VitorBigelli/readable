@@ -150,12 +150,10 @@ class Post extends Component {
 								<span className="post-date"> { fullDate } </span>
 							</p>
 
-							{isDetails && (
 							<OptionsMenu 
 								post={post} 
 								openModal={() => this.openPostModal()}
 								delete={ () => this.deletePost(post.id)}/>
-					    	)}
 						</div>
 
 				 		<div className="post-content">
