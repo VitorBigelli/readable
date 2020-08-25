@@ -1,6 +1,5 @@
 import React from 'react'; 
 import { AvatarsList } from './AvatarsList';
-import AutoheightTextarea from 'react-autoheight-textarea';
 
 /* 
 #########################################################################
@@ -27,7 +26,7 @@ export const CommentModal = ({ isEditing, createComment, editComment, comment, c
 						}}
 					>
 						<p> Comment: </p>
-						<AutoheightTextarea
+						<textarea
 							name="comment" 
 							className="comment-input"
 							defaultValue={comment.body}
@@ -63,7 +62,7 @@ export const CommentModal = ({ isEditing, createComment, editComment, comment, c
 							createComment(event, commentAvatar)
 						}}
 					>
-						<AutoheightTextarea
+						<textarea
 							name="comment" 
 							className="comment-input"
 							defaultValue=""
