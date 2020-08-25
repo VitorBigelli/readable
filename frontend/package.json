@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "braces": "^3.0.2",
+    "clean-css": "^4.2.3",
+    "eslint": "^7.7.0",
     "form-serialize": "^0.7.2",
+    "js-yaml": "^3.14.0",
     "prop-types": "^15.6.0",
     "react": "^16.1.1",
     "react-dom": "^16.13.1",
